@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EverLand Cafe</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.9.24/paper-full.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="./stylesheets/cafeShop/style.css">
+
+    <!-- font awesome pro link below -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.2.0/css/all.css">
+    <!-- <link rel="stylesheet" href="https://static.fontawesome.com/css/fontawesome-app.css"> -->
+
+    <!-- bootstrap 5-->
+    <link rel="stylesheet" href="/build/_css/bootstrap.min.css">
+    <script src="/build/_js/bootstrap.bundle.min.js"></script>
+    <script src="/build/_js/popper.min.js"></script>
+    <script src="/build/_js/bootstrap.min.js"></script>
+
+    <!-- JQUERY 3.4.1 -->
+    <script src="/build/_js/jquery-3.4.1.js"></script>
+
+    <!-- VUE 3-->
+    <!-- <script src="https://unpkg.com/vue@next"></script> -->
+
+    <!-- axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- 共用 -->
+    <link rel="stylesheet" href="/stylesheets/signinNavbar.css">
+
+
+</head>
+
+<body>
+
+    <div class="coffee-shop-container">
+
+        <button id="enterbookshelf" class="bookshelf">書架</button>
+        <button id="enterChat" class="chatbtn">聊天室</button>
+        <div id="noSignDialogBox">
+            <span id="noSignDialog">登入後才可以<br>使用此功能喔!</span>
+        </div>
+        <div id="welcomeDialogBox">
+            <span id="welcomeDialog">歡迎光臨~</span>
+        </div>
+        <!--進入聊天室入口-->
+        <div class="enterChatRoom">
+            <div class="chatRoomForm">
+                <div class="chatRoomFormTitle">
+                    <h3>EverLand Cafe</h3>
+                    <span></span>
+                </div>
+                <form action="/cafeShop/chatroom" class="form-input">
+                    <div>
+                        <label for="username">暱稱</label>
+                        <input type="text" name="username" id="username" placeholder="輸入暱稱..." class="form-control" required />
+                        <label for="exampleFormControlSelect1">選擇桌號</label>
+                        <select class="form-control" id="exampleFormControlSelect1" name="roomName">
+                            <option value="table1">桌號1</option>
+                            <option value="table2">桌號2</option>
+                            <option value="table3">桌號3</option>
+                            <option value="table4">桌號4</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn">送出</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 共用 (登入/NAVBAR)-->
+    <script src="/javascripts/signinNavbar.js"></script>
+
+
+
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/cafeShop/cafeTalk.js"></script>
+    <script src="/javascripts/cafeShop/cafeShop.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- font awesome pro link below -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.2.0/css/all.css">
+    <link rel="stylesheet" href="https://static.fontawesome.com/css/fontawesome-app.css">
+
+    <!-- bootstrap 5-->
+    <link rel="stylesheet" href="/build/_css/bootstrap.min.css">
+    <script src="/build/_js/bootstrap.bundle.min.js"></script>
+    <script src="/build/_js/popper.min.js"></script>
+    <script src="/build/_js/bootstrap.min.js"></script>
+
+    <!-- JQUERY 3.4.1 -->
+    <script src="/build/_js/jquery-3.4.1.js"></script>
+
+    <!-- VUE 3-->
+    <!-- <script src="https://unpkg.com/vue@next"></script> -->
+
+    <!-- axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- 共用 -->
+    <link rel="stylesheet" href="/stylesheets/signinNavbar.css">
+    <!-- 吐司共用 -->
+    <link rel="stylesheet" href="/stylesheets/jquery.toast.css">
+
+
+    <!-- 自己 -->
+    <link rel="stylesheet" href="/stylesheets/cakeShop/cakeOnlineOrder.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <section id="date">
+        <input type="hidden" id="inputhidden" value="<%=  userName %>">
+        <div id="left">
+            <!-- <div id="btn">
+                <button @click="beforeyear(1)">去年</button>
+                <button @click="beforemonth(1)">上個月</button>
+                <button @click="settoday">今天</button>
+                <button @click="aftermonth(1)">下個月</button>
+                <button @click="afteryear(1)">明年</button>
+            </div> -->
+            <div id="week">
+                <div id="info">
+                    <!-- <div id="infoleft">
+                        <p>注意事項：</p>
+                        <ul>
+                            <li>
+                                <p>用餐時段以1小時為限</p>
+                            </li>
+                            <li>
+                                <p>人數上限為4位</p>
+                            </li>
+                            <li>
+                                <p>每人低消為新台幣100整</p>
+                            </li>
+                            <li>
+                                <p>禁止攜帶外食寵物等等(導盲犬除外)</p>
+                            </li>
+                            <li>
+                                <p>禁止吸煙、酗酒、大聲喧嘩等等不良行為</p>
+                            </li>
+                        </ul>
+                    </div> -->
+                    <div id="inforight">
+                        <h2>選擇訂位時段</h2>
+                        <h3>
+                            <span>訂位人員：<span>
+                                    <%= userMyname %>
+                                </span></span>
+                        </h3>
+                        <hr />
+                        <div>
+                            <span>選擇日期：{{whatdaybeclicked}}</span>
+                        </div>
+                        <div>
+                            <span>用餐時段：</span>
+                            <select v-model="timeselect" class="timeselect">
+                                <option v-for="(item,index) in timearr" :value="index">{{item}}</option>
+                            </select>
+                        </div>
+                        <div>
+                            <span>用餐人數：</span>
+                            <select v-model="peopleselect" id="peopleselect">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+                        <!-- <label for="people">人數：</label>
+                        <input type="text" name="people" id="people"> -->
+                        <button @click="push" id="push">送出</button>
+                        <a id="goback" href="/cakeShop"><button>回首頁</button></a>
+                    </div>
+                </div>
+                <div id="itdisplay">
+                    <div id="it">
+                        <h2>{{this.calendar.year}}-{{this.calendar.month + 1}}</h2>
+                        <div id="whatday">
+                            <div>日</div>
+                            <div>一</div>
+                            <div>二</div>
+                            <div>三</div>
+                            <div>四</div>
+                            <div>五</div>
+                            <div>六</div>
+                        </div>
+                        <div class="iweek" v-for="(i,indexi) in 6">
+                            <div @click="dateclick" :class="{jweek:true,
+                                beforeday:calendarMonth[(i-1)*7+j-1].year === today.year && calendarMonth[(i-1)*7+j-1].month === today.month && calendarMonth[(i-1)*7+j-1].date <= today.date,
+                                today:calendarMonth[(i-1)*7+j-1].year === today.year && calendarMonth[(i-1)*7+j-1].month === today.month && calendarMonth[(i-1)*7+j-1].date === today.date,
+                                other:calendarMonth[(i-1)*7+j-1].month !== calendar.month}" v-for="(j,indexj) in 7"
+                                :data-jweekindex="(indexi*7)+indexj" :data-date="calendarMonth[(i-1)*7+j-1].date"></div>
+                        </div>
+                    </div>
+                    <div id="it">
+                        <h2>{{this.calendar.year}}-{{this.calendar.month + 2}}</h2>
+                        <div id="whatday">
+                            <div>日</div>
+                            <div>一</div>
+                            <div>二</div>
+                            <div>三</div>
+                            <div>四</div>
+                            <div>五</div>
+                            <div>六</div>
+                        </div>
+                        <div class="iweek" v-for="(i,indexi) in 6">
+                            <div @click="dateNextclick" :class="{jweek:true,
+                                other:calendarNextMonth[(i-1)*7+j-1].month !== calendar.month+1}"
+                                v-for="(j,indexj) in 7" :data-jweekindex="(indexi*7)+indexj"
+                                :data-date="calendarNextMonth[(i-1)*7+j-1].date"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js'></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <!-- 吐司共用 -->
+    <script src="/javascripts/jquery.toast.js"></script>
+    <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script>
+        let vm = new Vue({
+            el: '#date',
+            data: {
+                'user': $('#inputhidden').val(),
+                'myDate': '',
+                'today': {
+                    year: 0,
+                    month: 0,
+                    date: 0,
+                    day: 0
+                },
+                'calendar': {
+                    year: 0,
+                    month: 0,
+                    date: 0,
+                    day: 0
+                },
+                'timearr': [],
+                'whatdaybeclicked': '',
+                'peopleselect': '',
+                'timeselect': '',
+            },
+            mounted() {
+                let date = new Date();
+                this.today.year = date.getFullYear();
+                this.today.month = date.getMonth();
+                this.today.date = date.getDate();
+                this.today.day = date.getDay();
+
+                this.calendar.year = date.getFullYear();
+                this.calendar.month = date.getMonth();
+                this.calendar.date = date.getDate();
+                this.calendar.day = date.getDay();
+            },
+            methods: {
+                push() {
+                    if (this.whatdaybeclicked.trim() == '' ||
+                        this.peopleselect.trim() == '' ||
+                        this.timeselect.toString().trim() == '') {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'warning',
+                            title: '請填寫完整資訊',
+                            showConfirmButton: false,
+                            timer: 1200
+                        })
+                        return
+                    }
+                    $.ajax({
+                        url: "/cakeShop/onlineorderdata",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({
+                            'time': this.whatdaybeclicked,
+                        }),
+                        success: function (res) {
+                            let resdata = JSON.parse(res);
+                            if (resdata.length == 1) { //沒項目就新增
+                                console.log(888);
+                                let dayarr = JSON.parse(resdata[0]["str"].slice(1, -1));
+                                const nameList = Object.values(dayarr).map(item => item.time);
+                                const where = nameList.indexOf(vm.timeselect);
+
+                                //表示有時間段
+                                if (where > -1) {
+                                    let json = dayarr[where]["info"];
+                                    let haveorder = true;
+                                    if (json.length >= 4) {
+                                        // showToast('時段訂位數已滿');
+                                        Swal.fire({
+                                            position: 'center',
+                                            icon: 'warning',
+                                            title: '時段訂位數已滿',
+                                            showConfirmButton: false,
+                                            timer: 1200
+                                        })
+                                        return
+                                    }
+                                    json.forEach(el => {
+                                        if (el["user"] == vm.user) {
+                                            // showToast('該時段已有訂位');
+                                            Swal.fire({
+                                                position: 'center',
+                                                icon: 'warning',
+                                                title: '該時段已有訂位',
+                                                showConfirmButton: false,
+                                                timer: 1200
+                                            })
+                                            haveorder = false;
+                                        }
+                                    })
+                                    if (!haveorder) return;
+                                    let objx = {};
+                                    let obj = {
+                                        'user': vm.user,
+                                        'peopleselect': vm.peopleselect
+                                    };
+                                    json.push(obj);
+                                    objx.time = vm.timeselect;
+                                    objx.info = [...json];
+                                    dayarr[where] = objx;
+                                    $.ajax({
+                                        url: "/cakeShop/updatepush",
+                                        type: "POST",
+                                        contentType: "application/json; charset=utf-8",
+                                        data: JSON.stringify({
+                                            'time': vm.whatdaybeclicked,
+                                            'obj': JSON.stringify(dayarr),
+                                        }),
+                                        success: function (res) {
+                                            // showToast('訂位成功');
+                                            Swal.fire({
+                                                position: 'center',
+                                                icon: 'success',
+                                                title: '訂位成功',
+                                                showConfirmButton: false,
+                                                timer: 1200
+                                            })
+                                            console.log(res);
+                                        },
+                                        error: function (err) {
+                                            console.log(err);
+                                        }
+                                    })
+                                } else {
+                                    //沒有時間段的資料時
+
+                                    let newdata = [];
+                                    // let json = dayarr[where]["info"];
+                                    let objx = {};
+                                    let newobj = {
+                                        'user': vm.user,
+                                        'peopleselect': vm.peopleselect
+                                    };
+                                    newdata.push(newobj);
+                                    objx.time = vm.timeselect;
+                                    objx.info = [...newdata];
+                                    dayarr.push(objx);
+
+                                    $.ajax({
+                                        url: "/cakeShop/updatepush",
+                                        type: "POST",
+                                        contentType: "application/json; charset=utf-8",
+                                        data: JSON.stringify({
+                                            'time': vm.whatdaybeclicked,
+                                            'obj': JSON.stringify(dayarr),
+                                        }),
+                                        success: function (res) {
+                                            console.log(res);
+                                            // showToast('訂位成功');
+                                            Swal.fire({
+                                                position: 'center',
+                                                icon: 'success',
+                                                title: '訂位成功',
+                                                showConfirmButton: false,
+                                                timer: 1200
+                                            })
+
+                                        },
+                                        error: function (err) {
+                                            console.log(err);
+                                        }
+                                    })
+                                }
+                            } else {
+                                let data = [];
+                                let obj = {};
+                                obj.time = vm.timeselect;
+                                obj.info = [{
+                                    'user': vm.user,
+                                    'peopleselect': vm.peopleselect,
+                                }];
+                                data.push(obj);
+                                $.ajax({
+                                    url: "/cakeShop/push",
+                                    type: "POST",
+                                    contentType: "application/json; charset=utf-8",
+                                    data: JSON.stringify({
+                                        'time': vm.whatdaybeclicked,
+                                        'obj': JSON.stringify(data),
+                                    }),
+                                    success: function (res) {
+                                        // showToast('訂位成功');
+                                        Swal.fire({
+                                            position: 'center',
+                                            icon: 'success',
+                                            title: '訂位成功',
+                                            showConfirmButton: false,
+                                            timer: 1200
+                                        })
+                                        console.log(res);
+                                    },
+                                    error: function (err) {
+                                        console.log(err);
+                                    }
+                                })
+                            }
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    })
+                },
+                dateclick(e) {
+                    $('.jweek').css('background', 'white');
+                    $('.jweek').removeClass('pink');
+                    e.currentTarget.style.background = '#ffd0d0';
+                    e.currentTarget.classList.add('pink');
+                    const cindex = e.currentTarget.getAttribute('data-jweekindex') - 0; //索引
+
+                    let {
+                        year,
+                        month,
+                        date
+                    } = this.calendarFirstDay; //當月第一天
+                    let cdate = new Date(year, month, date + cindex);
+
+                    year = cdate.getFullYear() + '';
+                    month = (cdate.getMonth() + 1 < 10) ? '0' + (cdate.getMonth() + 1) : (cdate.getMonth() + 1) + '';
+                    date = (cdate.getDate() < 10) ? '0' + (cdate.getDate()) : cdate.getDate() + '';
+                    this.whatdaybeclicked = (year + month + date);
+
+                    $.ajax({
+                        url: "/cakeShop/onlineorderdata",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({
+                            'time': this.whatdaybeclicked,
+                        }),
+                        success: function (res) {
+
+                            if (JSON.parse(res)[0] == undefined) {
+                                $(`.timeselect > option`).prop('disabled', false);
+                                return
+                            };
+                            let getdata = JSON.parse(res)[0]["str"];
+                            let dataslice = JSON.parse(getdata.slice(1, -1));
+                            let overfour = Object.values(dataslice).map(item => item.info);
+                            console.log(overfour);
+                            overfour.forEach((ele, idx) => {
+                                let cctime
+                                if (ele.length >= 4) {
+                                    cctime = dataslice[idx]["time"];
+                                    console.log(cctime);
+                                    $(`.timeselect > option[value=${cctime}]`).prop('disabled', true);
+                                } else {
+                                    cctime = dataslice[idx]["time"];
+                                    console.log(cctime);
+                                    $(`.timeselect > option[value=${cctime}]`).prop('disabled', false);
+                                }
+                            });
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                },
+                dateNextclick(e) {
+                    $('.jweek').css('background', 'white');
+                    $('.jweek').removeClass('pink');
+                    e.currentTarget.style.background = '#ffd0d0';
+                    e.currentTarget.classList.add('pink');
+                    const cindex = e.currentTarget.getAttribute('data-jweekindex') - 0; //索引
+
+                    let {
+                        year,
+                        month,
+                        date
+                    } = this.calendarNextFirstDay; //當月第一天
+                    let cdate = new Date(year, month, date + cindex);
+                    year = cdate.getFullYear() + '';
+                    month = (cdate.getMonth() + 1 < 10) ? '0' + (cdate.getMonth() + 1) : (cdate.getMonth() + 1) + '';
+                    date = (cdate.getDate() < 10) ? '0' + (cdate.getDate()) : cdate.getDate() + '';
+
+                    date = (cdate.getDate() < 10) ? '0' + (cdate.getDate()) : cdate.getDate() + '';
+                    console.log(year + month + date);
+                    this.whatdaybeclicked = (year + month + date);
+                    $.ajax({
+                        url: "/cakeShop/onlineorderdata",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({
+                            'time': this.whatdaybeclicked,
+                        }),
+                        success: function (res) {
+
+                            if (JSON.parse(res)[0] == undefined) {
+                                $(`.timeselect > option`).prop('disabled', false);
+                                return
+                            };
+                            let getdata = JSON.parse(res)[0]["str"];
+                            let dataslice = JSON.parse(getdata.slice(1, -1));
+                            let overfour = Object.values(dataslice).map(item => item.info);
+                            console.log(overfour);
+                            overfour.forEach((ele, idx) => {
+                                let cctime
+                                if (ele.length >= 4) {
+                                    cctime = dataslice[idx]["time"];
+                                    console.log(cctime);
+                                    $(`.timeselect > option[value=${cctime}]`).prop('disabled', true);
+                                } else {
+                                    cctime = dataslice[idx]["time"];
+                                    console.log(cctime);
+                                    $(`.timeselect > option[value=${cctime}]`).prop('disabled', false);
+                                }
+                            });
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                },
+                // settoday() {
+                //     let year = this.today.year;
+                //     let month = this.today.month;
+                //     let date = this.today.date;
+
+                //     $('.jweek').css('background', 'white');
+                //     $('.jweek').removeClass('pink');
+                //     $(`div[data-date=${this.today.date}]`).css('background', '#ffd0d0');
+                //     $(`div[data-date=${this.today.date}]`).addClass('pink');
+
+                //     year = year + '';
+                //     month = (month + 1 < 10) ? '0' + (month + 1) : (month + 1) + '';
+                //     date = (date < 10) ? '0' + (date) : date + '';
+                //     this.whatdaybeclicked = (year + month + date);
+                // },
+                beforemonth(m) {
+                    let month = this.calendar.month - 1;
+                    if (month > 11) {
+                        this.calendar.month = 0;
+                        this.calendar.year += 1;
+                    } else if (month < 0) {
+                        this.calendar.month = 11;
+                        this.calendar.year -= 1;
+                    } else {
+                        this.calendar.month -= 1
+                    }
+                },
+                aftermonth(m) {
+                    let month = this.calendar.month + 1;
+                    if (month > 11) {
+                        this.calendar.month = 0;
+                        this.calendar.year += 1;
+                    } else if (month < 0) {
+                        this.calendar.month = 11;
+                        this.calendar.year -= 1;
+                    } else {
+                        this.calendar.month += 1
+                    }
+                },
+                beforeyear(m) {
+                    this.calendar.year -= 1
+                },
+                afteryear(m) {
+                    this.calendar.year += 1
+                }
+            },
+            computed: {
+                calendarFirstDay() {
+                    const nowDate = new Date(this.calendar.year, this.calendar.month, 1)
+                    const date = new Date(this.calendar.year, this.calendar.month, 1 - nowDate.getDay())
+                    return {
+                        year: date.getFullYear(),
+                        month: date.getMonth(),
+                        date: date.getDate(),
+                        day: date.getDay(),
+                    }
+                },
+                calendarMonth() {
+                    const data = []
+                    let date
+                    for (let i = 0; i < 42; i++) {
+                        date = new Date(this.calendarFirstDay.year, this.calendarFirstDay.month, this.calendarFirstDay.date + i)
+                        data.push({
+                            year: date.getFullYear(),
+                            month: date.getMonth(),
+                            date: date.getDate(),
+                            day: date.getDay()
+                        })
+                    }
+                    return data
+                },
+                //-------------------------------------------
+                calendarNextFirstDay() {
+                    const nowDate = new Date(this.calendar.year, this.calendar.month + 1, 1)
+                    const date = new Date(this.calendar.year, this.calendar.month + 1, 1 - nowDate.getDay())
+                    return {
+                        year: date.getFullYear(),
+                        month: date.getMonth(),
+                        date: date.getDate(),
+                        day: date.getDay(),
+                    }
+                },
+                calendarNextMonth() {
+                    const data = []
+                    let date
+                    for (let i = 0; i < 42; i++) {
+                        date = new Date(this.calendarNextFirstDay.year, this.calendarNextFirstDay.month, this.calendarNextFirstDay.date + i)
+                        data.push({
+                            year: date.getFullYear(),
+                            month: date.getMonth(),
+                            date: date.getDate(),
+                            day: date.getDay()
+                        })
+                    }
+                    return data
+                },
+            },
+            created() {
+                $('.timeperiod').each((idx, elm) => {
+                    $(elm).attr('data-idx', idx);
+                })
+                for (let i = 0; i < 18; i++) {
+                    let set = new Date();
+                    let chours;
+                    let cminutes;
+                    set.setHours(9);
+                    set.setMinutes(0);
+                    set.setSeconds(0);
+                    set.setMinutes(parseInt(i) * 30);
+                    chours = set.getHours();
+                    cminutes = set.getMinutes().toString();
+                    chours = (chours < 10) ? '0' + chours : chours + '';
+                    cminutes = (cminutes.length < 2) ? '0' + cminutes : cminutes + '';
+                    this.timearr.push(chours + ':' + cminutes);
+                }
+            },
+            updated() {
+                // if ($('div[class="jweek pink"]').length > 0) {
+                //     let pink = $('div[class="jweek pink"]').attr('data-jweekindex');
+                //     let pinkyear = this.calendarMonth[pink].year||this.calendarNextMonth[pink].year;
+                //     let pinkmonth = this.calendarMonth[pink].month||this.calendarNextMonth[pink].month;
+                //     let pinkdate = this.calendarMonth[pink].date||this.calendarNextMonth[pink].date;
+                //     pinkyear = pinkyear + '';
+                //     pinkmonth = (pinkmonth + 1 < 10) ? '0' + (pinkmonth + 1) : (pinkmonth + 1) + '';
+                //     pinkdate = (pinkdate < 10) ? '0' + (pinkdate) : pinkdate + '';
+                //     this.whatdaybeclicked = pinkyear + pinkmonth + pinkdate;
+                // }
+            },
+        })
+        //toast
+        // function showToast(heading, message) {
+        //     console.log(heading, message);
+        //     $.toast({
+        //         text: message, // Text that is to be shown in the toast
+        //         heading: heading, // Optional heading to be shown on the toast
+        //         icon: 'warning', // Type of toast icon
+        //         showHideTransition: 'fade', // fade, slide or plain
+        //         allowToastClose: true, // Boolean value true or false
+        //         hideAfter: 3000, // false to make it sticky or number representing the miliseconds as time after which toast needs to be hidden
+        //         stack: 5, // false if there should be only one toast at a time or a number representing the maximum number of toasts to be shown at a time
+        //         position: 'top-center', // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values
+        //         fontSize: '30px',
+        //         textAlign: 'left',  // Text alignment i.e. left, right or center
+        //         loader: true,  // Whether to show loader or not. True by default
+        //         loaderBg: '#9ec600',  // Background color of the toast loader
+        //         beforeShow: function () { }, // will be triggered before the toast is shown
+        //         afterShown: function () { }, // will be triggered after the toat has been shown
+        //         beforeHide: function () { }, // will be triggered before the toast gets hidden
+        //         afterHidden: function () { }  // will be triggered after the toast has been hidden
+        //     });
+        // }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EverLand</title>
+
+    <!-- font awesome pro link below -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.2.0/css/all.css">
+    <link rel="stylesheet" href="https://static.fontawesome.com/css/fontawesome-app.css">
+
+    <!-- bootstrap 5-->
+    <link rel="stylesheet" href="/build/_css/bootstrap.min.css">
+    <script src="/build/_js/bootstrap.bundle.min.js"></script>
+    <script src="/build/_js/popper.min.js"></script>
+    <script src="/build/_js/bootstrap.min.js"></script>
+
+    <!-- JQUERY 3.4.1 -->
+    <script src="/build/_js/jquery-3.4.1.js"></script>
+
+    <!-- VUE 3-->
+    <!-- <script src="https://unpkg.com/vue@next"></script> -->
+
+    <!-- axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- 共用 -->
+    <link rel="stylesheet" href="/stylesheets/signinNavbar.css">
+
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #C7B299;
+        }
+
+        #startView {
+            width: 100vw;
+            height: 100vh;
+            padding: 50px;
+            z-index: 1;
+            background-color: #C7B299;
+            /* clip-Path: circle(0%) */
+        }
+
+        #startView>div:nth-of-type(1) {
+            margin: 50px auto;
+            width: 360px;
+        }
+
+        #startView>div:nth-of-type(2) {
+            margin: 50px auto;
+            width: 500px;
+        }
+
+        #startView img {
+            margin: 0 auto;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        h1.loader {
+            text-align: center;
+            text-transform: uppercase;
+            font-family: 'Nunito', sans-serif;
+            font-size: 64px;
+            color: transparent;
+            letter-spacing: 0.01em;
+        }
+
+        #viewFinish {
+            display: none;
+        }
+
+        .loader {
+            text-shadow:
+                0 0 2px rgba(204, 208, 212, 0.9),
+                0 15px 25px rgba(0, 0, 0, 0.3),
+                0 -2px 3px rgba(0, 0, 0, 0.1),
+                0 -5px 10px rgba(255, 255, 255, 0.5),
+                0 5px 10px rgba(0, 0, 0, 0.3),
+                0 3px 4px rgba(255, 255, 255, 0.2),
+                0 0 20px rgba(255, 255, 255, 0.45);
+        }
+
+        #viewLoading span {
+            animation: loading 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes loading {
+            to {
+                text-shadow:
+                    0 0 2px rgba(204, 208, 212, 0.2),
+                    0 0 3px rgba(0, 0, 0, 0.02),
+                    0 0 0 rgba(0, 0, 0, 0),
+                    0 0 0 rgba(255, 255, 255, 0),
+                    0 0 0 rgba(0, 0, 0, 0),
+                    0 0 0 rgba(255, 255, 255, 0),
+                    0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+
+        #viewLoading span:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        #viewLoading span:nth-child(3) {
+            animation-delay: 0.30s;
+        }
+
+        #viewLoading span:nth-child(4) {
+            animation-delay: 0.45s;
+        }
+
+        #viewLoading span:nth-child(5) {
+            animation-delay: 0.60s;
+        }
+
+        #viewLoading span:nth-child(6) {
+            animation-delay: 0.75s;
+        }
+
+        #viewLoading span:nth-child(7) {
+            animation-delay: 0.90s;
+        }
+
+        #drawView {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(60deg, #5fa2e3 50%, #6ab691);
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='startView'>
+        <div><img src="/images/everlandLOGOsquare.svg" alt=""></div>
+        <div>
+            <h1 id="viewLoading" class="loader">
+                <span>L</span>
+                <span>O</span>
+                <span>A</span>
+                <span>D</span>
+                <span>I</span>
+                <span>N</span>
+                <span>G</span>
+            </h1>
+            <h1 id="viewFinish" class="loader">
+                <span>S</span>
+                <span>T</span>
+                <span>A</span>
+                <span>R</span>
+                <span>T</span>
+            </h1>
+        </div>
+    </div>
+    <!-- enjoy your vacation  enjoy rest your day-->
+
+    <div id="drawView"></div>
+
+    <div id="mainLogo"><img src="/images/everlandLOGOline.svg" alt=""></div>
+
+    <!-- 共用 (登入/NAVBAR)-->
+    <script src="/javascripts/signinNavbar.js"></script>
+
+    <!-- ThreeJS -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/tween.js/17.2.0/Tween.min.js'></script>
+    <script type="module">
+        $('#signHead,#iconNav,#mainLogo').hide();
+        function startAni() {
+            setTimeout(() => {
+                $('#viewLoading').css('display', 'none');
+                // $('#viewFinish').css({ 'display': 'block', "cursor": 'pointer' });
+                setTimeout(() => {
+                    $('#startView').hide()
+                    $({ step: 0 }).animate({ step: 100 }, {
+                        duration: 2000,
+                        step: function (val) {
+                            // val equals the current step
+                            $('#drawView').css({ 'clipPath': `circle(${val}% at 50% 50%)` })
+                        }
+                    });
+                    setTimeout(() => { $('#signHead,#iconNav,#mainLogo').show() }, 1100);
+                    render();
+                    afterStart()
+                }, 500);
+            }, 1500);
+        }
+
+        const animaTime = 3000;
+        function goPage(camX, camY, camZ, ctrlX, ctrlY, ctrlZ, url) {
+            for (let index = 9; index < 15; index++) {
+                scene.children[index].visible = false;
+            }
+            controls.autoRotate = false;
+            let cameraPOS = { x: camera.position.x, y: camera.position.y, z: camera.position.z };
+            new TWEEN.Tween(cameraPOS)
+                .to({ x: camX, y: camY, z: camZ }, animaTime)
+                // .easing(TWEEN.Easing.Quadratic.Out)
+                .onUpdate(() => {
+                    camera.position.set(cameraPOS.x, cameraPOS.y, cameraPOS.z);
+                })
+                .start();
+            let controlsPOS = { x: controls.target.x, y: controls.target.y, z: controls.target.z };
+            new TWEEN.Tween(controlsPOS)
+                .to({ x: ctrlX, y: ctrlY, z: ctrlZ }, animaTime)
+                .onUpdate(() => {
+                    controls.target.set(controlsPOS.x, controlsPOS.y, controlsPOS.z);
+                })
+                .onComplete(() => {
+                    $({ step: 100 }).animate({ step: 0 }, {
+                        duration: 1900,
+                        step: function (val) {
+                            $('#signHead,#iconNav,#mainLogo').hide();
+                            $('#drawView').css({ 'clipPath': `circle(${val}% at 50% 50%)` })
+                        }
+                    });
+                    setTimeout(() => { $(location).prop('href', url) }, 2000)
+                })
+                .start();
+        }
+
+        function afterStart() {
+            $(document).on("click", function () {
+                if (plane01.position.y >= planeEventY) {
+                    goPage(13, 19, -2, 25, 11, -23, '/cafeShop')
+                };
+                if (plane02.position.y >= planeEventY) {
+                    goPage(-6.9, 20.4, 12.2, 7.8, 16.8, 8.4, '/bank')
+                };
+                if (plane03.position.y >= planeEventY) {
+                    goPage(-13.4, 17, -0.8, -9.4, 15, -7.8, '/cakeShop')
+                };
+                if (plane04.position.y >= planeEventY) {
+                    goPage(-6, 18.7, -6, -1, 13.4, 18.9, '/shopping')
+                };
+                if (plane05.position.y >= planeEventY) {
+                    goPage(-2.7, 17.8, 17.9, -7.2, 16.6, 19.3, '/forum')
+                };
+                if (plane06.position.y >= planeEventY) {
+                    goPage(2, 18, 5, -15, 14, 2, '/adminCenter')
+                };
+            });
+
+            $(document).on('pointerdown', function () {
+                // console.log('pointerdown');
+                console.log(camera.position);
+                console.log(controls.target);
+            });
+
+            $(document).on('pointerup', function () {
+                // console.log('pointerup');
+            });
+
+            let mouse = { x: 0, y: 0 }
+
+            $(document).on('mousemove', function (event) {
+                event.preventDefault();
+                pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+                pointer.y = - (event.clientY / window.innerHeight) * 2 + 1;
+            });
+
+            // 視窗改變大小時 畫面比例以及渲染畫面 維持不變
+            $(window).on('resize', function () {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            })
+        }
+
+
+
+
+        // THREE JS
+        // 初始設定
+        //---------------------------------------------------------------------------------------
+        import * as THREE from './build/three.module.js';
+        import { OrbitControls } from './javascripts/threejs/OrbitControls.js';
+        import { GLTFLoader } from './javascripts/threejs/loaders/GLTFLoader.js';
+        import { ColladaLoader } from './javascripts/threejs/loaders/ColladaLoader.js';
+        import Stats from './javascripts/threejs/stats.module.js';
+
+        // 建立場景
+        const scene = new THREE.Scene();
+
+        // 建立鏡頭
+        const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1500);
+        camera.position.set(70, 60, 70)// 相機位置
+        camera.lookAt(0, 12, 0)
+
+        // 渲染畫面
+        const canvas = document.querySelector('#cav');
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.autoClear = true;
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true; // 陰影效果
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap; // 陰影貼圖
+        document.getElementById('drawView').appendChild(renderer.domElement);
+
+        // 設定背景色
+        // renderer.setClearColor(0xffffff, 1.0);
+        // scene.background = new THREE.Color('#ffffff'); // 背景色
+
+        // 輔助顯示：X Y Z軸(red、green、blue)
+        // let axis = new THREE.AxisHelper(60);
+        // scene.add(axis);
+
+        // 滑鼠套件
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.target.set(0, 12, 0);
+        // controls.enableDamping = true;  // 啟用阻尼效果
+        // controls.dampingFactor = .1;    // 阻尼係數
+        controls.autoRotate = true;        // 自動環繞
+        controls.autoRotateSpeed *= .1;     // 自動環繞(越大越快)
+        // controls.maxPolarAngle = Math.PI / 2.8;  // 垂直旋轉角度
+        // controls.minPolarAngle = Math.PI / 2.8;  // 垂直旋轉角度
+        controls.rotateSpeed = 0.02
+        controls.enableZoom = true; // 是否縮放
+        controls.enablePan = true; // 是否平移
+        controls.update();
+
+
+        // 燈光 陰影
+        //---------------------------------------------------------------------------------------
+
+        //Ambient light
+        const Amblight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(Amblight);
+
+        // const skyColor = 0xB1E1FF;  // light blue
+        // const groundColor = 0xffcb81;  // brownish orange
+        // const intensity = 0.5;
+        // const Hemlight = new THREE.HemisphereLight(skyColor, groundColor, intensity);
+        // scene.add(Hemlight);
+
+        const light = new THREE.DirectionalLight(0xffffff, .4);
+        light.position.set(60, 90, 60);
+        light.target.position.set(0, 0, 0);
+        light.castShadow = true;
+        scene.add(light);
+        scene.add(light.target);
+
+        // light.shadow.mapSize.width = 8192;
+        // light.shadow.mapSize.height = 8192;
+        // light.shadow.bias = 0.00001;
+        // // light.shadow.radius = 5;
+        // light.shadow.camera.near = .5;
+        // light.shadow.camera.far = 300;
+        // light.shadow.camera.left = -70;
+        // light.shadow.camera.right = 70;
+        // light.shadow.camera.top = 50;
+        // light.shadow.camera.bottom = -50;
+
+
+        // const helper01 = new THREE.CameraHelper(light.shadow.camera);
+        // scene.add(helper01);
+
+        // const helper02 = new THREE.DirectionalLightHelper(light, 1);
+        // scene.add(helper02);
+
+        // 模型
+        //---------------------------------------------------------------------------------------
+
+        const loader = new GLTFLoader();
+        let isLoadEnd = false;
+        loader.load('./images/index/newland.glb', function (gltf) {
+            const model = gltf.scene;
+            scene.add(model);
+            model.position.set(11.5, 10, -11.5)
+            // gltf.scene.rotation
+            model.traverse((obj) => {
+                if (obj.isMesh) {
+                    // obj.material = new THREE.MeshLambertMaterial();
+                    // obj.shadowSide = 0;
+                    obj.castShadow = true;
+                    obj.receiveShadow = true;
+                }
+            });
+            console.log('ready');
+            isLoadEnd = true;
+            startAni()
+        });
+
+        const planeColor = 0xfff200;
+        const planeOpacity = 0.5;
+        const planeEventY = 11.055;
+        const planeOriginalY = 10.7;
+
+        var tag01;
+        const daeExporter = new ColladaLoader();
+        daeExporter.load('./images/index/titleCoffeetw2.dae', function (gltf) {
+            tag01 = gltf.scene;
+            scene.add(tag01);
+            tag01.position.set(24, 16, -24)
+            tag01.scale.set(.018, .018, .018)
+        });
+
+        var planeMaterial = new THREE.MeshToonMaterial({ color: planeColor, opacity: planeOpacity, transparent: true });
+        var geometry01 = new THREE.PlaneGeometry(15, 15);
+        var plane01 = new THREE.Mesh(geometry01, planeMaterial);
+        plane01.position.set(24, planeOriginalY, -24) // 11.1
+        plane01.rotation.x = Math.PI * 1.5;
+        plane01.name = 'Coffee';
+        // console.log(plane01);
+        scene.add(plane01);
+
+        var tag02;
+        daeExporter.load('./images/index/titleMovietw.dae', function (gltf) {
+            tag02 = gltf.scene;
+            scene.add(tag02);
+            tag02.position.set(24, 15, 0)
+            tag02.scale.set(.018, .018, .018)
+        });
+
+        var geometry02 = new THREE.PlaneGeometry(15, 25);
+        var plane02 = new THREE.Mesh(geometry02, planeMaterial);
+        plane02.position.set(24, planeOriginalY, -0) // 11.1
+        plane02.rotation.x = Math.PI * 1.5;
+        plane02.name = 'Movie';
+        scene.add(plane02);
+
+        var tag03;
+        daeExporter.load('./images/index/titleRestauranttw.dae', function (gltf) {
+            tag03 = gltf.scene;
+            scene.add(tag03);
+            tag03.position.set(0, 16, -24)
+            tag03.scale.set(.018, .018, .018)
+        });
+
+        var geometry03 = new THREE.PlaneGeometry(25, 15);
+        var plane03 = new THREE.Mesh(geometry03, planeMaterial);
+        plane03.position.set(0, planeOriginalY, -24) // 11.1
+        plane03.rotation.x = Math.PI * 1.5;
+        plane03.name = 'Restaurant';
+        scene.add(plane03);
+
+        var tag04;
+        daeExporter.load('./images/index/titleShoptw.dae', function (gltf) {
+            tag04 = gltf.scene;
+            scene.add(tag04);
+            tag04.position.set(0, 16, 24)
+            tag04.scale.set(.018, .018, .018)
+        });
+
+        var geometry04 = new THREE.PlaneGeometry(25, 15);
+        var plane04 = new THREE.Mesh(geometry04, planeMaterial);
+        plane04.position.set(0, planeOriginalY, 24) // 11.1
+        plane04.rotation.x = Math.PI * 1.5;
+        plane04.name = 'Shop';
+        scene.add(plane04);
+
+        var tag05;
+        daeExporter.load('./images/index/titleCCtw.dae', function (gltf) {
+            tag05 = gltf.scene;
+            scene.add(tag05);
+            tag05.position.set(-24, 16, 24)
+            tag05.scale.set(.018, .018, .018)
+        });
+
+        var geometry05 = new THREE.PlaneGeometry(15, 15);
+        var plane05 = new THREE.Mesh(geometry05, planeMaterial);
+        plane05.position.set(-24, planeOriginalY, 24) // 11.1
+        plane05.rotation.x = Math.PI * 1.5;
+        plane05.name = 'CC';
+        scene.add(plane05);
+
+        var tag06;
+        daeExporter.load('./images/index/titleACtw.dae', function (gltf) {
+            tag06 = gltf.scene;
+            scene.add(tag06);
+            tag06.position.set(-24, 18, 0)
+            tag06.scale.set(.018, .018, .018)
+        });
+
+        var geometry06 = new THREE.PlaneGeometry(15, 25);
+        var plane06 = new THREE.Mesh(geometry06, planeMaterial);
+        plane06.position.set(-24, planeOriginalY, 0) // 11.1
+        plane06.rotation.x = Math.PI * 1.5;
+        plane06.name = 'AC';
+        scene.add(plane06);
+
+        var cloud01, cloud02, cloud03, cloud04, cloud05;
+        daeExporter.load('./images/index/cloud.dae', function (gltf) {
+            cloud01 = gltf.scene;
+            scene.add(cloud01);
+            cloud01.position.set(-30, 35, 35)
+            cloud01.scale.set(.004, .004, .004)
+        });
+
+        daeExporter.load('./images/index/cloud.dae', function (gltf) {
+            cloud02 = gltf.scene;
+            scene.add(cloud02);
+            cloud02.position.set(0, 38, 0)
+            cloud02.scale.set(.004, .004, .004)
+        });
+
+        daeExporter.load('./images/index/cloud.dae', function (gltf) {
+            cloud03 = gltf.scene;
+            scene.add(cloud03);
+            cloud03.position.set(30, 34, -35)
+            cloud03.scale.set(.004, .004, .004)
+        });
+
+        daeExporter.load('./images/index/cloud.dae', function (gltf) {
+            cloud04 = gltf.scene;
+            scene.add(cloud04);
+            cloud04.position.set(40, 33, 35)
+            cloud04.scale.set(.004, .004, .004)
+        });
+
+        daeExporter.load('./images/index/cloud.dae', function (gltf) {
+            cloud05 = gltf.scene;
+            scene.add(cloud05);
+            cloud05.position.set(-40, 38, -40)
+            cloud05.scale.set(.004, .004, .004)
+        });
+
+
+        // 攝影機環繞
+        // function cameraView() {
+        //     if (camera.position.z < 125 && camera.position.x > 0) {
+        //         camera.position.z += .2; camera.position.x -= .4
+        //     }
+        //     if (camera.position.z >= 125 && camera.position.x > -40) {
+        //         camera.position.x -= .5
+        //     }
+        //     camera.lookAt(scene.position);
+        // }
+
+        // 
+
+        let container = document.createElement('div');
+        let pointer = new THREE.Vector2();
+        let raycaster = new THREE.Raycaster();
+        let stats = new Stats();
+        container.appendChild(stats.dom);
+
+        function updata() {
+            raycaster.setFromCamera(pointer, camera);
+            const intersects = raycaster.intersectObjects(scene.children);
+            if (intersects.length > 0) {
+                const targetDistance = intersects[0].distance;
+                // camera.focusAt(targetDistance); // using Cinematic camera focusAt method
+                if (intersects != intersects[0].object) {
+                    document.body.style.cursor = 'pointer';
+                    const intersect = intersects[0].object
+                    if (plane01.position.y < planeEventY && intersect.name == 'Coffee') {
+                        plane01.position.y += 0.06;
+                        plane02.position.y = planeOriginalY;
+                        plane03.position.y = planeOriginalY;
+                        plane04.position.y = planeOriginalY;
+                        plane05.position.y = planeOriginalY;
+                        plane06.position.y = planeOriginalY;
+                    }
+                    if (plane02.position.y < planeEventY && intersect.name == 'Movie') {
+                        plane02.position.y += 0.06;
+                        plane01.position.y = planeOriginalY;
+                        plane03.position.y = planeOriginalY;
+                        plane04.position.y = planeOriginalY;
+                        plane05.position.y = planeOriginalY;
+                        plane06.position.y = planeOriginalY;
+                    }
+                    if (plane03.position.y < planeEventY && intersect.name == 'Restaurant') {
+                        plane03.position.y += 0.06;
+                        plane01.position.y = planeOriginalY;
+                        plane02.position.y = planeOriginalY;
+                        plane04.position.y = planeOriginalY;
+                        plane05.position.y = planeOriginalY;
+                        plane06.position.y = planeOriginalY;
+                    }
+                    if (plane04.position.y < planeEventY && intersect.name == 'Shop') {
+                        plane04.position.y += 0.06;
+                        plane01.position.y = planeOriginalY;
+                        plane02.position.y = planeOriginalY;
+                        plane03.position.y = planeOriginalY;
+                        plane05.position.y = planeOriginalY;
+                        plane06.position.y = planeOriginalY;
+                    }
+                    if (plane05.position.y < planeEventY && intersect.name == 'CC') {
+                        plane05.position.y += 0.06;
+                        plane01.position.y = planeOriginalY;
+                        plane02.position.y = planeOriginalY;
+                        plane03.position.y = planeOriginalY;
+                        plane04.position.y = planeOriginalY;
+                        plane06.position.y = planeOriginalY;
+                    }
+                    if (plane06.position.y < planeEventY && intersect.name == 'AC') {
+                        plane06.position.y += 0.06;
+                        plane01.position.y = planeOriginalY;
+                        plane02.position.y = planeOriginalY;
+                        plane03.position.y = planeOriginalY;
+                        plane04.position.y = planeOriginalY;
+                        plane05.position.y = planeOriginalY;
+                    }
+                }
+            }
+            else {
+                document.body.style.cursor = 'default';
+                plane01.position.y = planeOriginalY;
+                plane02.position.y = planeOriginalY;
+                plane03.position.y = planeOriginalY;
+                plane04.position.y = planeOriginalY;
+                plane05.position.y = planeOriginalY;
+                plane06.position.y = planeOriginalY;
+            }
+
+        };
+
+
+        var lookCamera = function () {
+            loadObj.rotation.z = Math.atan(camera.position.x / camera.position.z)
+        }
+
+        // ------------------------------------------------
+        // (Math.atan(camera.position.x / camera.position.z))
+
+
+        var render = function () {
+            // baseSet ------------------------------------
+            requestAnimationFrame(render);
+            renderer.render(scene, camera);
+            controls.update();
+            camera.updateMatrixWorld();
+
+            // Tag ----------------------------------------
+            if (isLoadEnd == true) {
+                tag01.rotation.z = Math.atan(camera.position.x / camera.position.z)
+                tag02.rotation.z = Math.atan(camera.position.x / camera.position.z)
+                tag03.rotation.z = Math.atan(camera.position.x / camera.position.z)
+                tag04.rotation.z = Math.atan(camera.position.x / camera.position.z)
+                tag05.rotation.z = Math.atan(camera.position.x / camera.position.z)
+                tag06.rotation.z = Math.atan(camera.position.x / camera.position.z)
+            }
+            // cloud ----------------------------------------
+            if (isLoadEnd == true) {
+                cloud01.position.x += 0.005
+                cloud01.position.z -= 0.005
+                cloud02.position.x -= 0.01
+                cloud03.position.z -= 0.0005
+                cloud04.position.x -= 0.01
+                cloud04.position.z -= 0.01
+                cloud05.position.x += 0.005
+
+            }
+            // event---------------------------------------
+            updata()
+            stats.update();
+            TWEEN.update();
+        };
+
+        // $(document).ready(function () {
+        //     let nowTime = new Date().toLocaleString('en-US', { hour: 'numeric', hour12: false });
+        //     // console.log(parseInt(nowTime))
+        //     if ( parseInt(nowTime) < 6 || parseInt(nowTime) > 18  ) {
+        //         console.log('night');
+        //         $('#drawView').css({'background-image': 'linear-gradient(45deg, #0a0a0a 60%, #424242)'})
+        //     }
+        // });
+
+        // ------------------------------------------------
+
+    </script>
+</body>
+
+</html>

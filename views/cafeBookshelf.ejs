@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EverLand Cafe</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.9.24/paper-full.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/stylesheets/cafeShop/bookshelf.css" />
+</head>
+
+<body>
+  <div class="bookshelf-container">
+    <div class="bookshelf-nav">
+      <h1>午後時光</h1>
+      <ul>
+        <li><a href="/cafeShop">回到大廳</a></li>
+      </ul>
+    </div>
+    <div class="bookshelf-Content">
+      <div class="bookshelf-sidebar">
+        <span>書單分類</span>
+        <ul>
+          <li class="active">所有書單</li>
+          <li>玄幻仙俠</li>
+          <li>恐怖推理</li>
+          <li>穿越歷史</li>
+          <li>古代言情</li>
+          <li>科幻恐怖</li>
+          <li>古今文學</li>
+          <li>外國名著</li>
+          <li>現代言情</li>
+        </ul>
+      </div>
+      <div class="bookshelf-item">
+        <div class="bookitem-cate">
+          <h2>所有書單</h2>
+        </div>
+
+        <div class="bookitem-filter">
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="書名.." aria-label="Search" id="searchvalue">
+            <button class="btn my-2 my-sm-0" type="submit" id="searchbtn">搜尋</button>
+          </form>
+        </div>
+
+        <div class="bookitem-list">
+          <% books.forEach((item ,index) => { %>
+          <div class="book-card">
+            <img src="/images/cafeShop/<%= item.book_img %>" alt="" />
+            <div class="book-card-content">
+              <h5><%= item.book_title %></h5>
+              <p><%= item.book_author %></p>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+
+      <!--黑屏-->
+      <div class="black-screen"></div>
+      <!--書籍簡介-->
+      <div class="book-description">
+        <div class="cross-icon">
+          <i class="fas fa-times fa-lg"></i>
+        </div>
+        <div class="description-content">
+          <div class="description-title">
+            <h6></h6>
+            <p></p>
+          </div>
+          <div class="description-text">
+            <span>內容簡介:</span>
+            <p></p>
+          </div>
+          <a href="#" class="btn readAll">閱讀全文</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="/javascripts/cafeShop/cafeBookshelf.js"></script>
+
+  <script>
+    $("li").on("click", function() {
+      $(this).toggleClass('active');
+      $(this).siblings().removeClass("active");
+      
+
+      let str = $(this).text();
+
+      $(".bookitem-cate h2").text(str);
+      $.get(`/cafeShop/bookshelfabc?bookid=${str}`, function(e) {
+        $(".bookitem-list").empty();
+        let bookdata = "";
+        e.forEach((elbook) => {
+          bookdata += `
+                 <div class="book-card">
+                    <img src="/images/cafeShop/${elbook.book_img}" alt="">
+                    <div class="book-card-content">
+                        <h5>${elbook.book_title}</h5>
+                        <p>${elbook.book_author}</p>
+                    </div>
+                </div>`;
+        });
+        $(".bookitem-list").append(bookdata);
+      }).then(function(e) {
+        //顯示書籍簡介
+        $(".book-card").on("click", function() {
+          let str = $(this)
+            .children("div.book-card-content")
+            .children("h5")
+            .text();
+          $.get(`/cafeShop/bookshelfDM?des=${str}`, function(des) {
+            $(".description-title h6").text(des[0].book_title);
+            $(".description-title p").html(
+              `<i class="fas fa-feather-alt"></i>${des[0].book_author}`
+            );
+            $(".description-text p").text(des[0].book_description);
+          });
+        });
+      });
+    });
+    
+    //在一開始即可以點選書封面閱覽簡介
+    $(".book-card").on("click", function() {
+          let str = $(this)
+            .children("div.book-card-content")
+            .children("h5")
+            .text();
+          $.get(`/cafeShop/bookshelfDM?des=${str}`, function(des) {
+            $(".description-title h6").text(des[0].book_title);
+            $(".description-title p").html(
+              `<i class="fas fa-feather-alt"></i>${des[0].book_author}`
+            );
+            $(".description-text p").text(des[0].book_description);
+          });
+    });
+
+
+    //顯示書籍內容在書本上
+    $("a.readAll").on("click", function() {
+      let str = $(this)
+        .parent()
+        .children("div.description-title")
+        .children("h6")
+        .text();
+      $(location).attr('href', `/cafeShop/bookread?booktext=${str}`);
+
+    });
+
+    //搜尋書籍功能
+    $("#searchbtn").on('click',function(e){
+      e.preventDefault();
+       let searchvalue = $('#searchvalue').val();
+       console.log(searchvalue)
+       $.get(`/cafeShop/bookshelfFilter?book=${searchvalue}`,function(book){
+          $(".bookitem-list").empty();
+          let bookdata = "";
+          bookdata = `
+          <div class="book-card">
+                    <img src="/images/cafeShop/${book[0].book_img}" alt="">
+                    <div class="book-card-content">
+                        <h5>${book[0].book_title}</h5>
+                        <p>${book[0].book_author}</p>
+                    </div>
+          </div>
+          `
+          $(".bookitem-list").append(bookdata);
+       }).then(function(e) {
+        //顯示書籍簡介
+        $(".book-card").on("click", function() {
+          let str = $(this)
+            .children("div.book-card-content")
+            .children("h5")
+            .text();
+          $.get(`/cafeShop/bookshelfDM?des=${str}`, function(des) {
+            $(".description-title h6").text(des[0].book_title);
+            $(".description-title p").html(
+              `<i class="fas fa-feather-alt"></i>${des[0].book_author}`
+            );
+            $(".description-text p").text(des[0].book_description);
+          });
+        });
+      });
+       $('#searchvalue').val("");
+    })
+
+
+    //點擊使書籍簡介滑入
+    $(".bookitem-list").on("click", function(event) {
+      if (event.target.nodeName === "IMG") {
+        $(".book-description").css({
+          transform: "translateX(0)"
+        });
+        $(".black-screen").css({
+          display: "block"
+        });
+      }
+    });
+    $(".cross-icon").on("click", function(e) {
+      $(".book-description").css({
+        transform: "translateX(100%)"
+      });
+      $(".black-screen").css({
+        display: "none"
+      });
+    });
+  </script>
+</body>
+
+</html>

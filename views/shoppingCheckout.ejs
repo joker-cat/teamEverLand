@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Checkout</title>
+    <!-- font awesome pro link below -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.2.0/css/all.css">
+    <link rel="stylesheet" href="https://static.fontawesome.com/css/fontawesome-app.css">
+    <!-- bootstrap -->
+    <!-- <script src="/build/_js/jquery.min.js"></script>
+    <script src="/build/_js/popper.min.js"></script>
+    <script src="/build/_js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/build/_css/bootstrap.min.css"> -->
+
+    <!-- bootstrap 5-->
+    <link rel="stylesheet" href="/build/_css/bootstrap.min.css">
+    <script src="/build/_js/bootstrap.bundle.min.js"></script>
+    <script src="/build/_js/popper.min.js"></script>
+    <script src="/build/_js/bootstrap.min.js"></script>
+
+    <!-- JQUERY 3.4.1 -->
+    <script src="/build/_js/jquery-3.4.1.js"></script>
+
+    <!-- VUE 3-->
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <!-- axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- 共用 -->
+    <link rel="stylesheet" href="/stylesheets/signinNavbar.css">
+
+    <!-- sweet alert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #C7B299;
+
+        }
+
+        .cart_item {
+            /* display: flex; */
+            text-align: center;
+        }
+
+        .item_title {
+            margin: 40px 15px;
+        }
+
+        th {
+            margin: 15px;
+        }
+
+        .thetable {
+            width: 80%;
+            margin: 0 auto;
+            /* border: 1px solid lightgray; */
+        }
+
+        .mytable_title {
+            background-color: black;
+            color: white;
+            display: grid;
+            grid-template-rows: auto;
+            grid-template-columns: 2fr 2fr 1fr 1fr 1fr 1fr;
+            grid-gap: 20px 20px;
+            text-align: center;
+            margin: 15px;
+            border-bottom: lightgrey 1px solid;
+        }
+
+        .mytable {
+            display: grid;
+            grid-template-rows: auto;
+            grid-template-columns: 2fr 2fr 1fr 1fr 1fr 1fr;
+            grid-gap: 20px 50px;
+            text-align: center;
+            margin-top: 20px;
+            /* line-height: 150px; */
+            border-bottom: rgb(182, 181, 181) 1px dashed;
+            padding: 10px 20px;
+            align-items: center;
+        }
+
+        .mytable img {
+            width: 100px;
+        }
+
+        td i {
+            color: red;
+            font-weight: 700;
+        }
+
+        .total_amount {
+            margin: 40px;
+            width: 80%;
+            text-align: end;
+        }
+
+        .total_amount p h5 {
+            margin: 10px;
+        }
+
+        .total_amount h5 {
+            margin-bottom: 20px;
+        }
+
+        .page_area {
+            margin: 15px;
+            margin-bottom: 50px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        /*  */
+        .add_item {
+            display: grid;
+            grid-template-columns: 10% 1fr 30%;
+            /* width: 80%; */
+
+        }
+
+        .trash {
+            cursor: pointer;
+        }
+
+        .amount_area {
+            margin: 50px 0;
+        }
+
+        .page_area {
+            margin: 100px 0;
+        }
+
+        .payment_area {
+            border-bottom: lightslategrey 1px solid;
+        }
+
+        .total_area {
+
+            display: grid;
+            grid-template-columns: 10% 2fr 1fr 10%;
+        }
+
+        .total_amount {
+
+            text-align: start;
+        }
+
+        .ct_btn {
+            height: 25px;
+            width: 25px;
+            border: 1px solid #CCCCCC;
+            background-color: #fff;
+        }
+
+        .num_input {
+            width: 40px;
+            text-align: center;
+            border: 1px solid #CCCCCC;
+        }
+
+        .thetry {
+            display: inline-block;
+        }
+
+        /*  */
+        .back_btn,
+        .next_btn {
+            width: 95px;
+            height: 30px;
+            border: 1px solid black;
+            /* border-radius: 10px; */
+            line-height: 30px;
+            text-align: center;
+        }
+
+        .next_btn {
+            background-color: black;
+        }
+
+        .back_btn a {
+            text-decoration: none;
+            color: black;
+            font-weight: 700;
+        }
+
+        .next_btn a {
+            color: white;
+            text-decoration: none;
+            /* font-weight: 700; */
+        }
+
+        td p {
+            font-size: 20px;
+        }
+
+        .total_amount p {
+            font-size: 18px;
+        }
+
+        .amount_area p {
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- logo -->
+    <div style="position: absolute; top: 10px; left: 10px;">
+        <svg id="everlandLOGO" width="170px" data-name="圖層 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 459.07 172.65">
+            <defs>
+                <style>
+                    .cls-1,
+                    .cls-8 {
+                        fill: #386b57;
+                    }
+
+                    .cls-2,
+                    .cls-4 {
+                        fill: none;
+                        stroke-linecap: round;
+                        stroke-width: 8px;
+                    }
+
+                    .cls-2 {
+                        stroke: #a3baa3;
+                    }
+
+                    .cls-2,
+                    .cls-8,
+                    .cls-9 {
+                        stroke-miterlimit: 10;
+                    }
+
+                    .cls-3,
+                    .cls-9 {
+                        fill: #c7b299;
+                    }
+
+                    .cls-4 {
+                        stroke: #fff;
+                        stroke-linejoin: round;
+                        stroke-dasharray: 8 20;
+                    }
+
+                    .cls-5 {
+                        fill: #b3b3b3;
+                    }
+
+                    .cls-6 {
+                        fill: #f9f7f6;
+                    }
+
+                    .cls-7 {
+                        fill: #333;
+                    }
+
+                    .cls-8,
+                    .cls-9 {
+                        stroke: #000;
+                        stroke-width: 4px;
+                    }
+                </style>
+            </defs>
+            <circle class="cls-1" cx="86.33" cy="86.33" r="86.33" />
+            <line class="cls-2" x1="71.47" y1="49.14" x2="133.86" y2="49.14" />
+            <line class="cls-2" x1="118.97" y1="67.88" x2="165.45" y2="67.88" />
+            <line class="cls-2" x1="4.73" y1="67.88" x2="86.33" y2="67.88" />
+            <line class="cls-2" x1="58.22" y1="89.27" x2="139.82" y2="89.27" />
+            <line class="cls-2" x1="7.32" y1="110.66" x2="88.92" y2="110.66" />
+            <line class="cls-2" x1="73.68" y1="132.05" x2="155.28" y2="132.05" />
+            <line class="cls-2" x1="37.77" y1="151.76" x2="84.25" y2="151.76" />
+            <line class="cls-2" x1="106.98" y1="151.76" x2="136.24" y2="151.76" />
+            <line class="cls-2" x1="131.22" y1="109.82" x2="162.22" y2="109.82" />
+            <path d="M258.59,302.49a81.33,81.33,0,1,1-81.33,81.33,81.42,81.42,0,0,1,81.33-81.33m0-5a86.33,86.33,0,1,0,86.33,86.33,86.33,86.33,0,0,0-86.33-86.33Z" transform="translate(-172.26 -297.49)" />
+            <circle class="cls-3" cx="29.8" cy="151.76" r="10.67" />
+            <path d="M202.07,440.57a8.68,8.68,0,1,1-8.68,8.68,8.68,8.68,0,0,1,8.68-8.68m0-4a12.68,12.68,0,1,0,12.67,12.68,12.68,12.68,0,0,0-12.67-12.68Z" transform="translate(-172.26 -297.49)" />
+            <path class="cls-4" d="M222.2,351.72c3.63,9.2,9.86,17.22,17.05,24,23,21.68,58,32.66,70.75,63.83" transform="translate(-172.26 -297.49)" />
+            <line class="cls-2" x1="31.99" y1="28.44" x2="81.15" y2="28.44" />
+            <polygon class="cls-5" points="5.29 9.34 35.15 55.19 51.14 39.2 5.29 9.34" />
+            <polygon class="cls-6" points="5.29 9.34 51.49 42.61 63.83 23.61 5.29 9.34" />
+            <polygon class="cls-6" points="5.29 9.34 38.56 55.54 19.57 67.88 5.29 9.34" />
+            <path class="cls-7" d="M224.49,344l16-24.65-62.29-15.19-4.38-1.06,2,8.43,14.2,58.24,24.65-16-1.89-2.63,9-9Zm7.2-21.16-7.39,11.38-28.75-16.85-11.49-7.87Zm-51.46-9.52,7.87,11.49L205,353.58,193.58,361Zm29.36,33.3-20-27.73,27.72,20Z" transform="translate(-172.26 -297.49)" />
+            <line class="cls-2" x1="100.37" y1="28.44" x2="145.59" y2="28.44" />
+            <path class="cls-3" d="M317.85,342.77a17.53,17.53,0,1,1,17.53-17.53A17.55,17.55,0,0,1,317.85,342.77Z" transform="translate(-172.26 -297.49)" />
+            <path d="M317.85,309.71a15.53,15.53,0,1,1-15.52,15.53,15.55,15.55,0,0,1,15.52-15.53m0-4a19.53,19.53,0,1,0,19.53,19.53,19.53,19.53,0,0,0-19.53-19.53Z" transform="translate(-172.26 -297.49)" />
+            <path class="cls-8" d="M365.41,405a5.34,5.34,0,0,1-.91-2.86q-.21-2-.2-11.95t.25-13q.3-3.93,2.59-4,2.61-.09,21.73-.09c1.43,0,2.15,1.17,2.15,3.51,0,1.85-.63,2.77-1.89,2.77h-8a1.41,1.41,0,0,0-1.22.66,2.83,2.83,0,0,0-.46,1.68V385c0,.93.33,1.4,1,1.4h6.62a2.26,2.26,0,0,1,.89.14,1.42,1.42,0,0,1,.57.82,7,7,0,0,1,.25,2.23,3.48,3.48,0,0,1-.42,2.06,1.63,1.63,0,0,1-1.36.52H381a1.33,1.33,0,0,0-1.25.58,3.68,3.68,0,0,0-.35,1.81v2.29c0,1.35.5,2,1.49,2H390a1.63,1.63,0,0,1,1.17.49,3.21,3.21,0,0,1,.51,2.16,6.89,6.89,0,0,1-.62,3c-.42.88-.9,1.31-1.46,1.31H367.14A2.14,2.14,0,0,1,365.41,405Z" transform="translate(-172.26 -297.49)" />
+            <path class="cls-8" d="M416.29,403.41a4.94,4.94,0,0,1-2.28,2.48,7.1,7.1,0,0,1-3.51.89,7.2,7.2,0,0,1-3.46-.84,4.92,4.92,0,0,1-2.26-2.44q-5.46-13-10.16-25.49a7.48,7.48,0,0,1-.54-2.3c0-1.69.59-2.53,1.78-2.53l10.52-.09a3.05,3.05,0,0,1,2.06.61,5.26,5.26,0,0,1,1.26,2.43l3.53,11.63c.14.5.41.74.8.74s.68-.24.87-.74l4.77-13.31q.48-1.27,1-1.41a4.3,4.3,0,0,1,.77-.05l4.18.1q.69,0,1,.84a2.62,2.62,0,0,1,.11.8,11.81,11.81,0,0,1-.82,2.57q-.82,2.11-4.26,11.72T416.29,403.41Z" transform="translate(-172.26 -297.49)" />
+            <path class="cls-8" d="M431.19,405a5.52,5.52,0,0,1-.91-2.86q-.19-2-.2-11.95t.26-13c.19-2.62,1.06-4,2.58-4q2.63-.09,21.74-.09c1.43,0,2.15,1.17,2.15,3.51,0,1.85-.63,2.77-1.9,2.77h-8a1.42,1.42,0,0,0-1.22.66,2.9,2.9,0,0,0-.45,1.68V385c0,.93.33,1.4,1,1.4h6.63a2.29,2.29,0,0,1,.89.14,1.42,1.42,0,0,1,.57.82,7.33,7.33,0,0,1,.25,2.23,3.48,3.48,0,0,1-.42,2.06,1.63,1.63,0,0,1-1.36.52h-5.94a1.32,1.32,0,0,0-1.25.58,3.57,3.57,0,0,0-.35,1.81v2.29c0,1.35.5,2,1.49,2h9.07a1.62,1.62,0,0,1,1.16.49,3.15,3.15,0,0,1,.51,2.16,6.75,6.75,0,0,1-.62,3c-.41.88-.89,1.31-1.45,1.31H432.92A2.16,2.16,0,0,1,431.19,405Z" transform="translate(-172.26 -297.49)" />
+            <path class="cls-8" d="M485.5,396.85c.46.62,2.09,3,4.91,7.07a1.5,1.5,0,0,1,.26.75c0,.82-.28,1.22-.84,1.22-1.29,0-2.58.05-3.88.05s-2.59,0-3.88-.05a2.5,2.5,0,0,1-1.93-1.08L477,398.72a.84.84,0,0,0-.43-.37c-.39-.19-.59,0-.59.61v4.78a1.93,1.93,0,0,1-2.05,2.15c-1.38.1-2.87.14-4.5.14s-3.59-.08-5.9-.23a2.28,2.28,0,0,1-1.69-.94,3.76,3.76,0,0,1-.75-1.92q-.28-4.12-.29-13t.22-12.86c.15-2.69,1.2-4.05,3.17-4.08s4.35-.05,7.53-.05,5.82,0,7.9.1A8.87,8.87,0,0,1,487,377.4a16.47,16.47,0,0,1,2.88,9.51,14.55,14.55,0,0,1-1.11,5.72A9.94,9.94,0,0,1,485.5,396.85Zm-9.54-14,.07,8.67c0,.6.25.89.76.89a4.28,4.28,0,0,0,3.55-1.61,5.89,5.89,0,0,0,1.3-3.82,6.09,6.09,0,0,0-1.22-3.8,4.25,4.25,0,0,0-3.59-1.59Q476,381.57,476,382.83Z" transform="translate(-172.26 -297.49)" />
+            <path class="cls-9" d="M509.45,384.33l0,9.38a7.3,7.3,0,0,0,.5,3.07,2,2,0,0,0,2,1h9.21c1.12,0,1.68,1.13,1.68,3.28a10.15,10.15,0,0,1-.47,3.61,2,2,0,0,1-1.93,1.17c-3.43.13-6.81.19-10.16.19s-7.62,0-12.82-.09a2.88,2.88,0,0,1-2.13-.82,3.49,3.49,0,0,1-.92-2.27q-.3-4.08-.3-12.87t.17-11.86a12,12,0,0,1,.67-4.07,2,2,0,0,1,2-1h9.76a2,2,0,0,1,2,1,9.23,9.23,0,0,1,.6,3.33Q509.45,379.7,509.45,384.33Z" transform="translate(-172.26 -297.49)" />
+            <path class="cls-9" d="M548.88,375.24l11.9,25.92a6.33,6.33,0,0,1,.73,2.6,1.89,1.89,0,0,1-.65,1.57,2.43,2.43,0,0,1-1.53.51H547.61c-1.19,0-2-.28-2.3-.84a8.74,8.74,0,0,1-.4-1l-1-2.91a2.38,2.38,0,0,0-2.23-1.54h-6.88a2.93,2.93,0,0,0-1.16.18,1.46,1.46,0,0,0-.66.85l-1.42,3.79a2.65,2.65,0,0,1-.8,1.15,2.23,2.23,0,0,1-1.27.3h-3.28a1.33,1.33,0,0,1-1.53-1.31,2.31,2.31,0,0,1,0-.37,4.2,4.2,0,0,1,.54-2.06l11.4-25.87a5.5,5.5,0,0,1,5.31-3.66h2.92A4.18,4.18,0,0,1,548.88,375.24Zm-11.8,12-1.67,4.26a2.31,2.31,0,0,0-.15.75c0,.82.31,1.22.91,1.22h3.32a1.1,1.1,0,0,0,1-.49,1.71,1.71,0,0,0,.29-.87,2.43,2.43,0,0,0-.11-.75l-1.38-4c-.29-.81-.67-1.22-1.13-1.22S537.37,386.49,537.08,387.24Z" transform="translate(-172.26 -297.49)" />
+            <path class="cls-9" d="M589.66,373h3.89a2.35,2.35,0,0,1,1.73.51,3.34,3.34,0,0,1,.53,2.11q.21,7.13.22,15.33c0,5.47-.09,9.46-.26,12a4.07,4.07,0,0,1-.64,2,1.66,1.66,0,0,1-1.47.89h-6.08a4.76,4.76,0,0,1-2.8-1.17q-8.44-6.42-10.63-7.82a.49.49,0,0,0-.71.16,2.74,2.74,0,0,0-.28,1.48v5.2a1.94,1.94,0,0,1-.51,1.41c-.51.53-1.82.79-3.93.79-.58,0-1.15,0-1.71-.07a1.74,1.74,0,0,1-1.36-1,3.84,3.84,0,0,1-.57-1.92q-.11-5.62-.11-14.13c0-5.67,0-9.37,0-11.08a11,11,0,0,1,.47-3.64,1.65,1.65,0,0,1,1.68-1h4a4.56,4.56,0,0,1,2.55.89q11.28,7.54,13.18,8.76c.41.25.74.28,1,.1a1.25,1.25,0,0,0,.37-1v-6.57a2.79,2.79,0,0,1,.38-1.54A1.16,1.16,0,0,1,589.66,373Z" transform="translate(-172.26 -297.49)" />
+            <path class="cls-9" d="M616.85,405.75a64.66,64.66,0,0,1-7,.28q-4.54,0-6.21-.16a5.19,5.19,0,0,1-2.49-.77,2.41,2.41,0,0,1-.91-1.93q-.22-5.06-.22-11.55t.15-13.75c.05-3,1.13-4.6,3.24-4.78q2.22-.19,6.81-.19t7.19.16a11.52,11.52,0,0,1,5,1.55,11.33,11.33,0,0,1,3.88,3.58,18.65,18.65,0,0,1,3,10.55A20.55,20.55,0,0,1,626.17,400a12.7,12.7,0,0,1-3.95,3.94A11.42,11.42,0,0,1,616.85,405.75Zm-1.64-22.59V394.5a1.32,1.32,0,0,0,.22.71.69.69,0,0,0,.59.32,4,4,0,0,0,3.58-2.06,9.15,9.15,0,0,0,1.26-4.87,10.05,10.05,0,0,0-1.15-4.9,3.45,3.45,0,0,0-3.08-2.09,4.3,4.3,0,0,0-.72.05C615.44,381.82,615.21,382.32,615.21,383.16Z" transform="translate(-172.26 -297.49)" />
+        </svg>
+    </div>
+    <!-- end of logo -->
+    <div class="">
+        <div class="cart_item">
+            <div class="item_title">
+                <h2>Shopping Cart</h2>
+            </div>
+            <div class="item_area">
+                <table class="thetable">
+                    <thead>
+                        <tr class="mytable_title">
+                            <th scope="col"></th>
+                            <th scope="col">商品名稱</th>
+                            <th scope="col">單價</th>
+                            <th scope="col">數量</th>
+                            <th scope="col">小計</th>
+                            <th scope="col">刪除</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <tr class="mytable">
+                            <td class="align-middle">
+                                <img src="" alt="">
+                            </td>
+                            <td class="align-middle">
+                                <p>productsName</p>
+                            </td>
+                            <td class="align-middle">
+                                <p>NT3000</p>
+                            </td>
+                            <td class="align-middle">
+                                <p>qut:1</p>
+                            </td>
+
+                            <td class="align-middle">
+                                <p>${el.count}</p>
+                            </td>
+    
+                            <td class="align-middle">
+                                <p>tol$$$</p>
+                            </td>
+                            <td class=" align-middle">
+                                <p><a href=""><i class=" trash fal fa-trash-alt"></a></i></a></p>
+                            </td>
+                        </tr> -->
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--  -->
+        <div class="add_item">
+            <div></div>
+            <div class="payment_area">
+                <h3 style="font-family: 'Noto Sans TC', sans-serif;" class="m-1 p-3">付款方式</h3>
+
+                <div class="">
+                    <ul>
+                        <!-- <li style="list-style-type:none;" class="m-3 p-3 ">
+                            <span><input id="payment1" type="radio" name="payment"></span>
+                            <span class="pl-3"><label for="payment1">信用卡線上刷卡 </label></span>
+                            <span class="pl-5">
+                                <i class="visa fab fa-cc-visa"><span class="pl-1 pt-1"></span></i><i
+                                    class="master fab fa-cc-mastercard"></i>
+                                (宅配到府，將酌收 80元物流費。)
+                            </span>
+                        </li> -->
+                        <li style="list-style-type:none;" class="m-3 p-3 form-check">
+                            <span><input class="form-check-input" id="payment2" type="radio" name="payment" value="ATM"></span>
+                            <span class="pl-3"><label class="form-check-label" for="payment2">Web ATM </label></span>
+                        </li>
+                        <li style="list-style-type:none;" class="m-3 p-3 form-check">
+                            <span><input class="form-check-input" id="payment3" type="radio" name="payment" value="cash"></span>
+                            <span class="pl-3"><label class="form-check-label" for="payment3">貨到付款 </label></span>
+                        </li>
+                        <li style="list-style-type:none;" class="my-3 p-1 form-check">
+                            <span>備註：本賣場宅配到府，酌收 100 元運費。</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div></div>
+        </div>
+        <!--  -->
+        <div class="total_area m-3 p-3">
+            <div></div>
+            <div>
+                <div class="text_area_center">
+                    <div>
+                        <h3 style="font-family: 'Noto Sans TC', sans-serif;" class="my-3">宅配資訊<input type="checkbox" name="" id="writeInfo" class="ms-3"><label for="writeInfo" class="fs-6">自動填入市民資料</label></h3>
+                        <div class="customer_input row">
+                            <div class="col-7 d-block">
+                                <label for="name" class="form-label">取件人姓名：</label><br>
+                                <input class="form-control" id="name" type="text" value=""><br>
+                            </div><br>
+                            <div class="col-7">
+                                <label for="tel" class="form-label">聯絡電話：</label><br>
+                                <input class="form-control" id="tel" type="text"><br>
+                            </div><br>
+                            <div class="col-7">
+                                <label for="add" class="form-label">送件地址：</label><br>
+                                <input class="form-control" id="add" type="text"><br>
+                            </div><br>
+                            <div class="col-7">
+                                <label for="email" class="form-label">電子郵件：</label><br>
+                                <input class="form-control" id="email" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="total_amount">
+                <h4 class="">訂單資訊</h4>
+                <div class="amount_area">
+                    <p>本次消費數量共: <span class="totalCount"></span>件</p>
+                    <p>商品總金額: NT$<span class="totalPrice"></span>元</p>
+                    <p>+ 運費: NT$ <span class="totalfeePrice">100</span>元</p>
+                    <p>= 應付金額: NT$<span id="needPay"></span>元</p>
+                </div>
+                <div class="page_area">
+                    <button onclick="Checkout()" class="btn btn-success" id="Checkout">Checkout</button>
+                    <button id="Checkoutcancel" class="btn btn-outline-success">Back</button>
+                </div>
+            </div>
+            <div></div>
+        </div>
+
+    </div>
+
+
+    <div id="returnDIV">
+        <div id="returnIcon" style="right: 170px;" v-on:click="returnPage"><i class="fas fa-reply"></i></div>
+    </div>
+
+    <!-- 共用 (登入/NAVBAR)-->
+    <script src="/javascripts/signinNavbar.js"></script>
+    <script>
+        const returnIcon = Vue.createApp({
+            methods: {
+                returnPage() {
+                    window.location.href = '/shopping';
+                },
+            }
+        }).mount('#returnDIV');
+    </script>
+
+    <script>
+        let latestshopcart;
+        $(document).ready(function() {
+            $.get('/signinCheck').then(function(res) {
+                let sendData = {
+                    user: res.data.username
+                }
+                $.ajax({
+                    url: "/shopping/products/getapple",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(sendData),
+                    success: function(res) {
+                        //取出欄位內容
+                        let allstr = JSON.parse(res);
+
+                        //取出shopcart裡面的字串
+                        let str = JSON.parse(allstr[0]["shopcart"]); // <=
+                        latestshopcart = str;
+
+                        //取出屬性值
+                        let strnum = str.map(item => Object.values(item)[0] + '');
+                        $.get('/shopping/products/all', function(e) {
+                            let sqldata = JSON.parse(e);
+                            let mapdata = sqldata.map(item => Object.values(item)[0] + '');
+                            strnum.forEach((el, index) => {
+                                let where = mapdata.indexOf(el);
+                                let productname = sqldata[where]["productname"];
+                                let productimg = sqldata[where]["productimg"];
+                                str[index]["productname"] = productname;
+                                str[index]["productimg"] = productimg;
+                                // console.log(str[index]);
+                            });
+                        }).done(function(script, textStatus) {
+                            let totalPrice = 0;
+                            let totalShopingCount = 0;
+                            $.each(str, function(index, el) {
+                                // console.log(el["price"]);
+                                // console.log(el["count"]);
+                                let everytotal = (el.price - 0) * (el.count - 0);
+                                // console.log(everytotal);
+                                let datatr = `
+                                 <tr class="mytable">
+                                 <td class="align-middle">
+                                     <img src="/images/shoppingProducts/${el.productimg}.png" alt="">
+                                 </td>
+                                 <td class="align-middle">
+                                     <p>${el.productname}</p>
+                                 </td>
+                                 <td class="align-middle">
+                                     <p>NT. ${el.price}</p>
+                                 </td>
+                                 
+                                 <td>
+                                     <button onclick="numChangeM(${index})" class="ct_btn">-</button>
+                                     <input class="num_input" type="text" value="${el.count}">
+                                     <button onclick="numChangeP(${index})" class="ct_btn"><span>+</span></button>
+                                 </td>
+     
+                                 <td class="align-middle">
+                                     <p>NT. ${el.price * el.count}</p>
+                                 </td>
+                                 <td class=" align-middle">
+                                     <p><i onclick="deleteitem(${index})" class="trash fal fa-trash-alt"></a></i></p>
+                                 </td>
+                             </tr>`
+                                $('tbody').append(datatr);
+                                totalPrice += everytotal;
+                                peach = totalPrice.toLocaleString('en-US');
+                                totalShopingCount += parseInt(el.count);
+                            })
+                            // console.log(totalShopingCount)
+                            // console.log(totalPrice);
+                            $('.totalPrice').append(peach);
+                            $('.totalCount').text(totalShopingCount)
+                            $('#needPay').text((totalPrice + 100).toLocaleString('en-US'));
+
+                        })
+                        // console.log(res);
+                        // console.log(allstr);
+                        // console.log(allstr[0]);
+                        // console.log(str);
+                        // console.log(JSON.parse(str));
+
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                })
+
+            })
+            $('#Checkoutcancel').on('click', function() {
+                window.location.href = '/shopping';
+            });
+        });
+
+        //刪除
+        function deleteitem(e) {
+            $.ajax({
+                url: `/shopping/products/apple/deleteitem/${e}`,
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    'user': signInInfo.username
+                }),
+                success: function(e) {
+                    // 後端(which)=>前端接收(e) //點選刪除的id
+                    console.log(e);
+                    $('tbody').empty();
+                    $('.totalPrice').empty();
+                    latestshopcart.splice(e, 1);
+                    console.log(latestshopcart);
+
+                    let totalPrice2 = 0;
+
+                    let totalShopingCount = 0;
+                    $.each(latestshopcart, function(index, el) {
+                        console.log(el);
+                        let everytotal2 = (el.price - 0) * (el.count - 0);
+                        let datatr = `
+                            <tr class="mytable">
+                            <td class="align-middle">
+                                <img src="/images/shoppingProducts/${el.productimg}.png" alt="">
+                            </td>
+                            <td class="align-middle">
+                                <p>${el.productname}</p>
+                            </td>
+                            <td class="align-middle">
+                                <p>NT. ${el.price}</p>
+                            </td>
+                            <td class="thetry">
+                                <button onclick="numChangeM(${index})" class="ct_btn">-</button>
+                                <input class="num_input" type="text" value="${el.count}">
+                                <button onclick="numChangeP(${index})" class="ct_btn"><span>+</span></button>
+                            </td>
+                            <td class="align-middle">
+                                <p>NT. ${el.price}</p>
+                            </td>
+                            <td class=" align-middle">
+                                <p><i onclick="deleteitem(${index})" class="trash fal fa-trash-alt"></a></i></p>
+                            </td>
+                        </tr>`
+                        $('tbody').append(datatr);
+                        totalPrice2 += everytotal2;
+                        peach2 = totalPrice2.toLocaleString('en-US');
+                        totalShopingCount += parseInt(el.count);
+                    })
+                    $('.totalPrice').text(peach2); //總金額
+                    if (latestshopcart.length <= 0) {
+                        $('.totalPrice').text(0); //總金額
+                    }
+                    $('.totalCount').text(totalShopingCount) //件
+                    $('#needPay').text(totalPrice2 + 100);
+
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            })
+        }
+
+        // change products number button
+        function numChangeP(e) {
+            let a = parseInt($('.num_input').eq(e).val()) + 1;
+            latestshopcart[e]["count"] = a;
+            let sendData = {
+                'user': signInInfo.username,
+                'shopcart': JSON.stringify(latestshopcart)
+            }
+            $.ajax({
+                url: "/shopping/products/apple",
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(sendData),
+                success: function(res) {
+                    console.log(res);
+                    $('.num_input').eq(e).val(a);
+                    math();
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        }
+
+        function numChangeM(e) {
+            console.log(e);
+            let nowcount = parseInt($('.num_input').eq(e).val());
+            if (nowcount > 1) {
+                let a = parseInt($('.num_input').eq(e).val()) - 1;
+                latestshopcart[e]["count"] = a;
+                $.ajax({
+                    url: "/shopping/products/apple",
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        'user': signInInfo.username,
+                        'shopcart': JSON.stringify(latestshopcart)
+                    }),
+                    success: function(res) {
+                        // console.log(res);
+                        $('.num_input').eq(e).val(a);
+                        math();
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
+            }
+        };
+
+
+        let bool = false;
+
+        function Checkout() {
+            if ($('#signName').text() == '' ||
+                $('#name').val() == '' ||
+                $('#tel').val() == '' ||
+                $('#add').val() == '' ||
+                $('#email').val() == '' ||
+                JSON.stringify(latestshopcart) == '[]' ||
+                $('input[type=radio]:checked').val() == '') {
+                console.log('請填寫空缺！');
+                swal({
+                    title: "請填寫空缺！",
+                    typq: 'success'
+                }).then(function() {
+                    bool = true;
+                    console.log(bool);
+                });
+
+            } else {
+                let today = new Date();
+                let year = today.getFullYear();
+                let month = today.getMonth();
+                let date = today.getDate();
+                let cdate = new Date(year, month, date);
+
+                year = cdate.getFullYear() + '';
+                month = (cdate.getMonth() + 1 < 10) ? '0' + (cdate.getMonth() + 1) : (cdate.getMonth() + 1) + '';
+                date = (cdate.getDate() < 10) ? '0' + (cdate.getDate()) : cdate.getDate() + '';
+                // console.log(year + month + date);
+                let orderdata = {
+                    user: $('#signName').text(),
+                    customer: $('#name').val(),
+                    tel: $('#tel').val(),
+                    add: $('#add').val(),
+                    email: $('#email').val(),
+                    shopcart: JSON.stringify(latestshopcart),
+                    radio: $('input[type=radio]:checked').val(),
+                    date: (year + month + date),
+                }
+                // console.log(orderdata)
+                console.log($('#signName').text());
+                $.ajax({
+                    url: "/shopping/products/pushcustomerdata",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(orderdata),
+                    success: function(res) {
+                        console.log(res);
+                        swal({
+                            title: "已收到您的訂單",
+                            text: `訂單編號：${res.message}`,
+                        }).then(function() {
+                            bool = false;
+                            console.log(bool);
+                        });
+
+
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                })
+            }
+        };
+
+        function math() {
+            let tot = 0;
+            let totalShopingCount = 0;
+            $.each(latestshopcart, function(idx, elm) {
+                tot += (elm["price"] * elm["count"]);
+                totalShopingCount += parseInt(elm["count"]);
+            })
+            $('.totalCount').text(totalShopingCount)
+            $('.totalPrice').text(tot.toLocaleString('en-US'));
+            $('#needPay').text((tot + 100).toLocaleString('en-US'))
+        };
+
+        $('body').on('click', '.swal-button-container', () => {
+            if (!bool) {
+                $.ajax({
+                    url: "/shopping/products/apple",
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        'user': signInInfo.username,
+                        'shopcart': JSON.stringify([])
+                    }),
+                    success: function(res) {
+                        window.location = '/shopping';
+                    },
+                    error: function() {
+                        console.log("didn't work");
+                    }
+                });
+            }
+        })
+
+        $('#writeInfo').on('click', function(event) {
+            if ($(this).prop('checked') == true) {
+                add = JSON.parse(signInInfo.address);
+                $('#name').val(signInInfo.myname)
+                $('#tel').val(signInInfo.userphone)
+                $('#add').val(add.add01 + add.add02 + add.add03)
+                $('#email').val(signInInfo.usermail)
+            } else {
+                $('#name').val("")
+                $('#tel').val("")
+                $('#add').val("")
+                $('#email').val("")
+            }
+
+        });
+    </script>
+
+</body>
+
+</html>

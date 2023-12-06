@@ -1,0 +1,339 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.other, .beforeday {
+  pointer-events: none;
+}
+
+.other {
+  border: 1px solid #8f83744d !important;
+}
+
+.beforeday {
+  border: 1px solid #8f83744d !important;
+}
+
+.other::after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0.5;
+  background: #8f83744d;
+}
+
+.beforeday::after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0.5;
+  background: #8f83744d;
+}
+
+.today::after {
+  content: '';
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 3px solid red;
+}
+
+#date {
+  width: 1400px;
+  margin: 0 auto;
+}
+
+#date #left {
+  width: 100%;
+}
+
+#date #left #btn {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  margin-bottom: 50px;
+}
+
+#date #left #btn button {
+  width: 100px;
+  padding: 10px;
+}
+
+#date #left #week {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 30px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#date #left #week #info {
+  width: 100%;
+  padding: 15px 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+#date #left #week #info #infoleft {
+  width: 50%;
+}
+
+#date #left #week #info #infoleft p {
+  font-size: 2rem;
+}
+
+#date #left #week #info #infoleft ul li p {
+  font-size: 1.6rem;
+}
+
+#date #left #week #info #inforight {
+  width: 100%;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+#date #left #week #info #inforight h2 {
+  font-size: 3rem;
+  letter-spacing: 3px;
+  font-weight: 400;
+}
+
+#date #left #week #info #inforight h3 {
+  font-size: 2.4rem;
+  letter-spacing: 2px;
+  font-weight: 200;
+  margin-bottom: 10px;
+}
+
+#date #left #week #info #inforight h3 span {
+  display: inline-block;
+  margin: 10px 0;
+  font-size: 2.2rem;
+}
+
+#date #left #week #info #inforight hr {
+  height: 3px;
+  background: black;
+  margin-bottom: 45px;
+}
+
+#date #left #week #info #inforight div {
+  display: inline-block;
+  width: 350px;
+  margin: 0 10px;
+}
+
+#date #left #week #info #inforight div:nth-of-type(1) {
+  width: 320px;
+}
+
+#date #left #week #info #inforight div span {
+  margin: 10px 0;
+  font-size: 2rem;
+}
+
+#date #left #week #info #inforight div span span {
+  display: inline-block;
+  width: 120px;
+  height: 20px;
+  border-bottom: 1px solid black;
+}
+
+#date #left #week #info #inforight div select {
+  display: inline-block;
+  padding: 0px 1.4em 0px 0.8em;
+  line-height: 35px;
+  width: 180px;
+  margin: 0px;
+  border: 1px solid #cbcbcb;
+  border-radius: 5px;
+  color: black;
+  font-size: 2rem;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: white;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(white), to(white));
+  background-image: linear-gradient(white 0%, white 100%);
+  background-repeat: no-repeat, repeat;
+  background-position: right 0.7em top 50%, 0px 0px;
+  outline: none;
+}
+
+#date #left #week #info #inforight #push {
+  font-size: 2.6rem;
+  letter-spacing: 3px;
+  border-radius: 5px;
+  border: none;
+  padding: 5px 10px;
+  margin-left: 50px;
+}
+
+#date #left #week #info #inforight #goback {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  letter-spacing: 3px;
+  border-radius: 5px;
+  background-color: darksalmon;
+}
+
+#date #left #week #info #inforight #goback button {
+  width: 100%;
+  height: 100%;
+  padding: 5px 10px;
+  outline: none;
+  border: none;
+  font-size: 2.8rem;
+  background: transparent;
+}
+
+#date #left #week #itdisplay {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+#date #left #week #itdisplay #it {
+  width: 50%;
+}
+
+#date #left #week #itdisplay #it h2 {
+  text-align: center;
+  font-size: 2.4rem;
+  letter-spacing: 2px;
+}
+
+#date #left #week #itdisplay #it #whatday {
+  width: 90%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+#date #left #week #itdisplay #it #whatday div {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 0%;
+          flex: 1 1 0%;
+  text-align: center;
+  padding: 5px;
+}
+
+#date #left #week #itdisplay #it .iweek {
+  width: 90%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0 auto;
+}
+
+#date #left #week #itdisplay #it .iweek .jweek {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 0%;
+          flex: 1 1 0%;
+  height: 90px;
+  border: 1px solid black;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  margin: 5px;
+}
+
+#date #left #week #itdisplay #it .iweek .jweek::before {
+  content: attr(data-date);
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 2rem;
+  opacity: 0.6;
+}
+
+#date #right {
+  width: 100%;
+  height: 100vh;
+  padding: 0px;
+}
+
+#date #right #selecttime {
+  width: 100%;
+  height: 100%;
+  background: #eed4b3;
+  padding: 50px;
+}
+
+#date #right #selecttime p {
+  margin: 20px;
+  padding: 5px 0;
+  text-align: center;
+}
+
+#date #right #selecttime .content {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+}
+
+#date #right #selecttime .content .timeperiod {
+  width: calc(100% / 3);
+  height: 80px;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+#date #right #selecttime .content .timeperiod .c {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+#date #right #selecttime .content .timeperiod .c .c1 {
+  width: 50%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+/*# sourceMappingURL=cakeOnlineOrder.css.map */

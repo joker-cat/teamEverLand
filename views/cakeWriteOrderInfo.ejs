@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"> -->
+    <!-- <link rel="stylesheet" href="/CSS/font-awesome-4.7.0/css/font-awesome.css">-->
+
+    <!-- font awesome pro link below -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.2.0/css/all.css">
+
+    <!-- bootstrap 5-->
+    <link rel="stylesheet" href="/build/_css/bootstrap.min.css">
+    <script src="/build/_js/bootstrap.bundle.min.js"></script>
+    <script src="/build/_js/popper.min.js"></script>
+    <script src="/build/_js/bootstrap.min.js"></script>
+
+    <!-- JQUERY 3.4.1 -->
+    <!-- <script src="/build/_js/jquery-3.4.1.js"></script> -->
+
+    <!-- VUE 3-->
+    <!-- <script src="https://unpkg.com/vue@next"></script> -->
+
+    <!-- axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- 共用 -->
+    <link rel="stylesheet" href="/stylesheets/signinNavbar.css">
+
+    <!-- 吐司共用 -->
+    <link rel="stylesheet" href="/stylesheets/jquery.toast.css">
+
+    <!-- 自己 -->
+    <link rel="stylesheet" href="/stylesheets/cakeShop/writeorderinfo.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <section id="writeordersection">
+        <input type="hidden" id="shopcarhidden" value=<%=shopcar %>>
+        <input type="hidden" id="userNamehidden" value=<%=userName %>>
+        <div id="form">
+            <h1>填寫訂單</h1>
+            <hr class="my-2">
+            <div class="userinfo">
+                <label for="">訂餐人員</label>
+                <input id="people" type="text" v-model='writePeople'>
+            </div>
+            <div class="userinfo">
+                <label for="">電話號碼</label>
+                <input id="number" type="tel" v-model='writeTel'>
+            </div>
+            <div class="userinfo">
+                <label for="">地址</label>
+                <select id="city" v-model="checkcity">
+                    <option disabled value="">請選擇</option>
+                    <option v-for="(item,index) in city">{{item}}</option>
+                </select>
+                <select id="area" v-model="checkarea">
+                    <option disabled value="">請選擇</option>
+                    <option v-for="(item,index) in area[showarea]">{{item.name}}</option>
+                </select><br />
+                <input type="text" id="address" v-model='writeAdd'>
+            </div>
+            <div>
+                <input type="checkbox" name="" id="writeInfo" v-on:click="writeInfoEvent" v-bind:checked="selected">
+                <label for="writeInfo" class="h-5">自動填入市民資料</label>
+            </div>
+            <hr>
+            <div class="userinfo my-1">
+                <label for="">商品</label>
+                <div id="products">
+                    <ul>
+                        <li v-for="(item,index) in showcheck">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="imgset" v-bind:style="{backgroundImage:'url(/images/cakeShop/' + item.imgpath + ')'}">
+                                    </div>
+                                </div>
+                                <div class="col">{{item.foodname}}</div>
+                                <div class="col">
+                                    <a class="border">{{item.productscount}}</a>
+                                </div>
+                                <div class="col">TWD: {{item.foodprice * item.productscount}}</div>
+                                <div class="col">
+                                    <i class="far fa-trash-alt" @click="del(index)" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="pricetotal">
+                <p>總金額：<span>{{totalprice}}</span></p>
+                <button id="ordergo" @click="ordergo">送出訂單</button>
+            </div>
+
+        </div>
+    </section>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+
+    <!-- 吐司共用 -->
+    <script src="/javascripts/jquery.toast.js"></script>
+    <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script>
+        let vm = new Vue({
+            el: '#writeordersection',
+            data() {
+                return {
+                    'user': $('#userNamehidden').val(),
+                    'shopcar': $('#shopcarhidden').val(),
+                    'city': [],
+                    'area': [],
+                    'checkcity': '',
+                    'checkarea': '',
+                    'userallshopcar': [],
+                    'shopcarnumarr': [],
+                    'eighttoten': [],
+                    'usershoparr': [],
+                    'showcheck': [],
+                    'writePeople': '',
+                    'writeTel': '',
+                    "writeAdd": "",
+                    "selected": false
+                }
+            },
+            computed: {
+                //取得相對應索引
+                showarea() {
+                    const cityindex = this.city.indexOf(this.checkcity);
+                    return cityindex
+                },
+                totalprice() {
+                    let totalprice = 0;
+                    this.showcheck.forEach(el => {
+                        totalprice += (el["foodprice"] * el["productscount"]);
+                    })
+                    return totalprice
+                }
+            },
+            created() {
+                const user = this.user;
+                $.ajax({
+                    url: "/JSON/address.json",
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    data: {},
+                    success: function(res) {
+                        vm.city = Object.values(res).map(item => item.name);
+                        vm.area = Object.values(res).map(item => item.districts);
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
+
+                // 有待改善
+                // console.log()
+                $.ajax({
+                    url: "/cakeShop/lookshopcar",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        'user': user
+                    }),
+                    success: function(res) {
+                        let usershopdata = JSON.parse(res);
+                        console.log(usershopdata);
+                        let numberList = ''; // 購物車產品編號陣列
+                        if (usershopdata[0]["shopcar"] == '') { // 判斷是否為空並移除空值
+                            usershopdata = [];
+                            vm.numberList = usershopdata.map(item => Object.values(item)[0]);
+                            vm.shopdata = usershopdata;
+                            return
+                        } else {
+                            const valueList = usershopdata[0]["shopcar"].slice(2, -2); //取出重要字串
+                            let userarr = '';
+                            usershopdata = JSON.parse('[' + valueList + ']'); // 手動變json字串並轉json格式
+                            vm.userallshopcar = usershopdata;
+                            vm.numberList = usershopdata.map(item => Object.values(item)[0]); //抓value值
+                            vm.shopdata = usershopdata; //整體資料
+
+                            // 二次搜尋，抓取比對並塞入物件
+                            userarr = vm.numberList.toString();
+
+                            $.ajax({
+                                url: "/cakeShop/usershopcar",
+                                type: "POST",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({
+                                    'userarr': userarr
+                                }),
+                                success: function(res) {
+                                    const willpushobject = JSON.parse(res);
+                                    let arr = [];
+                                    $.each(willpushobject, (index, it) => {
+                                        let newobj = Object.assign({}, vm.shopdata[index], it); // 物件合併，在參數中設定空物件可以不讓原物件遭到改寫
+                                        arr.push(newobj);
+                                    })
+
+                                    vm.shopcarnumarr = Object.values(arr).map(item => item.serialnumber.toString());
+                                    vm.eighttoten.forEach(el => {
+                                        let where = vm.shopcarnumarr.indexOf(el);
+                                        vm.showcheck.push(arr[where])
+                                    })
+
+                                },
+                                error: function(err) {
+                                    console.log(err);
+                                }
+                            })
+                        }
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                })
+            },
+            methods: {
+                time() {
+                    let today = new Date();
+                    let year = today.getFullYear();
+                    let month = today.getMonth();
+                    let date = today.getDate();
+                    let cdate = new Date(year, month, date);
+
+                    year = cdate.getFullYear() + '';
+                    month = (cdate.getMonth() + 1 < 10) ? '0' + (cdate.getMonth() + 1) : (cdate.getMonth() + 1) + '';
+                    date = (cdate.getDate() < 10) ? '0' + (cdate.getDate()) : cdate.getDate() + '';
+                    return (year + month + date);
+                },
+                del(index) {
+                    this.showcheck.splice(index, 1);
+                    this.usershoparr.splice(index, 1);
+                    this.eighttoten.splice(index, 1);
+                    // showToast('移除商品成功');
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'warning',
+                        title: '商品移除結帳',
+                        showConfirmButton: false,
+                        timer: 1200
+                    })
+                },
+                ordergo() {
+                    if ($('#people').val().trim() == '' ||
+                        $('#number').val().trim() == '' ||
+                        $('#address').val().trim() == '' ||
+                        this.checkcity.trim() == '' ||
+                        this.checkarea.trim() == '') {
+                        Swal.fire({
+                            position: 'waining',
+                            icon: 'warning',
+                            title: '請填寫完整資訊',
+                            showConfirmButton: false,
+                            timer: 1200
+                        })
+                        return
+                    }
+                    let havearr = [];
+                    let nohavearr = [];
+                    let obj = {};
+                    this.shopcarnumarr.forEach((el, index) => {
+                        // console.log(el);
+                        console.log(vm.eighttoten.indexOf(el));
+                        if (this.eighttoten.indexOf(el) >= 0) {
+                            havearr.push(this.userallshopcar[index]);
+                        } else {
+                            nohavearr.push(this.userallshopcar[index])
+                        }
+                    })
+
+                    obj.orderuser = $('#people').val();
+                    obj.number = $('#number').val();
+                    obj.address = this.checkcity.trim() +
+                        this.checkarea.trim() +
+                        $('#address').val().trim();
+                    obj.totalprice = this.totalprice;
+                    obj.product = JSON.stringify(havearr);
+
+                    console.log(JSON.stringify(obj));
+
+                    // 將要做成訂單的品項跟購物車比對
+                    $.ajax({
+                        url: "/cakeShop/ordergo",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({
+                            'user': this.user,
+                            'orderinfo': '[' + JSON.stringify(obj) + ']',
+                            'noproduct': JSON.stringify(nohavearr),
+                            'date': this.time()
+                        }),
+                        success: function(res) {
+                            console.log(res);
+                            let arr = [];
+                            vm.showcheck.forEach((el, index) => {
+                                let {
+                                    serialnumber,
+                                    sales,
+                                    productscount
+                                } = el
+                                let updatesales = {
+                                    'serialnumber': serialnumber,
+                                    'sales': sales,
+                                    'productscount': productscount - 0
+                                }
+                                arr.push(updatesales)
+                            })
+                            console.log(arr);
+
+                            $.ajax({
+                                url: "/cakeShop/updatesales",
+                                type: "POST",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({
+                                    'arr': arr
+                                }),
+                                success: function(res) {
+                                    console.log(res);
+                                    // showToast('完成訂單，稍回重新導回首頁');
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'success',
+                                        title: '完成訂單，稍回重新導回首頁',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    })
+                                    setTimeout(() => {
+                                        window.location.href = '/cakeShop';
+                                    }, 3000);
+                                },
+                                error: function(err) {
+                                    console.log(err);
+                                }
+                            })
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    })
+                },
+                writeInfoEvent() {
+                    this.selected = !this.selected
+                    if (this.selected == true) {
+                        axios.get('/signinCheck')
+                            .then((res) => {
+                                console.log(res.data.data);
+                                add = JSON.parse(res.data.data.address);
+                                if (res.data.errno == 1) {
+                                    this.writePeople = res.data.data.myname;
+                                    this.writeTel = res.data.data.userphone;
+                                    this.checkcity = add.add01
+                                    this.checkarea = add.add02
+                                    this.writeAdd = add.add03
+                                }
+                            })
+                            .catch((error) => {
+                                console.log(error)
+                            });
+                    }
+                    if (this.selected == false) {
+                        this.writePeople = "";
+                        this.writeTel = "";
+                        this.checkcity = "";
+                        this.checkarea = "";
+                        this.writeAdd = "";
+                    }
+
+                }
+            },
+            mounted() {
+                //過濾
+                let see = /[A-Z]+/g; //[a-zA-Z]表示匹配字母，g表示全局匹配
+                while (result = this.shopcar.match(see)) { //判断str.match(reg)是否没有字母了
+                    this.shopcar = this.shopcar.replace(result[0], ','); //替换掉字母  result[0] 是 str.match(reg)匹配到的字母
+                }
+                this.usershoparr = this.shopcar.split(',');
+                this.usershoparr.forEach(el => {
+                    this.eighttoten.push(parseInt(el, 8).toString());
+                });
+            }
+        })
+        //toast
+        // function showToast(heading, message) {
+        //     $.toast({
+        //         text: message, // Text that is to be shown in the toast
+        //         heading: heading, // Optional heading to be shown on the toast
+        //         icon: 'warning', // Type of toast icon
+        //         showHideTransition: 'fade', // fade, slide or plain
+        //         allowToastClose: true, // Boolean value true or false
+        //         hideAfter: 3000, // false to make it sticky or number representing the miliseconds as time after which toast needs to be hidden
+        //         stack: 5, // false if there should be only one toast at a time or a number representing the maximum number of toasts to be shown at a time
+        //         position: 'top-center', // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values
+        //         textAlign: 'left',  // Text alignment i.e. left, right or center
+        //         loader: true,  // Whether to show loader or not. True by default
+        //         loaderBg: '#9ec600',  // Background color of the toast loader
+        //         beforeShow: function () { }, // will be triggered before the toast is shown
+        //         afterShown: function () { }, // will be triggered after the toat has been shown
+        //         beforeHide: function () { }, // will be triggered before the toast gets hidden
+        //         afterHidden: function () { }  // will be triggered after the toast has been hidden
+        //     });
+        // }
+    </script>
+</body>
+
+</html>

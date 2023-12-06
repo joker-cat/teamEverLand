@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Knewave&family=Lobster&family=Vollkorn:ital,wght@1,700&display=swap');
+body {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(233, 214, 163);
+    font-family: 'Vollkorn', serif;
+}
+img{
+    max-width: 100%;
+}
+
+#noSignDialogBox {
+    position: absolute;
+    top: 28%;
+    left: 19%;
+    width: 20%;
+    height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('/images/cafeShop/dialog8.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    font-size: 3.5vh;
+    visibility: hidden;
+}
+
+#welcomeDialogBox {
+    position: absolute;
+    top: 28%;
+    left: 19%;
+    width: 20%;
+    height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('/images/cafeShop/dialog8.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    font-size: 3.5vh;
+    visibility: hidden;
+}
+
+.coffee-shop-container {
+    display: flex;
+    background-image: url('/images/cafeShop/cafe.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+
+#enterbookshelf {
+    position: absolute;
+    top: 55%;
+    right: 8%;
+    background-color: #ffffffd8;
+    color: #386B57;
+    border: none;
+    font-size: 25px;
+    padding: 7px 25px;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#enterbookshelf:hover {
+    color: #386B57;
+}
+
+.coffee-shop-container .chatbtn {
+    position: absolute;
+    bottom: 35%;
+    right: 31%;
+    background-color: #ffffffa9;
+    color: #386B57;
+    border: none;
+    font-size: 25px;
+    padding: 7px 25px;
+    border-radius: 15px;
+    outline: none;
+    font-weight: bold;
+}
+
+/*聊天室入口*/
+
+.enterChatRoom {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.enterChatRoom.active {
+    display: flex;
+}
+
+.chatRoomForm {
+    background-color: #C7B299;
+    padding: 30px 20px;
+    border-radius: 5px;
+}
+
+.chatRoomFormTitle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 600px;
+}
+
+.chatRoomFormTitle h3 {
+    color: #386B57;
+    font-family: 'Vollkorn', serif;
+}
+
+.chatRoomFormTitle span {
+    display: inline-block;
+    width: 90%;
+    height: 2px;
+    background-color: #7e6b55;
+}
+
+.form-control {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.form-input input {
+    margin-bottom: 15px;
+}
+
+.form-input input, .form-input select {
+    width: 400px;
+    font-family: 'Vollkorn', serif;
+}
+
+.form-input label {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.form-input button.btn {
+    background-color: #386B57;
+    color: #fff;
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px 0;
+    width: 25%;
+}
+
+.form-input button.btn:hover {
+    background-color: #264d3d;
+}

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>card</title>
+  <style>
+    .container button {
+      width: 200px;
+      height: 80px;
+      margin-left: 235px;
+      font-size: 30px;
+
+    }
+
+    .container a {
+      text-decoration: none;
+    }
+
+    .container a:hover {
+      text-decoration: none;
+    }
+
+    li div img {
+      height: 32px;
+    }
+
+    /* Make the image fully responsive */
+    .carousel-inner img {
+      width: 100%;
+      height: 360px;
+    }
+
+    footer>div {
+      height: "800px";
+    }
+
+    .ftp {
+      margin-left: 350px
+    }
+
+    .footerdiv {
+      border: none;
+      border-collapse: collapse;
+    }
+
+    a {
+      font-weight: bold;
+    }
+
+    h3 {
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .myHead {
+      flex: auto;
+    }
+
+    .content {
+      width: 1024px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn-outline-primary {
+      margin-left: 10px;
+    }
+
+    .btn-outline-secondary {
+      margin-right: 10px;
+    }
+
+    .nav-link {
+      margin-right: 6px;
+    }
+
+    /* 待修正 */
+    .card {
+      margin-right: 20px;
+      width: 60%;
+    }
+
+    .card-img-top {
+      height: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .container>p {
+      text-align: center;
+    }
+
+
+    .carousel-item>img {
+      /* height: 360px; */
+      max-width: 100%;
+      /* position: absolute; */
+      /* margin: auto; */
+
+    }
+
+    marquee a {
+      color: red;
+      font-size: 20px;
+    }
+
+    /* .card-body>.btn {
+      margin-right: 10px;
+    } */
+
+    /* .btn-outline-primary{margin-left: 90px;} */
+    /* 待修正 */
+    @media screen and(max-width: 600px) {
+      .card {
+        width: 100%;
+      }
+    }
+
+    .spt {
+      border-bottom: 1px solid black;
+    }
+
+    td>img {
+      width: 200px;
+    }
+
+    table {
+      margin-left: auto;
+      margin-right: auto;
+      width: 940px;
+    }
+
+    thead th {
+      background-color: lightskyblue;
+      text-align: center;
+      padding: 10px;
+
+    }
+
+    td>a:hover {
+      text-decoration: none;
+
+    }
+
+    .lpimg {
+      width: 50px;
+    }
+  </style>
+
+
+  <!-- bootstrap 5-->
+  <link rel="stylesheet" href="/build/_css/bootstrap.min.css">
+  <script src="/build/_js/bootstrap.bundle.min.js"></script>
+  <script src="/build/_js/popper.min.js"></script>
+  <script src="/build/_js/bootstrap.min.js"></script>
+
+  <!-- JQUERY 3.4.1 -->
+  <!-- <script src="/build/_js/jquery-3.4.1.js"></script> -->
+
+  <!-- VUE 3-->
+  <!-- <script src="https://unpkg.com/vue@next"></script> -->
+
+  <!-- axios-->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <!-- 共用 -->
+  <link rel="stylesheet" href="/stylesheets/signinNavbar.css">
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+    integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+</head>
+
+<body>
+  <div>
+    <nav class="navbar navbar-expand-sm bg-light navbar-light fixed-top" style="z-index: 5;">
+      <!-- Brand -->
+      <a class="navbar-brand" href="#">信用卡線上申請</a>
+
+      <!-- Links -->
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown active">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardropQRcode" data-toggle="dropdown">
+            卡片推薦
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/banklinePay.html" target="_blank"> <img
+                src="/images/bank/linePay/linepay-logo-tw2.png" alt=""></a>
+            <a class="dropdown-item" href="/bankjkos.html" target="_blank"> <img
+                src="/images/bank/jkosPay/675ee3620d794815048025df3d51ce4d.jpg" alt=""></a>
+            <a class="dropdown-item" href="https://www.gamapay.com.tw/" target="_blank">橘子支付<img
+                src="/images/bank/gamaPay/unnamed.png" alt=""> </a>
+          </div>
+        </li>
+        <li class="nav-item dropdown active">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardropNFC" data-toggle="dropdown">
+            卡片總覽
+          </a>
+          <div class="dropdown-menu active">
+            <a class="dropdown-item" href="/banksamsungPay.html" target="_blank">Samsung Pay</a>
+            <a class="dropdown-item" href="/bankgooglePay.html" target="_blank"><img
+                src="/images/bank/google-pay-logo.svg" alt=""></a>
+            <a class="dropdown-item" href="https://www.apple.com/tw/apple-pay/" target="_blank">Apple Pay <img
+                src="/images/bank/applePay/cc_mpay_applepay_4_02.jpg" alt=""></a>
+          </div>
+        </li>
+        <li class="nav-item dropdown active">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+            我要申請
+          </a>
+          <div class="dropdown-menu active">
+            <a class="dropdown-item" href="https://www.family.com.tw/marketing/fami_member/famipay.html"
+              target="_blank">My FamiPay <img src="/images/bank/other/MyFamiPay1050x630.jpg" alt=""></a>
+            <a class="dropdown-item" href="https://www.esunbank.com.tw/event/credit/1070425wallet/index.html"
+              target="_blank"> 玉山Wallet<img src="/images/bank/other/icon07.png" alt=""></a>
+            <a class="dropdown-item"
+              href="https://www.taishinbank.com.tw/TSB/personal/digital/Digital-Platform/Richart-Life/key-function/"
+              target="_blank">台新Pay <img src="/images/bank/other/unnamed.jpg" alt=""></a>
+            <a class="dropdown-item"
+              href="http://www.pxmart.com.tw/px/pxhtml__AppManual.px?utm_source=http://www.pxmart.com.tw/px/pxhtml__AppManual.px"
+              target="_blank"> PX Pay</a>
+            <a class="dropdown-item" href="https://www.twmp.com.tw/" target="_blank"> 台灣行動支付</a>
+
+          </div>
+        </li>
+      </ul>
+      <div class="myHead"></div>
+      <!-- 右邊有放大鏡的搜尋 -->
+      <div class="mySearch">
+
+        <!-- <form class="form-inline" action="/action_page.php">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search">
+          <button class="btn btn-outline-secondary" type="submit">Search</button>
+          <button type="button" class="btn btn-outline-primary">登入 <i class="fa fa-bars"></i></button>
+          <button type="button" class="btn btn-outline-primary">註冊 <i class="fa fa-bars"></i></button>
+        </form> -->
+
+      </div>
+
+  </div>
+
+
+  <br>
+  <br>
+
+
+
+
+
+
+
+
+
+
+  </nav>
+  <div id="demo" class="carousel slide" data-ride="carousel">
+
+    <!-- Indicators -->
+    <ul class="carousel-indicators">
+      <li data-target="#demo" data-slide-to="0" class="active"></li>
+      <li data-target="#demo" data-slide-to="1"></li>
+      <li data-target="#demo" data-slide-to="2"></li>
+    </ul>
+
+    <!-- The slideshow -->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="/images/bank/bankOffice/social distancing2.jpg" alt=" ">
+      </div>
+      <div class="carousel-item">
+        <img src="/images/bank/bankOffice/social distancing2.jpg" alt=" ">
+      </div>
+      <div class="carousel-item">
+        <img src="/images/bank/bankOffice/social distancing2.jpg" alt=" ">
+      </div>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  </div>
+
+
+
+
+
+
+  <marquee direction="right" height="30" scrollamount="5" behavior="alternate"><a href="card.html"
+      target="_blank">澳洲研究：武漢肺炎病毒在鈔票手機可活28天</a></marquee>
+  <div class="content">
+    <h3>辦卡連結</h3>
+    <div class="row">
+      <div class="col-sm-3 card mx-auto"><a href="https://www.esunbank.com.tw/event/credit/UBear/index.html"
+          target="_blank"><img class="card-img-top img-thumbnail" src="/images/bank/ubear/yellow.png" alt=""></a>
+        <div class="card-body ">
+          <p class="card-title">橘子支付</p>
+          <h4>U Bear信用卡</h4>
+          <p class="card-text">現金回饋 3.8% <br> 回饋上限 200元</p>
+          <a href="https://www.esunbank.com.tw/bank/personal/credit-card/intro/bank-card/u-bear" target="_blank"
+            class="btn btn-outline-primary">了解更多</a>
+        </div>
+      </div>
+      <div class="col-sm-3 card mx-auto"><a href="https://www.skbank.com.tw/skbank_cashback_eventpage/"
+          target="_blank"><img class="card-img-top img-thumbnail" src="/images/bank/ctbc/credit1.png" alt=""></a>
+        <div class="card-body ">
+          <p class="card-title">網購5大電商 </p>
+          <h4>英雄聯盟信用卡</h4>
+          <p class="card-text">數位通路最高 10%回饋 <br> 5大電商同享 10%</p>
+          <a href="https://www.ctbcbank.com/content/dam/minisite/long/creditcard/LOL/index.html" target="_blank"
+            class="btn btn-outline-primary">了解更多</a>
+        </div>
+      </div>
+      <div class="col-sm-3 card mx-auto"><a
+          href="https://www.taishinbank.com.tw/TSB/personal/credit/intro/overview/cg038/card001/index.html"
+          target="_blank"><img class="card-img-top img-thumbnail" src="/images/bank/jkosPay/ccard20191029121216330.png"
+            alt=""></a>
+        <div class="card-body ">
+          <p class="card-title">街口支付 </p>
+          <h4>街口聯名卡</h4>
+          <p class="card-text">晚餐時段消費 最高 6% <br> 街口幣回饋</p>
+          <a href="https://www.taishinbank.com.tw/TSB/personal/credit/intro/overview/cg038/card001/index.html"
+            target="_blank" class="btn btn-outline-primary">了解更多</a>
+        </div>
+      </div>
+      <div class="col-sm-3 card mx-auto"><a
+          href="https://richart.tw/TSDIB_RichartWeb/Products/GogoCard?utm_source=google&utm_medium=gsm&utm_campaign=richart_alwayson_20201201&utm_content=textlink_product_creditcard_gogo&gclid=CjwKCAiA6aSABhApEiwA6Cbm_xbTfQQyshHfsUy0B1J2lj8Eovh7jlfkGgAxBEa5iBGkgfnvsDVbbRoCjMkQAvD_BwE"
+          target="_blank"><img class="card-img-top img-thumbnail" src="/images/bank/linePay/omiyage.jpg" alt=""></a>
+        <div class="card-body ">
+          <p class="card-title">Line Pay</p>
+          <h4>富邦J卡</h4>
+          <p class="card-text">國內一般消費享 3%無上限 一卡通 2%回饋</p>
+          <a href="https://www.fubon.com/banking/personal/credit_card/all_card/omiyage/omiyage.htm" target="_blank"
+            class="btn btn-outline-primary">了解更多</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br><br>
+
+
+  <h3>卡片推薦</h3>
+  <div class="tbdiv">
+    <table>
+      <thead>
+        <tr>
+          <th colspan="2">電子支付與網購</th>
+          <th>活動日期</th>
+          <th>優惠內容</th>
+
+        </tr>
+      </thead>
+
+      <tr>
+        <td rowspan="3"><img src="/images/bank/linePay/omiyage.jpg" alt=""></td>
+
+        <td class="spt" rowspan="3"><a
+            href="https://www.fubon.com/banking/event/hot/omiyagecard/index.html?fromUrl=googlekeyword010104"
+            target="blank">富邦銀行J卡</a></td>
+        <td class="spt" rowspan="3">~2021/6/30</td>
+        <td>1. 國內最高 3% <img class="lpimg" src="/images/bank/linePay/line_points-logo.png" alt="">無上限</td>
+
+      </tr>
+      <tr>
+        <td>2. 日本一般消費 3%</td>
+
+      </tr>
+      <tr>
+        <td class="spt">3. 首年免年費</td>
+
+      </tr>
+      <tbody>
+        <tr>
+          <td rowspan="3"><img src="/images/bank/jkosPay/ccard20191029121216330.png" alt=""></td>
+          <td class="spt" rowspan="3"><a
+              href="https://www.taishinbank.com.tw/TSB/personal/credit/intro/overview/cg038/card001/index.html"
+              target="blank">街口聯名卡</a></td>
+          <td class="spt" rowspan="3">~2021/6/30</td>
+          <td>1. 晚餐時段消費 最高 6% 回饋</td>
+        </tr>
+        <tr>
+          <td>2. 每週五~日 全家、速食品牌最高10%回饋</td>
+
+        </tr>
+        <tr>
+          <td class="spt">3. 新戶核卡後 30日內，消費累積滿 888元(含)以上，享好禮二選一</td>
+
+        </tr>
+      </tbody>
+
+      <tr>
+        <td rowspan="3"><img src="/images/bank/ubear/yellow.png" alt=""></td>
+        <td class="spt" rowspan="3"><a href="https://www.esunbank.com.tw/event/credit/UBear/index.html"
+            target="blank">玉山ＵBear信用卡</a></td>
+        <td class="spt" rowspan="3">~2022/ 2/28</td>
+        <td>1. 指定網路消費享3.8% 現金回饋</td>
+      </tr>
+      <tr>
+        <td>2. Nintendo、PlayStation、Netflix、Spotify享12%現金回饋</td>
+
+      </tr>
+      <tr>
+        <td class="spt"> 3. 每期回饋上限200元，於當期帳單直接折抵</td>
+
+      </tr>
+      <tr>
+        <td rowspan="3"><img src="/images/bank/ctbc/credit1.png" alt=""></td>
+        <td class="spt" rowspan="3"><a
+            href="https://www.ctbcbank.com/content/dam/minisite/long/creditcard/LOL/index.html"
+            target="blank">英雄聯盟信用卡</a></td>
+        <td class="spt" rowspan="3">~2021/ 6/30</td>
+        <td>1. PChome、momo、Yahoo、蝦皮、淘寶 5大電商同享 10%</td>
+      </tr>
+      <tr>
+        <td>2. foodpanda、Uber Eats 指定數位通路最高10%</td>
+
+      </tr>
+      <tr>
+        <td class="spt">3. 核卡30天內累積刷卡消費滿NT888元(含)以上，享好禮</td>
+
+      </tr>
+
+    </table>
+  </div>
+  <br><br><br>
+  <div class="container">
+    <h3>線上辦卡 輕鬆方便</h3>
+    <br>
+    <button><a href="https://ebank.taipeifubon.com.tw/EXT/common/CAC/Index.faces">線上申請</a></button>
+    <button><a href="https://ebank.taipeifubon.com.tw/EXT/common/CAC/Index.faces">書面申請</a></button>
+    <br><br>
+
+    <hr>
+    <p>注意事項 <br>
+      只要您年滿20歲，且年收入於臺幣20萬以上，與銀行往來信用紀錄正常之本國國民，皆可申請信用卡喔！</p>
+
+  </div>
+
+  <footer class="bg-dark">
+    <div class="content">
+
+      <div class="row text-white">
+        <div class="col-sm-3 card mx-auto bg-dark">
+          <div class="card-body ">
+            <p class="card-title">謹慎理財 信用無價</p>
+            <p>客服專線：(02)1234-7000</p>
+            <p>客服信箱：service@1.com</p>
+            <a href="https://www.esunbank.com.tw/event/credit/UBear/index.html" target="_blank" class="btn btn-primary">
+              f </a>
+          </div>
+        </div>
+        <div class="col-sm-3 card mx-auto bg-dark">
+          <div class="card-body ">
+            <p class="card-title">連結 </p>
+            <a href="" target="_blank" class="text-white">
+              <p>最新公告</p>
+            </a>
+            <a href="" target="_blank" class="text-white">
+              <p>使用說明</p>
+            </a>
+
+          </div>
+        </div>
+        <div class="col-sm-3 card mx-auto bg-dark">
+
+          <div class="card-body footerdiv">
+            <p class="card-title">條款 </p>
+            <a href="" target="_blank" class="text-white">
+              <p>隱私權政策</p>
+            </a>
+            <a href="" target="_blank" class="text-white">
+              <p>服務條款</p>
+            </a>
+
+          </div>
+        </div>
+        <div class="col-sm-3 card mx-auto bg-dark">
+          <div class="card-body">
+            <p class="card-title">下載</p>
+            <a href="https://www.jkos.com/download_app.html" target="_blank" class="text-white">
+              <p>街口支付</p>
+            </a>
+            <a href="https://www.piapp.com.tw/personal#download" target="_blank" class="text-white">
+              <p>Pi 拍錢包</p>
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-white">
+
+      <p class="ftp">防詐騙！提醒您，請勿告知他人您的個人資訊與簡訊驗證碼，以確保帳戶安全。</p>
+
+      <!-- 置中回到上方的按鈕 -->
+      <a href="#" class="back-to-top"><button type="button" class="btn btn-primary btn-block">TOP</button></a>
+
+    </div>
+  </footer>
+
+  <!-- 共用 (登入/NAVBAR)-->
+  <script src="/javascripts/signinNavbar.js"></script>
+</body>
+
+</html>

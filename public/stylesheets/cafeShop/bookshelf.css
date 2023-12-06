@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,900&display=swap');
+
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #C7B299;
+    font-family: 'Merriweather', serif;
+    padding: 50px;
+}
+ul{
+    list-style: none;
+}
+
+.bookshelf-container{
+    width: 90%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+}
+.bookshelf-nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #9c8b76;
+    padding: 3px 0;
+}
+.bookshelf-nav h1{
+    color: #386B57;
+    font-size: 25px;
+    font-weight: bolder;
+}
+.bookshelf-nav ul{
+    display: flex;
+}
+.bookshelf-nav ul li{
+    margin: 0 10px;
+}
+.bookshelf-nav ul li a{
+    text-decoration: none;
+    color: #000;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+
+/*sidebar和書單*/
+.bookshelf-Content{
+    display: flex;
+    position: relative;
+    padding-top: 10px;
+    overflow: hidden;
+}
+.bookshelf-sidebar{
+    width: 20%;
+}
+.bookshelf-sidebar span{
+    display: flex;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bolder;
+    margin-bottom: 15px;
+}
+
+.bookshelf-sidebar ul li{
+    font-size: 15px;
+    font-weight: bold;
+    width: 80%;
+    text-align: center;
+    padding: 8px 0;
+    cursor: pointer;
+    border: 1px solid #C7B299;
+    color: #524545;
+} 
+.bookshelf-sidebar ul li:hover{
+    background-color: rgb(163, 186, 163);
+    color: #fff;
+}
+.bookshelf-sidebar ul li.active{
+    background-color: #386B57;
+    color: #fff;
+}
+.bookshelf-item{
+    width: 80%;
+    padding: 7px;
+}
+.bookitem-cate{
+    border-bottom: 2px solid #9c8b7670;
+    padding: 8px 0;
+}
+.bookitem-cate h2{
+    font-weight: bold;
+    font-size: 20px;
+}
+.bookitem-filter{
+    border-bottom: 2px solid #9c8b7670;
+    padding: 7px 0;
+    margin-bottom: 15px;
+}
+.bookitem-filter form button.btn{
+    background-color: #386B57;
+    color: #fff;
+    font-weight: bold;
+}
+.bookitem-filter form button.btn:hover{
+    background-color: #2b5544;
+}
+.bookitem-list{
+    height: 280px;
+    padding: 20px;
+    overflow-y: scroll;
+    display: flex;
+    flex-wrap: wrap;
+}
+.book-card{
+    box-shadow: 0px 2px 2px 1px rgba(0,0,0,0.5);
+    width: 112px;
+    height: 220px;
+    margin: 15px;
+}
+.book-card:hover{
+    cursor: pointer;
+}
+.book-card img{
+    width: 100%;
+}
+.book-card h5{
+    font-weight: bolder;
+    font-size: 15px;
+}
+.book-card-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+.book-card-content p{
+    font-size: 13px;
+}
+
+
+/*book description*/
+.book-description{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    background-color: #e0d0c1;
+    width: 28%;
+    padding: 25px;
+    height: 100%;
+    transition: all 0.7s;
+    transform: translateX(100%);
+}
+.cross-icon{
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+i.fas{
+    margin-right: 10px;
+
+}
+.description-title{
+    text-align: center;
+}
+.description-title h6{
+    font-size: 18px;
+    font-weight: bolder;
+}
+.description-title p{
+    font-size: 14px;
+}
+.description-text span{
+    font-size: 15px;
+    font-weight: bolder;
+    margin-bottom: 5px;
+}
+.description-text p{
+    font-size: 13px;
+    font-weight: bold;
+}
+.description-content{
+   height: 90%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: space-between;
+}
+.description-content a.btn{
+    background-color: #386B57;
+    color: #fff;
+    width: 100%;
+    font-size: 14px;
+    font-weight: bold;
+}
+.description-content a.btn:hover{
+    background-color: #2c5745;
+}
+
+/*黑屏*/
+.black-screen{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    transition: all 0.7s;
+    display: none;
+}

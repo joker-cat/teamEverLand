@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+
+    <!-- font awesome pro link below -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.2.0/css/all.css">
+    <!-- <link rel="stylesheet" href="https://static.fontawesome.com/css/fontawesome-app.css"> -->
+
+    <!-- bootstrap 5-->
+    <link rel="stylesheet" href="/build/_css/bootstrap.min.css">
+    <script src="/build/_js/bootstrap.bundle.min.js"></script>
+    <script src="/build/_js/popper.min.js"></script>
+    <script src="/build/_js/bootstrap.min.js"></script>
+
+    <!-- JQUERY 3.4.1 -->
+    <script src="/build/_js/jquery-3.4.1.js"></script>
+
+    <!-- VUE 3-->
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <!-- axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- 共用 -->
+    <link rel="stylesheet" href="/stylesheets/signinNavbar.css">
+
+
+    <style>
+        * {
+            margin: 0 auto;
+        }
+
+        body {
+            overflow-x: hidden;
+            background-color: #C7B299;
+        }
+
+        #returnIcon img {
+            object-fit: contain;
+            position: absolute;
+            top: 2vh;
+            left: 2vh;
+            width: 5vw;
+            z-index: 99;
+        }
+
+        #returnIcon:hover {
+            cursor: pointer;
+        }
+
+        #regForm {
+            position: relative;
+        }
+
+        #myForm {
+            padding: 8%;
+            border: solid 10px #444444;
+            border-radius: 30px;
+            background-color: #386B57;
+        }
+
+        #writeForm {
+            padding: 2%;
+            border: solid 10px #444444;
+            border-radius: 15px;
+            background-color: white;
+            z-index: 1;
+        }
+
+        #formPenImg {
+            position: absolute;
+            bottom: 25%;
+            right: 2%;
+            width: 20%;
+            object-fit: contain;
+            object-position: center;
+        }
+
+        #formPeople {
+            position: absolute;
+            bottom: 15%;
+            left: 2%;
+            width: 20%;
+            object-fit: contain;
+            object-position: center;
+            z-index: 98;
+        }
+
+        #welcomeDialogBox {
+            position: absolute;
+            bottom: 65%;
+            left: 13%;
+            width: 30%;
+            height: 18%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 3vh;
+            background-image: url('/images/cafeShop/dialog8.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            font-size: 2.5vh;
+            visibility: hidden;
+            z-index: 99;
+        }
+
+        #dropBlock {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 200vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            visibility: hidden;
+            z-index: 97;
+        }
+
+        .myStyleSelector>div {
+            display: inline-block;
+            margin-right: 2%;
+        }
+
+        #sendtext:hover {
+            cursor: pointer;
+        }
+
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+    </style>
+
+</head>
+
+<body class="container">
+
+    <div id="mainLogo"><img src="/images/everlandLOGOline.svg" alt="" v-on:click="handle"></div>
+    <div id="dropBlock"></div>
+
+    <script>
+        const mainLogo = Vue.createApp({
+            methods: {
+                handle() {
+                    formHaveToWrite.userName = "youmary520";
+                    formHaveToWrite.userMail = "youmary520@gmail.com";
+                    formHaveToWrite.userPwd = "zxcv123";
+                    formHaveToWrite.userPwdAgain = "zxcv123";
+                    formHaveToWrite.userPhone = "0921000123";
+                    formHaveToWrite. keyVerValue = 3504;
+                    userInfoName.nameValue = "游美麗";
+                    userInfobirth.yyyyValue = 2000;
+                    userInfobirth.mmValue = 06;
+                    userInfobirth.ddValue = 18;
+                    userInfoSex.valueSex = 0;
+                    // userInfoAdd.valueAdd01 = "台中市";
+                    // userInfoAdd.valueAdd02 = "南屯區";
+                    userInfoAdd.valueAdd03 = "公益路二段51號";
+                }
+            }
+        }).mount('#mainLogo')
+    </script>
+
+    <div id="returnBtn">
+        <div id="returnIcon" style="right:20px" v-on:click="returnPage">
+            <i class="fas fa-reply"></i>
+        </div>
+    </div>
+
+    <div id="regForm" class="row my-5">
+        <div class="col-2 mx-0">
+            <img id="formPeople" src="/images/adminCenter/regPeople.svg" alt="">
+            <div id="welcomeDialogBox">
+                <span id="welcomeDialog">恭喜您，<br>成為EVERLAND市民~</span>
+            </div>
+        </div>
+        <div id="myForm" class="col-9 mx-0">
+            <div id="writeForm">
+                <form class="col-sm-12 my-3">
+                    <div class="row">
+                        <div id="formHaveToWrite" class="col form-group my-3">
+                            <span class="col-12 fs-2">基本資料</span><span class="badge bg-danger mx-1">必填</span>
+                            <div class="col-12 input-group my-3">
+                                <div class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <input id="userName" name="userName" type="text" class="form-control"
+                                    placeholder="請輸入6-16位 帳號" v-model="userName" v-on:focusout="userNameCheck">
+                            </div>
+                            <span class="text-danger">{{warning01}}</span>
+                            <div class="col-12 input-group my-3">
+                                <div class="input-group-text">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <input id="userMail" name="userMail" type="email" class="form-control"
+                                    placeholder="請輸入E-MAIL" v-model="userMail" v-on:focusout="userMailCheck">
+                            </div>
+                            <span class="text-danger">{{warning02}}</span>
+                            <div class="col-12 input-group my-3">
+                                <div class="input-group-text">
+                                    <i class="fas fa-key"></i>
+                                </div>
+                                <input id="userPwd" name="userPwd" type="password" class="form-control"
+                                    placeholder="請輸入6-16位英文+數字 密碼" v-model="userPwd" v-on:focusout="userPwdCheck">
+                            </div>
+                            <span class="text-danger">{{warning03}}</span>
+                            <div class="col-12 input-group my-3">
+                                <div class="input-group-text">
+                                    <i class="fas fa-key"></i>
+                                </div>
+                                <input id="userPwdAgain" name="userPwdAgain" type="password" class="form-control"
+                                    placeholder="請再輸入一次密碼" v-model="userPwdAgain" v-on:focusout="userPwdAgainCheck">
+                            </div>
+                            <span class="text-danger">{{warning04}}</span>
+                            <div></div>
+                            <div class="col-12">
+                                <div class="input-group my-3">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <div class="col-6">
+                                        <input id="userPhone" name="userPhone" type="tel" class="form-control"
+                                            placeholder="請輸入手機號碼 (ex：0912345678)" v-model="userPhone"
+                                            v-on:focusout="userPhoneCheck">
+                                    </div>
+                                    <div class="input-group-text">
+                                        <span id="sendtext" class="col-12" @click="getVer">發送驗證碼</span>
+                                    </div>
+                                    <input id="ver" name="ver" type="tel" class="form-control col-4"
+                                        placeholder="請輸入驗證碼" v-model="keyVerValue" v-on:focusout="verCheck">
+                                </div>
+                            </div>
+                            <span class="text-danger">{{warning05}}</span>
+                        </div>
+                    </div>
+                    <span class="col-12 fs-2">個人資訊</span><span class="badge bg-primary mx-1 my-0">選填</span>
+                    <div id="userInfoName" class="row">
+                        <div class="col form-group">
+                            <div class="input-group my-3">
+                                <span class="col-12 fs-4">姓名</span>
+                                <div class="col-4 my-1">
+                                    <input id="myName" name="myName" type="tel" class="form-control"
+                                        v-model="nameValue">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="userInfobirth" class="col-8 form-group ">
+                            <span class="col-12 fs-4">生日</span>
+                            <div class="input-group my-3">
+                                <div class="col-4 ms-0 me-0">
+                                    <select name="yyyy" class="form-control form-control-sm"
+                                        aria-label="Default select example" @change="yearOnChange" v-model="yyyyValue">
+                                        <option disabled >年</option>
+                                        <option v-for="(item, index) in yearArr" :value="item.year">
+                                            {{item.year}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-3 mx-2">
+                                    <select name="mm" class="form-control form-control-sm"
+                                        aria-label="Default select example" v-model="mmValue">
+                                        <option disabled>月</option>
+                                        <option v-for="(item, index) in monthArr" :value="item.month">
+                                            {{item.month}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-3  mx-0">
+                                    <select name="dd" class="form-control form-control-sm"
+                                        aria-label="Default select example" v-model="ddValue">
+                                        <option disabled>日</option>
+                                        <option v-for="(item, index) in changeDay" :value="item.day">
+                                            {{item.day}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="userInfoSex" class="col-4 form-group">
+                            <span class="col-12 fs-4">性別</span>
+                            <div class="input-group  my-3">
+                                <input type="radio" v-model="valueSex" value="1" class="btn-check" name="genderWhich"
+                                    id="genderMale" autocomplete="off">
+                                <label class="btn btn-outline-success col-6" for="genderMale">男</label>
+                                <input type="radio" v-model="valueSex" value="0" class="btn-check rounded-3"
+                                    name="genderWhich" id="genderFemale" autocomplete="off">
+                                <label class="btn btn-outline-success col-6" for="genderFemale">女</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="userInfoAdd" class="col form-group ">
+                            <span class="col-12 fs-4">地址</span>
+                            <div class="input-group my-3">
+                                <div class="col-12 mx-0 twCitySelector myStyleSelector">
+                                    <select name="Add" class="form-control county" aria-label="Default select example"
+                                        v-model="valueAdd01"></select>
+                                    <select name="Add" class="form-control district" aria-label="Default select example"
+                                        v-model="valueAdd02"></select>
+                                </div>
+                                <div class="col-12 my-2">
+                                    <input id="text1" name="text1" type="tel" class="form-control" v-model="valueAdd03">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div id="regBtn" class="col-sm-12">
+                    <button type="button" class="btn btn-success me-3 ms-0 col-4 fs-5" v-on:click="sendData">送
+                        出</button>
+                    <button class="btn btn-secondary col-4 fs-5" v-on:click="returnPage">取 消</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 mx-0">
+            <img id="formPenImg" src="/images/adminCenter/pen.svg" alt="">
+        </div>
+    </div>
+
+
+
+
+
+
+    <script src="/javascripts/twCitySelector.js"></script>
+    <script>
+        new TwCitySelector({
+            el: '.twCitySelector',
+            elCounty: '.county', // 在 el 裡查找 element
+            elDistrict: '.district', // 在 el 裡查找 element
+            bootstrapStyle: true,
+        });
+    </script>
+    <script>
+        const returnIcon = Vue.createApp({
+            methods: {
+                returnPage() {
+                    window.location.href = '/adminCenter';
+                },
+            }
+        }).mount('#returnBtn');
+
+        let isUNC = false;
+        let isUMC = false;
+        let isUPC = false;
+        let isUPAC = false;
+        let isUPhC = false;
+        let isUVC = false;
+
+        const formHaveToWrite = Vue.createApp({
+            data() {
+                return {
+                    userName: '',
+                    warning01: '',
+                    userMail: '',
+                    warning02: '',
+                    userPwd: '',
+                    warning03: '',
+                    userPwdAgain: '',
+                    warning04: '',
+                    userPhone: '',
+                    warning05: '',
+                    keyVerValue: '',
+                    getVerValue: '',
+                }
+            },
+            methods: {
+                userNameCheck() {
+                    if (this.userName == '') {
+                        this.warning01 = '尚未填入';
+                        return;
+                    };
+                    if (this.userName.length < 6 || this.userName.length > 16) {
+                        this.warning01 = '長度須介於6-16字元之間';
+                        return;
+                    };
+                    this.warning01 = "";
+                    isUNC = true;
+                },
+                userMailCheck() {
+                    index = this.userMail.indexOf('@', 0);
+                    if (this.userMail == '') {
+                        this.warning02 = '尚未填入';
+                        return;
+                    };
+                    if (index == -1 || index == 0 || index == this.userMail.length - 1) {
+                        this.warning02 = 'E-Mail格式不正確';
+                        return;
+                    }
+                    this.warning02 = "";
+                    isUMC = true;
+                },
+                userPwdCheck() {
+                    if (this.userPwd == '') {
+                        this.warning03 = '尚未填入';
+                        return;
+                    };
+                    var regExp = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,}$/
+                    if (regExp.test(this.userPwd) == false) {
+                        this.warning03 = '須含英文字母及數字';
+                        return;
+                    };
+                    if (userPwd.value.length < 6 || userPwd.value.length > 16) {
+                        this.warning03 = '長度須介於6-16字元之間';
+                        return;
+                    };
+                    this.warning03 = "";
+                    isUPC = true;
+                },
+                userPwdAgainCheck() {
+                    if (this.userPwdAgain == '') {
+                        this.warning04 = '尚未填入';
+                        return;
+                    };
+                    if (this.userPwd != this.userPwdAgain) {
+                        this.warning04 = '請輸入與上個欄位相同的密碼';
+                        return;
+                    };
+                    this.warning04 = "";
+                    isUPAC = true;
+                },
+                userPhoneCheck() {
+                    if (this.userPhone == '') {
+                        this.warning05 = '尚未填入手機號碼';
+                        return;
+                    };
+                    var regExp = /^09\d{8}$/
+                    if (regExp.test(this.userPhone) == false) {
+                        this.warning05 = '手機號碼格式不正確';
+                        return;
+                    };
+                    this.warning05 = "";
+                    isUPhC = true;
+                },
+                verCheck() {
+                    if (this.userPhone == '') {
+                        this.warning05 = '尚未填入手機號碼';
+                        return;
+                    };
+                    if (this.keyVerValue == '') {
+                        this.warning05 = '尚未填入驗證碼';
+                        return;
+                    };
+                    if (this.keyVerValue != keyInVer) {
+                        this.warning05 = '驗證碼錯誤';
+                        return;
+                    };
+                    this.warning05 = "";
+                    isUVC = true;
+                },
+                getVer() {
+                    if (this.userPhone == '') {
+                        this.warning05 = '尚未填入手機號碼';
+                        return;
+                    };
+                    var regExp = /^09\d{8}$/
+                    if (regExp.test(this.userPhone) == false) {
+                        this.warning05 = '手機號碼格式不正確';
+                        return;
+                    };
+
+                    let sendPhone = { 'phone': this.userPhone };
+
+                    axios.post('/adminCenter/getver', sendPhone)
+                        .then((res) => {
+                            this.getVerValue = res.data
+                        })
+                        .catch((error) => { console.log(error) })
+                },
+            },
+        }).mount('#formHaveToWrite')
+
+        const userInfoName = Vue.createApp({
+            data() {
+                return {
+                    nameValue: '',
+                }
+            },
+        }).mount('#userInfoName');
+
+        const userInfobirth = Vue.createApp({
+            data() {
+                return {
+                    yearArr: [],
+                    monthArr: [],
+                    yyyyValue: '年',
+                    mmValue: '月',
+                    ddValue: '日',
+                    everyMonthDays: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+                }
+            },
+            created() {
+                for (let index = 1900; index < new Date().getFullYear() + 1; index++) {
+                    let obj = { year: index }
+                    this.yearArr.unshift(obj)
+                }
+                for (let index = 1; index < 13; index++) {
+                    let obj = { month: index }
+                    this.monthArr.push(obj)
+                }
+                // console.log(this.yearArr);
+            },
+            methods: {
+                yearOnChange() {
+                    if (this.yyyyValue % 4 == 0) {
+                        this.everyMonthDays[1] = 28
+                        if (this.yyyyValue % 100 == 0 && this.yyyyValue % 400 != 0) {
+                            this.everyMonthDays[1] = 29
+                        }
+                    } else {
+                        this.everyMonthDays[1] = 29
+                    }
+                },
+            },
+            computed: {
+                changeDay: function () {
+                    let createDays = []
+                    for (let index = 0; index < this.everyMonthDays[this.mmValue - 1]; index++) {
+                        let obj = { day: index + 1 }
+                        createDays.push(obj)
+                    }
+                    return createDays;
+                }
+            }
+        }).mount('#userInfobirth');
+
+        const userInfoSex = Vue.createApp({
+            data() {
+                return {
+                    valueSex: '',
+                };
+            },
+        }).mount('#userInfoSex');
+
+        const userInfoAdd = Vue.createApp({
+            data() {
+                return {
+                    valueAdd01: '',
+                    valueAdd02: '',
+                    valueAdd03: '',
+                };
+            },
+        }).mount('#userInfoAdd');
+
+        const regBtn = Vue.createApp({
+            data() {
+                return {
+                }
+            },
+            methods: {
+                sendData() {
+                    formHaveToWrite.userNameCheck();
+                    formHaveToWrite.userMailCheck();
+                    formHaveToWrite.userPwdCheck();
+                    formHaveToWrite.userPwdAgainCheck();
+                    formHaveToWrite.userPhoneCheck();
+                    // formHaveToWrite.verCheck();
+                    // || isUVC == false
+                    if (isUNC == false || isUMC == false || isUPC == false || isUPAC == false || isUPhC == false) {
+                        window.location.href = '#';
+                    } else {
+                        userData = {
+                            username: formHaveToWrite.userName,
+                            userpwd: formHaveToWrite.userPwd,
+                            usermail: formHaveToWrite.userMail,
+                            userphone: formHaveToWrite.userPhone,
+                            myname: userInfoName.nameValue,
+                            address: `{ "add01": "${userInfoAdd.valueAdd01}","add02": "${userInfoAdd.valueAdd02}" ,"add03": "${userInfoAdd.valueAdd03}" }`,
+                            userbirth: `{ "yyyy": "${userInfobirth.yyyyValue}" ,"mm":"${userInfobirth.mmValue}" ,"dd": "${userInfobirth.ddValue}" }`,
+                            usersex: userInfoSex.valueSex,
+                        }
+                        axios.post('/adminCenter/sendUserData', userData)
+                            .then((res) => {
+                                console.log(res.data);
+                                welcomeDialogBox.style.visibility = 'visible';
+                                dropBlock.style.visibility = 'visible';
+                                setTimeout(() => { window.location.href = '/adminCenter'; }, 2000);
+                            })
+                            .catch((error) => { console.log(error) })
+                    }
+                },
+                returnPage() {
+                    window.location.href = '/adminCenter';
+                    console.log('OK')
+                },
+            },
+        }).mount('#regBtn');
+
+    </script>
+
+</body>
+
+</html>

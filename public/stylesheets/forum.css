@@ -1,0 +1,713 @@
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    :root {
+        --myBeige: #C7B299;
+        --myGreen: #386B57;
+        --heart: rgb(214, 72, 96);
+        --myLightgray: rgb(243, 243, 243);
+        --myLightGreen: rgb(163, 186, 163);
+    }
+
+    #navBar {
+        width: 100%;
+        height: 150px;
+        /* background-color: var(--myGreen); */
+    }
+
+    #talk {
+        width: 90%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        /* align-items: center; */
+        padding: 30px 0px;
+    }
+
+    #talkCate {
+        /* margin-top: 60px; */
+        /* height: 400px; */
+        /* background-color: red; */
+        width: 170px;
+        border: 1px solid var(--myBeige);
+    }
+
+    #talkCate>div:hover {
+        cursor: pointer;
+    }
+
+    .cate, #popularCate, #latestCate {
+        margin: 0 auto;
+        /* background-color: red; */
+        height: 70px;
+        text-align: center;
+        line-height: 70px;
+        border-bottom: 1px solid var(--myBeige);
+        color: var(--myBeige);
+        font-size: 14pt;
+        /* font-weight: bold; */
+    }
+
+    .cate:nth-last-child(1) {
+        border-bottom: none;
+    }
+
+    .cate:hover, #popularCate:hover, #latestCate:hover {
+        background-color: var(--myLightGreen);
+        color: white;
+    }
+
+    .cate.active, #popularCate.active, #latestCate.active {
+        background-color: var(--myGreen);
+        color: white;
+    }
+
+    #talkOuter {
+        /* padding: 50px; */
+        width: 1000px;
+        background-color: white;
+        /* margin-top: 87px; */
+        padding-left: 65px;
+        border-radius: 5px;
+        display: flex;
+        flex-wrap: wrap;
+        /* background-color: black; */
+        /* text-align: center; */
+    }
+
+    #talkTitle {
+        margin-top: 50px;
+        margin-bottom: 50px;
+        margin-left: 10px;
+    }
+
+    .arti {
+        padding: 20px;
+        margin: 0 10px;
+        margin-bottom: 20px;
+        border: 1px solid var(--myBeige);
+        border-radius: 5px;
+        width: 280px;
+        height: 450px;
+        cursor: pointer;
+        background-color: white;
+        /* display: inline-block; */
+        /* background-color: black; */
+    }
+
+    .imgOuter {
+        text-align: center;
+    }
+
+    .artiTitle {
+        width: 200px;
+        height: 300px;
+        object-fit: contain;
+    }
+
+    .artiContent {
+        margin-top: 10px;
+        height: 42px;
+        overflow: hidden;
+        /* white-space: nowrap; */
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        white-space: normal;
+    }
+
+    hr {
+        margin: 3px 0px;
+    }
+
+    .likeComment {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .fa-heart {
+        font-size: 15pt;
+        color: gray;
+    }
+
+    .fa-heart.heartOuter {
+        color: var(--heart);
+    }
+
+    .fa-comment-alt {
+        font-size: 13pt;
+        color: darkgray;
+        margin-top: 3px;
+        margin-left: 20px;
+    }
+
+    .likeCommentSpan {
+        margin-left: 3px;
+    }
+
+    /* 點開之後的block */
+
+    .heartAni {
+        /* font-size: 80pt; */
+        z-index: 0;
+        color: var(--heart);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .heartAni.show {
+        animation-name: heartChange;
+        animation-duration: 0.8s;
+        animation-iteration-count: 1;
+    }
+
+    @keyframes heartChange {
+        0% {
+            z-index: 0;
+            font-size: 10pt;
+            /* opacity: 0%; */
+        }
+        5% {
+            font-size: 25pt;
+            /* opacity: 20%; */
+        }
+        10% {
+            z-index: 5;
+            font-size: 40pt;
+            /* opacity: 40%; */
+        }
+        15% {
+            font-size: 55pt;
+            /* opacity: 30%; */
+        }
+        20% {
+            font-size: 70pt;
+            /* opacity: 40%; */
+        }
+        25% {
+            font-size: 80pt;
+            /* opacity: 50%; */
+        }
+        30% {
+            font-size: 80pt;
+            /* opacity: 60%; */
+        }
+        35% {
+            font-size: 78pt;
+            /* opacity: 70%; */
+        }
+        40% {
+            font-size: 80pt;
+            /* opacity: 80%; */
+        }
+        45% {
+            font-size: 80pt;
+        }
+        50% {
+            font-size: 80pt;
+            /* opacity: 100%; */
+        }
+        60% {
+            font-size: 80pt;
+            /* opacity: 100%; */
+        }
+        70% {
+            font-size: 80pt;
+            /* opacity: 100%; */
+        }
+        80% {
+            font-size: 80pt;
+            /* opacity: 100%; */
+        }
+        90% {
+            font-size: 40pt;
+            /* opacity: 100%; */
+        }
+        100% {
+            font-size: 10pt;
+            /* opacity: 100%; */
+            z-index: 0;
+        }
+    }
+
+    .heartInner, .likeCommentSpanInner {
+        font-size: 25pt;
+    }
+
+    #likecomtInner {
+        width: 100%;
+        /* border-top: 1px solid lightgray; */
+        /* border-bottom: 1px solid lightgray; */
+        padding: 10px 0px;
+        margin-bottom: 20px;
+    }
+
+    #artiMain {
+        border: 5px solid var(--myBeige);
+        z-index: 1;
+        /* height: 700px; */
+        width: 700px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding-top: 20px;
+        background-color: white;
+        display: none;
+    }
+
+    #artiSub {
+        width: 100%;
+        height: 585px;
+        overflow: scroll;
+        text-align: center;
+    }
+
+    #artiMain.show {
+        display: block;
+        animation-name: showing;
+        animation-duration: 0.5s;
+        animation-iteration-count: 1;
+    }
+
+    #artiMainContent {
+        margin-top: 30px;
+    }
+
+    small {
+        color: gray;
+    }
+
+    #closeMain {
+        width: 40px;
+        height: 40px;
+        /* border: 1px solid darkgray; */
+        border: none;
+        border-radius: 50%;
+        color: darkgray;
+        font-size: 18pt;
+        text-align: center;
+        line-height: 40px;
+        float: right;
+        cursor: pointer;
+        margin-right: 30px;
+        /* position: fixed; */
+    }
+
+    #imgMain {
+        width: 500px;
+        height: 500px;
+        object-fit: contain;
+    }
+
+    #closeMain:focus {
+        outline: none;
+    }
+
+    /* 發文的＋ */
+
+    #artiNew {
+        position: fixed;
+        width: 80px;
+        height: 80px;
+        font-size: 18pt;
+        text-align: center;
+        line-height: 80px;
+        bottom: 50px;
+        right: 50px;
+        /* border: 3px solid var(--myGreen); */
+        background-color: var(--myBeige);
+        border-radius: 50%;
+        color: white;
+    }
+
+    #artiNew:hover {
+        background-color: var(--myGreen);
+        color: white;
+        cursor: pointer;
+    }
+
+    /* html */
+
+    /* html.noscroll {
+        position: fixed;
+        overflow-y: scroll;
+        width: 100%;
+    }
+
+    html.fixWindow {
+        position: fixed;
+        width: 100%;
+    } */
+
+    /* 留言 */
+
+    .commentDiv {
+        width: 500px;
+        height: min-content;
+        background-color: var(--myLightgray);
+        /* z-index: 1; */
+        padding: 5px 15px;
+        border-radius: 20px;
+    }
+
+    /* 發文的那個block */
+
+    #artiNewDiv {
+        border: 5px solid var(--myBeige);
+        z-index: 2;
+        height: 700px;
+        width: 700px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 30px;
+        overflow: scroll;
+        background-color: white;
+        display: none;
+        /* animation-name: noshowing;
+        animation-duration: 1s;
+        animation-iteration-count: 1; */
+    }
+
+    #artiNewDiv.show {
+        display: block;
+        animation-name: showing;
+        animation-duration: 0.5s;
+        animation-iteration-count: 1;
+    }
+
+    @keyframes showing {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    #closeNew {
+        width: 40px;
+        height: 40px;
+        /* border: 1px solid darkgray; */
+        border: none;
+        border-radius: 50%;
+        color: darkgray;
+        font-size: 18pt;
+        text-align: center;
+        line-height: 40px;
+        float: right;
+        cursor: pointer;
+    }
+
+    #closeNew:focus {
+        outline: none;
+    }
+
+    /* boottttttttttttttttt strap */
+
+    .bootImg {
+        width: 500px;
+        height: 600px;
+        object-fit: contain;
+    }
+
+    .carousel-control-next-icon {
+        background-color: black;
+    }
+
+    .carousel-control-prev-icon {
+        background-color: black;
+    }
+
+    li.carouselLI {
+        background-color: black;
+    }
+
+    div#carouselExampleIndicators {
+        width: 600px;
+        height: 600px;
+        background-color: gray;
+    }
+
+    html, body {
+        position: relative;
+        height: 100%;
+    }
+
+    body {
+        background: #eee;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color: #000;
+        margin: 0;
+        padding: 0;
+    }
+
+    .swiper-container {
+        /* width: 100%;
+        height: 100%; */
+        margin-left: 60px;
+    }
+
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+    }
+
+    /* swipeRRRRRRRRRRRRRRRR */
+
+    .imgincar {
+        width: 500px;
+        height: 500px;
+        object-fit: contain;
+    }
+
+    .swiper-button-prev:focus, .swiper-button-next:focus {
+        outline: none;
+    }
+
+    div#nextBtn, div#prevBtn {
+        color: var(--myGreen)
+    }
+
+    /* 留言處 */
+
+    #comtPlace {
+        width: 100%;
+        height: 45px;
+        background-color: red;
+        border-top: 5px solid var(--myBeige);
+        position: relative;
+    }
+
+    #comtInput {
+        width: 100%;
+        height: 40px;
+        resize: none;
+        padding: 7px;
+        border: none;
+        /* display: inline; */
+        /* background-color: darkgrey; */
+        /* position: absolute;
+        left: 0;
+        bottom: 0; */
+        /* z-index: 2; */
+    }
+
+    #comtInput::-webkit-scrollbar {
+        display: none;
+    }
+
+    #comtInput:focus {
+        outline: none;
+    }
+
+    #comtSubmit {
+        border: none;
+        background-color: var(--myBeige);
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        z-index: 3;
+        width: 70px;
+        height: 40px;
+    }
+
+    #comtSubmit:focus {
+        outline: none;
+    }
+
+    #contentBox {
+        width: 500px;
+        margin: 0 auto;
+        margin-top: 10px;
+        text-align: left;
+    }
+
+    #comtText {
+        width: 500px;
+        margin: 0 auto;
+        text-align: left;
+    }
+
+    .comtSelf {
+        width: 500px;
+        background-color: var(--myLightgray);
+        /* width: fit-content; */
+        padding: 7px 15px;
+        border-radius: 10px;
+    }
+
+    /* 刪除留言 */
+
+    .delComt {
+        border: none;
+        color: darkgrey;
+        /* z-index: 3; */
+        float: right;
+    }
+
+    .comtI {
+        font-size: 9pt;
+    }
+
+    /* 發文文 */
+
+    input[type="file"] {
+        width: 200px;
+        background-color: var(--myBeige);
+        border: none;
+    }
+
+    #contentArea {
+        width: 600px;
+        height: 430px;
+        overflow: scroll;
+        resize: none;
+        padding: 10px 10px;
+        font-size: 14pt;
+        border: 2px solid var(--myBeige);
+        border-radius: 5px;
+        margin-top: 20px;
+    }
+
+    #contentArea:focus {
+        outline: none;
+    }
+
+    #postBtn {
+        width: 80px;
+        height: 80px;
+        font-size: 13pt;
+        font-weight: bold;
+        color: white;
+        background-color: var(--myBeige);
+        border: none;
+        border-radius: 50%;
+        float: right;
+        margin-top: 10px;
+        margin-right: 25px;
+    }
+
+    #postBtn:hover {
+        background-color: var(--myGreen);
+    }
+
+    .smallimg {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+    }
+
+    #selectCate {
+        width: 150px;
+        margin-top: 10px;
+        padding: 5px 0px;
+        padding-left: 8px;
+        border: 2px solid var(--myBeige);
+        border-radius: 5px;
+    }
+
+    #selectCate:focus {
+        outline: none;
+    }
+
+    #pageDiv {
+        margin: 0 auto;
+        padding-top: 20px;
+        padding-bottom: 120px;
+        font-size: 14pt;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .pageA {
+        color: var(--myGreen);
+        text-decoration: none;
+    }
+
+    .pageInner {
+        border-radius: 50%;
+        background-color: var(--myLightgray);
+        width: 40px;
+        height: 40px;
+        margin: 0 2px;
+        text-align: center;
+        line-height: 40px;
+        /* padding: 8px 10px; */
+    }
+
+    .pageInner:hover {
+        cursor: pointer;
+        background-color: var(--myGreen);
+        color: white;
+    }
+
+    .pageA:hover {
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .pageA:focus {
+        text-decoration: none;
+    }
+
+    /* 搜尋 */
+
+    /* #searchInput{
+        
+    } */
+
+    #searchIcon {
+        background-color:#386b57 ;
+        color: white;
+        transition: all 0s ease;
+    }
+
+    #searchIcon:hover {
+        background-color:white ;
+        color: #386b57;
+        transition: all 0s ease;
+        opacity: 0.3;
+    }
+
+    #searchCH{
+        position: absolute;
+        right: 250px;
+        top: 20px;
+        width: 300px;
+        height: 50px;
+        border-radius: 30px;
+        border: 1px solid white;
+        background-color: gray;
+        padding: 5px 15px;
+    }
+
+    #searchCH:focus{
+        outline: none;
+    }
+
+    

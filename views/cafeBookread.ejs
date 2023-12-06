@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>page flip</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.9.24/paper-full.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="stylesheet" href="/stylesheets/cafeShop/bookread.css">
+</head>
+<body>
+
+    <div class="bookshelf-nav">
+        <h1>午後時光</h1>
+        <ul>
+            <li><a href="/cafeShop">回到大廳</a></li>
+            <li><a href="/cafeShop/bookshelf">回到書架</a></li>
+        </ul>
+    </div>
+
+    <div class="flipbook-container">
+        <div id="flipbook" class="flipbook">
+            <div class="hard" id="book_cover">
+                <h2><%= bookdata[0].book_title %></h2>
+                <span><i class="fas fa-feather-alt"></i><%= bookdata[0].book_author %></span>
+            </div>
+    
+            <div class="soft"> 
+                <span>- 1 -</span> 
+                <p><%= desc[0] %></p>
+            </div>
+            <div class="soft"> 
+                <span>- 2 -</span> 
+                <p><%= desc[1] %></p>
+            </div>
+            <div class="soft"> 
+                <span>- 3 -</span> 
+                <p><%= desc[2] %></p>
+            </div>
+            <div class="soft"> 
+                <span>- 4 -</span> 
+                <p><%= desc[3] %></p>
+            </div>
+            <div class="soft"> 
+                <span>- 5 -</span> 
+                <p><%= desc[4] %></p>
+            </div>
+            <div class="soft"> 
+                <span>- 6 -</span> 
+                <p><%= desc[5] %></p>
+            </div>
+            <div class="soft"> 
+                <span>- 7 -</span> 
+                <p><%= desc[6] %></p>
+            </div>
+            <div class="soft"> 
+                <span>- 8 -</span> 
+                <p><%= desc[7] %></p>
+            </div>
+            <div class="soft"> 
+                <span>- 9 -</span> 
+                <p><%= desc[8] %></p>
+            </div>
+            <div class="hard"></div>
+        </div> 
+        <div class="flip-func">
+            <label>頁數:</label>
+            <input type="number" id="pageFld" min=1/>
+            <button id="prevBtn" class="btn">上一頁</button>
+            <button id="nextBtn" class="btn">下一頁</button>
+        </div>
+    </div>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.2/qs.min.js" integrity="sha256-TDxXjkAUay70ae/QJBEpGKkpVslXaHHayklIVglFRT4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="/javascripts/cafeShop/turn.js"></script>
+
+    <script>
+        //sweetalert提示訊息
+        Swal.fire({
+            icon: 'info',
+            title: '使用方法',
+            text: '請點擊書籍右下角或點選下方導覽列翻頁'
+        })
+       
+       //翻頁效果
+       $("#flipbook").turn({
+		width: 900,
+		height: 530,
+		autoCenter: true
+        });
+
+        $("#pageFld").val($("#flipbook").turn("page"));
+
+        $("#flipbook").bind("turned", function(event, page, view) {
+                $("#pageFld").val(page);
+        });
+
+        $("#pageFld").change(function() {
+                $("#flipbook").turn("page", $(this).val());
+        });
+
+        $("#prevBtn").click(function() {
+                $("#flipbook").turn("previous");
+        });
+
+        $("#nextBtn").click(function() {
+                $("#flipbook").turn("next");
+        });
+    </script>
+</body>
+</html>

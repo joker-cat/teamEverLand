@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,900&display=swap');
+
+
+html{
+    height: 100%;
+    overflow: hidden;
+}
+body{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url("../../images/cafeShop/bookshelf.jpg");
+    background-size: cover;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-family: tahoma;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bookshelf-nav h1{
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #ffffff;
+    font-size: 25px;
+    font-weight: bold;
+    margin: 5px;
+}
+.bookshelf-nav ul{
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    list-style: none;
+}
+.bookshelf-nav ul li{
+   margin: 0 15px;
+}
+.bookshelf-nav ul li a{
+   color:#fff;
+   text-decoration: none;
+   font-size: 20px;
+   font-weight: bold;
+}
+
+/*翻書效果*/
+.flipbook-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+.flipbook{
+    margin-bottom: 10px;
+}
+.flip-func input{
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    height: 30px;
+}
+.flip-func button.btn{
+    background-color: #386B57;
+    color: #fff;
+    font-weight: bolder;
+    padding: 2px 30px;
+}
+.flip-func input{
+    text-indent: 5px;
+}
+.flip-func button.btn:hover{
+    background-color: #2d5847;
+}
+label{
+    color: #fff;
+    font-size: 20px;
+    font-weight: bolder;
+}
+#book_cover{
+    background-image: url("../../images/cafeShop/book_cover.jpg");
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: bolder;
+}
+.hard span i{
+    margin-right: 10px;
+}
+.soft {
+   background-color: #f0ebe6;
+}
+.soft span{
+    display: flex;
+    justify-content: center;
+}
+.soft p{
+    padding: 9px 11px;
+    font-size: 13px;
+    line-height: 22px;
+}
+
+div.swal2-actions button.swal2-styled.swal2-confirm{
+    background-color: #386B57;
+}

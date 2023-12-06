@@ -1,0 +1,127 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  background-color: #386b57;
+}
+
+#searchorder {
+  width: 50%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+#searchorder h1 {
+  font-size: 2.6rem;
+  letter-spacing: 2.2px;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+#searchorder #goback {
+  position: fixed;
+  right: 50px;
+  top: 50px;
+  display: block;
+  width: 150px;
+  margin: 0 auto;
+  letter-spacing: 3px;
+  border-radius: 5px;
+  background-color: darksalmon;
+}
+
+#searchorder #goback button {
+  width: 100%;
+  height: 100%;
+  padding: 5px 10px;
+  outline: none;
+  border: none;
+  font-size: 2.2rem;
+  background: transparent;
+}
+
+#searchorder ul {
+  width: 100%;
+  padding: 20px;
+  list-style-type: none;
+  background-color: #ffffff;
+  border-radius: 5px;
+}
+
+#searchorder ul .orderinfo {
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  position: relative;
+  border-bottom: 2px solid black;
+}
+
+#searchorder ul .orderinfo > div {
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  font-weight: 200;
+  margin-bottom: 2px;
+}
+
+#searchorder ul .orderinfo > div:nth-child(1) {
+  margin-bottom: 10px;
+}
+
+#searchorder ul .orderinfo > div:nth-child(2) {
+  font-size: 1.5rem;
+  position: absolute;
+  right: 10px;
+  top: 20px;
+}
+
+#searchorder ul .orderinfo > div:last-child {
+  text-align: right;
+  font-size: 2.4rem;
+  padding: 0 30px;
+  color: red;
+}
+
+#searchorder ul .orderinfo > div:last-child span {
+  color: black;
+  border-bottom: 1px solid black;
+}
+
+#searchorder ul .orderinfo ul {
+  padding: 10px;
+}
+
+#searchorder ul .orderinfo ul .orderobj {
+  width: 100%;
+  height: 160px;
+  margin: 10px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+#searchorder ul .orderinfo ul .orderobj .imgdiv {
+  width: 26%;
+  height: 100%;
+}
+
+#searchorder ul .orderinfo ul .orderobj .imgdiv div {
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#searchorder ul .orderinfo ul .orderobj:nth-child(odd) {
+  background-color: #dfcb99;
+}
+
+#searchorder ul .orderinfo ul .orderobj:nth-child(even) {
+  background-color: #cfcabe;
+}
+/*# sourceMappingURL=ordersearch.css.map */

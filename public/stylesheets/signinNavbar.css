@@ -1,0 +1,215 @@
+/* 回上一頁 */
+#returnIcon {
+  position: fixed;
+  top: 15px;
+  /* right: 20px; */
+  width: 60px;
+  height: 60px;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  border: 1px solid white;
+  border-radius: 50%;
+  background-color: #386b57;
+  text-align: center;
+  line-height: 60px;
+  font-size: 30px;
+  color: white;
+  z-index: 99;
+  transition: all 1s ease;
+  cursor: pointer;
+}
+
+#returnIcon:hover {
+  background-color: white;
+  color: #386b57;
+  transition: all 0s ease;
+}
+
+/* 導覽球 */
+/* ----------------------------------------------- */
+#iconNav {
+  position: fixed;
+  top: 15px;
+  right: 70px;
+  width: 110px;
+  height: 60px;
+  margin: 0;
+  padding: 0;
+  /* border: 1px solid black; */
+  z-index: 9;
+}
+
+#iconNav:hover {
+  height: 210px;
+}
+
+/* :not(div:nth-of-type(1)) */
+.iconBall {
+  position: absolute;
+  top: 0px;
+  right: 25px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
+  border-radius: 50%;
+  background-color: #386b57;
+  text-align: center;
+  /* line-height: 60px; */
+  color: white;
+  z-index: 9;
+  transition: all 1s ease;
+  cursor: pointer;
+}
+
+#homeIcon,
+#goWherebox,
+.fa-chevron-right,
+.fa-chevron-left {
+  opacity: 0;
+}
+
+#goWhereBox {
+  position: relative;
+  transition: all 1s ease;
+}
+
+.fa-chevron-right {
+  position: absolute;
+  top: 20px;
+  left: 88px;
+  font-size: 24px;
+}
+
+.fa-chevron-left {
+  position: absolute;
+  top: 20px;
+  left: 7px;
+  font-size: 24px;
+}
+
+#iconNav:hover #arrIcon {
+  background-color: white;
+  color: #386b57;
+  opacity: 0.3;
+  cursor: default;
+}
+
+#iconNav:hover #homeIcon {
+  transform: translateY(65px);
+  transition: all 1s ease;
+  opacity: 1;
+}
+
+#iconNav:hover #goWhereBox {
+  transform: translateY(130px);
+  transition: all 1s ease;
+  opacity: 1;
+}
+
+#homeIcon:hover,
+#goWhereIcon:hover {
+  background-color: white;
+  color: #386b57;
+  transition: all 0s ease;
+}
+
+.fa-chevron-right:hover,
+.fa-chevron-left:hover {
+  cursor: pointer;
+}
+
+#iconNav:hover .fa-chevron-right,
+#iconNav:hover .fa-chevron-left {
+  opacity: 1;
+}
+
+/* 登入大頭 */
+/* ----------------------------------------------- */
+#signHead {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  border: 1px solid white;
+  border-radius: 50%;
+  background-color: rgb(99, 99, 99);
+  text-align: center;
+  line-height: 60px;
+  font-size: 30px;
+  color: rgb(150, 150, 150);
+  z-index: 9;
+  transition: all 1s ease;
+
+}
+
+#signHead:hover {
+  background-color: white;
+  transition: all 1s ease;
+  cursor: pointer;
+}
+
+/* 登入後 身分證 */
+
+#signInAfter {
+  position: fixed;
+  top: 80px;
+  right: 15px;
+  width: 180px;
+  height: 220px;
+  padding: 5px;
+  border: solid 2px white;
+  border-radius: 15px;
+  background-color: rgba(56, 107, 87, 1);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  z-index: 9;
+}
+
+#bigHeadImg {
+  width: 80px;
+  height: 80px;
+  border: 2px solid white;
+  border-radius: 50%;
+  clip-path: circle(50% at 50% 50%);
+  background-color: grey;
+}
+
+#closeUserInfo {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 30px;
+  color: #fff;
+}
+
+#closeUserInfo:hover{
+  cursor: pointer;
+}
+
+
+/* LOGO */
+#mainLogo {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  width: 15%;
+  /* height: 10%; */
+  z-index: 99;
+}
+
+#bigHead_Img {
+  object-fit: contain;
+  object-position: center;
+  width: 100%;
+}

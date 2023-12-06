@@ -1,0 +1,206 @@
+/* #try {
+  overflow: scroll;
+} */
+.section1 {
+  display: flex;
+  background-color: rgba(48, 48, 48, 0.2);
+}
+/* ---------------- section 1 below ------------------- */
+/* section 1 left */
+
+.section1_left {
+  background-color: #fff;
+  width: 20%;
+  margin-top: 15px;
+  /* height: 100vh; */
+}
+.Category {
+  height: 30px;
+  margin: 30px 0;
+}
+.Category p {
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+  font-weight: bolder;
+  margin-bottom: 15px;
+}
+.Category_item {
+  margin: 30px 0;
+}
+
+/* end of section 1 left */
+
+/* section 1 right */
+.section1_right {
+  display: grid;
+  width: 80%;
+  height: 87vh;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-row-gap: 20px;
+  grid-column-gap: 20px;
+  /* background-color: #fdfdfd; */
+  /* overflow: scroll; */
+  /* color: #492645; */
+  padding: 15px;
+  overflow: scroll;
+}
+
+.section1_right img {
+  padding: 20px;
+}
+.items_block {
+  /* background-color: rgba(255, 255, 255, 0.824); */
+}
+/* end of section 1 right */
+/* ---------------- end of section 1 ------------------- */
+.items_block {
+  cursor: pointer;
+  background-color: #fff;
+}
+.items_block p {
+  margin: 10px;
+  text-decoration: none;
+}
+
+/* product intro right div below */
+/* side hamburger menu below*/
+.show_rightside {
+  width: 40%;
+  height: 100%;
+  background-color: rgba(48, 48, 48, 0.2);
+  position: fixed;
+  top: 0;
+  right: -40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: right 0.8s;
+  z-index: 10;
+  /* overflow: hidden; */
+}
+
+/* change right-400px to 0, in order to see the side bar  */
+.hambuger_cross_right {
+  right: 0;
+}
+
+#rightsidebackdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  opacity: 0.1;
+  display: block;
+  z-index: 11;
+}
+
+.burger_icon_right {
+  width: 35px;
+  height: 30px;
+  position: fixed;
+  top: 2%;
+  right: 2%;
+  /* background-color: coral; */
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  z-index: 12;
+}
+
+.burgerline_right {
+  width: 100%;
+  height: 5px;
+  background-color: black;
+  border-radius: 20px;
+  transition: all 0.8s;
+}
+
+.hambuger_cross1 .line1 {
+  transform: rotateZ(-45deg) translate(-9px, 7px);
+}
+
+.hambuger_cross1 .line2 {
+  opacity: 0;
+}
+
+.hambuger_cross1 .line3 {
+  transform: rotateZ(45deg) translate(-7px, -5px);
+}
+/* product intro section below */
+.product_intro_grid {
+  /* how to scroll??????????????? */
+  position: relative;
+  overflow: scroll;
+  display: grid;
+  /* width: 75%; */
+  grid-template-columns: 1fr 1fr;
+  grid-row-gap: 20px;
+  grid-column-gap: 20px;
+  background-color: #fdfdfd;
+  /* color: #492645; */
+  padding: 15px;
+  z-index: 12;
+}
+.product_text {
+  margin-top: 40px;
+}
+.img_div {
+  /* display: grid; */
+  /* width: 75%; */
+  grid-template-rows: 3fr 1fr;
+  grid-row-gap: 20px;
+  grid-column-gap: 20px;
+  /* background-color: #fdfdfd; */
+  /* color: #492645; */
+}
+.sub_img {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 5px;
+}
+.ct_btn {
+  border: none;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 50%;
+  margin: 5px;
+  color: white;
+  background-color: rgb(5, 69, 88);
+}
+#num_input {
+  border: none;
+  width: 50px;
+  height: 30px;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 5px;
+  color: white;
+  background-color: rgb(5, 69, 88);
+}
+.add_btn {
+  border: none;
+  width: 100px;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  color: white;
+  background-color: tomato;
+}
+.love_btn {
+  border: none;
+  width: 100px;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  color: tomato;
+  border-color: tomato;
+}

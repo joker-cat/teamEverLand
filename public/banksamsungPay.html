@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>samsungPay</title>
+
+    <style>
+        a {
+            font-weight: bold;
+        }
+
+        .navbar-brand>img {
+            height: 50px;
+            object-fit: contain;
+        }
+
+        h3 {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .myHead {
+            flex: auto;
+        }
+
+        .btn-outline-success {
+            margin-left: 10px;
+        }
+
+        .btn-outline-secondary {
+            margin-right: 10px;
+        }
+
+        .nav-link {
+            margin-right: 6px;
+        }
+
+        table,
+        th,
+        td {
+            border: none;
+            border-collapse: collapse;
+
+        }
+
+        td {
+            padding: 5px;
+            text-align: left;
+
+        }
+
+        table {
+            margin-left: auto;
+            margin-right: auto;
+            width: 940px;
+        }
+
+        thead th {
+            background-color: lightskyblue;
+            text-align: center;
+            padding: 10px;
+
+        }
+
+        .spt {
+            border-bottom: 1px solid black;
+        }
+
+        td>a:hover {
+            text-decoration: none;
+
+        }
+
+        footer div {
+            height: "800px";
+
+        }
+
+        .carousel-inner img {
+            width: 100%;
+            height: 450px;
+        }
+
+        .lpimg {
+            width: 50px;
+        }
+
+        .tab-pane>img {
+            width: 350px;
+            height: 200px;
+            object-fit: contain;
+        }
+
+        td>img {
+            width: 200px;
+        }
+
+        .ftp {
+            margin-left: 360px;
+        }
+
+        @media screen and(max-width: 600px) {
+            .card {
+                width: 100%;
+            }
+        }
+    </style>
+
+
+    <!-- bootstrap 5-->
+    <link rel="stylesheet" href="/build/_css/bootstrap.min.css">
+    <script src="/build/_js/bootstrap.bundle.min.js"></script>
+    <script src="/build/_js/popper.min.js"></script>
+    <script src="/build/_js/bootstrap.min.js"></script>
+
+    <!-- JQUERY 3.4.1 -->
+    <!-- <script src="/build/_js/jquery-3.4.1.js"></script> -->
+
+    <!-- VUE 3-->
+    <!-- <script src="https://unpkg.com/vue@next"></script> -->
+
+    <!-- axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- 共用 -->
+    <link rel="stylesheet" href="/stylesheets/signinNavbar.css">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div>
+        <nav class="navbar navbar-expand-sm bg-white navbar-light fixed-top" style="z-index: 5;">
+            <!-- Brand -->
+            <a class="navbar-brand" href="#"><img src="/images/bank/samsungPay/Samsung-Pay-Logo.jpg" alt=""></a>
+
+            <!-- Links -->
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown active">
+                    <a class="nav-link" href="#" id="navbardropQRcode" data-toggle="dropdown">
+                        Samsung Pay介紹
+                    </a>
+
+                </li>
+                <li class="nav-item dropdown active">
+                    <a class="nav-link" href="#" id="navbardropNFC" data-toggle="dropdown">
+                        更多資訊
+                    </a>
+
+                </li>
+                <li class="nav-item dropdown active">
+                    <a class="nav-link" href="#" id="navbardrop" data-toggle="dropdown">
+                        通路優惠活動
+                    </a>
+
+                </li>
+            </ul>
+            <div class="myHead"></div>
+            <!-- 右邊有放大鏡的搜尋 -->
+            <div class="mySearch">
+
+                <form class="form-inline" action="/action_page.php">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                    <button type="button" class="btn btn-outline-primary">登入 <i class="fa fa-bars"></i></button>
+                    <button type="button" class="btn btn-outline-primary">註冊 <i class="fa fa-bars"></i></button>
+                </form>
+
+
+            </div>
+
+    </div>
+    <br><br>
+
+    <div id="demo" class="carousel slide" data-ride="carousel">
+
+        <!-- Indicators -->
+        <ul class="carousel-indicators">
+            <li data-target="#demo" data-slide-to="0" class="active"></li>
+            <li data-target="#demo" data-slide-to="1"></li>
+            <li data-target="#demo" data-slide-to="2"></li>
+        </ul>
+
+        <!-- The slideshow -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/images/bank/samsungPay/1354x584_A.webp" alt="Los Angeles" width="1100" height="500">
+                <div class="carousel-caption">
+                    <h3>聰明的行動支付</h3>
+
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="/images/bank/samsungPay/rewards.webp" alt="Chicago" width="1100" height="500">
+                <div class="carousel-caption">
+                    <h3>沒帶錢包也能隨時付款</h3>
+
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="/images/bank/samsungPay/kv-5_0916.webp" alt="New York" width="1100" height="500">
+                <div class="carousel-caption">
+                    <p></p>
+                    <h3>悠遊卡全面開通</h3>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#demo" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+    </div>
+    <br><br>
+
+    <h3>最新活動</h3>
+    <div class="tbdiv">
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="2">銀行</th>
+                    <th>活動日期</th>
+                    <th>優惠內容</th>
+
+                </tr>
+            </thead>
+
+            <tr>
+                <td rowspan="3"><img src="/images/bank/piPay/Pi_blue.png" alt=""></td>
+                <td class="spt" rowspan="3"><a href="https://www.piapp.com.tw/picard" target="blank">Pi 拍錢包信用卡</a></td>
+                <td class="spt" rowspan="3">~2021/ 8/31</td>
+                <td>1. 國內消費 1.5% P幣</td>
+
+            </tr>
+            <tr>
+                <td>2. 海外消費 3% P幣</td>
+
+            </tr>
+            <tr>
+                <td class="spt">3. 新戶首刷禮贈500 P幣</td>
+
+            </tr>
+            <tbody>
+                <tr>
+                    <td rowspan="3"><img src="/images/bank/linePay/聯邦銀行-賴點一卡通御璽卡.jpg" alt=""></td>
+                    <td class="spt" rowspan="3"><a
+                            href="https://activity.ubot.com.tw/2021LaiDianCard/index.htm?gclid=CjwKCAiA6aSABhApEiwA6Cbm_9kqABO0Gkdptrm_Lc0Vv7JIqV6-iiXMSUYQUzAJWKQCXRQTpi6I8BoCAgEQAvD_BwE"
+                            target="blank">聯邦銀行賴點卡</a></td>
+                    <td class="spt" rowspan="3">~2021/12/31</td>
+                    <td>1. 國內最高 2%<img class="lpimg" src="/images/bank/linePay/line_points-logo.png" alt="">無上限</td>
+                </tr>
+                <tr>
+                    <td>2. 國外消費 3%</td>
+
+                </tr>
+                <tr>
+                    <td class="spt">3. 新戶核卡後 30日內，消費累積滿 888元(含)以上，享好禮二選一</td>
+
+                </tr>
+            </tbody>
+
+            <tr>
+                <td rowspan="3"><img src="/images/bank/ubear/yellow.png" alt=""></td>
+                <td class="spt" rowspan="3"><a href="https://www.esunbank.com.tw/event/credit/UBear/index.html"
+                        target="blank">玉山ＵBear信用卡</a></td>
+                <td class="spt" rowspan="3">~2022/ 2/28</td>
+                <td>1. 國內外一般消費享1%現金回饋</td>
+            </tr>
+            <tr>
+                <td>2. 指定娛樂/影音平台消費享12%現金回饋</td>
+
+            </tr>
+            <tr>
+                <td class="spt"> &emsp;</td>
+
+            </tr>
+
+
+        </table>
+    </div>
+
+    <br><br>
+    <div class="container">
+        <h3>精選合作商家</h3>
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active samsungPay" data-toggle="tab" href="#home">信用卡實體通路</a>
+            </li>
+            <li class="nav-item samsungPay">
+                <a class="nav-link" data-toggle="tab" href="#menu1">信用卡線上通路</a>
+            </li>
+            <li class="nav-item samsungPay">
+                <a class="nav-link" data-toggle="tab" href="#menu2">悠遊卡</a>
+
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div id="home" class="container tab-pane active"><br>
+                <br><br>
+                <img src="/images/bank/samsungPay/logo-05.jpg" alt="">
+                <img src="/images/bank/samsungPay/下載.png" alt="">
+                <img src="/images/bank/samsungPay/82.85bf3a3c.jpg" alt="">
+                <br><br>
+            </div>
+            <div id="menu1" class="container tab-pane fade"><br>
+                <br><br>
+                <img src="/images/bank/samsungPay/24HLOGO.png" alt="">
+                <img src="/images/bank/samsungPay/maxresdefault.jpg" alt="">
+                <img src="/images/bank/samsungPay/onepage1000_02.webp" alt="">
+                <br><br>
+            </div>
+            <div id="menu2" class="container tab-pane fade"><br><br>
+                <div class="row">
+                    <div class="col-sm-4 card mx-auto"><a
+                            href="https://www.esunbank.com.tw/event/credit/UBear/index.html" target="_blank"><img
+                                class="card-img-top img-thumbnail" src="/images/bank/samsungPay/sec5_pic2-5.webp"
+                                alt=""></a>
+                        <div class="card-body ">
+                            <p class="card-title"> 悠遊卡功能正式開通</p>
+                            <h4>Samsung Pay 悠遊卡</h4>
+                            <p class="card-text">一指完成行動加值</p>
+                            <a href="https://www.samsung.com/tw/samsungpay/easycard/?_ga=2.147081847.1368139407.1611536637-80065903.1606877970&_gac=1.150776260.1609898963.CjwKCAiAudD_BRBXEiwAudakX3eXXw1rlJ7x2LF7I2-JfwXisHX57pClfEni981hUX6Y8I34LJBssRoCf0YQAvD_BwE#s3"
+                                target="_blank" class="btn btn-outline-primary">立即開卡</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 card mx-auto"><a href="https://www.skbank.com.tw/skbank_cashback_eventpage/"
+                            target="_blank"><img id="easycard" class="card-img-top img-thumbnail"
+                                src="/images/bank/samsungPay/sec5_pic1-5.webp" alt=""></a>
+                        <div class="card-body ">
+                            <p class="card-title"> 2021/01/27~2021/03/15</p>
+                            <h4>Galaxy S21 5G 用戶獨享</h4>
+                            <p class="card-text">悠遊卡加值金回饋NT$ 300元</p>
+                            <a href="https://promotion.twsamsungcampaign.com/2021-galaxy-s21-promotion/bank.aspx?_ga=2.147081847.1368139407.1611536637-80065903.1606877970&_gac=1.150776260.1609898963.CjwKCAiAudD_BRBXEiwAudakX3eXXw1rlJ7x2LF7I2-JfwXisHX57pClfEni981hUX6Y8I34LJBssRoCf0YQAvD_BwE#sspay"
+                                target="_blank" class="btn btn-outline-primary">立即登錄</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <br><br>
+
+    <footer class="bg-dark">
+        <div class="content">
+
+            <div class="row text-white">
+                <div class="col-sm-3 card mx-auto bg-dark">
+                    <div class="card-body ">
+                        <p class="card-title">謹慎理財 信用無價</p>
+                        <p>客服專線：(02)1234-7000</p>
+                        <p>客服信箱：service@1.com</p>
+                        <a href="https://www.esunbank.com.tw/event/credit/UBear/index.html" target="_blank"
+                            class="btn btn-primary"> f </a>
+                    </div>
+                </div>
+                <div class="col-sm-3 card mx-auto bg-dark">
+                    <div class="card-body ">
+                        <p class="card-title">連結 </p>
+                        <a href="" target="_blank" class="text-white">
+                            <p>最新公告</p>
+                        </a>
+                        <a href="" target="_blank" class="text-white">
+                            <p>使用說明</p>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="col-sm-3 card mx-auto bg-dark">
+
+                    <div class="card-body footerdiv">
+                        <p class="card-title">條款 </p>
+                        <a href="" target="_blank" class="text-white">
+                            <p>隱私權政策</p>
+                        </a>
+                        <a href="" target="_blank" class="text-white">
+                            <p>服務條款</p>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="col-sm-3 card mx-auto bg-dark">
+                    <div class="card-body">
+                        <p class="card-title">下載</p>
+                        <a href="https://www.jkos.com/download_app.html" target="_blank" class="text-white">
+                            <p>街口支付</p>
+                        </a>
+                        <a href="https://www.piapp.com.tw/personal#download" target="_blank" class="text-white">
+                            <p>Pi 拍錢包</p>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-white">
+
+            <p class="ftp">防詐騙！提醒您，請勿告知他人您的個人資訊與簡訊驗證碼，以確保帳戶安全。</p>
+
+            <!-- 置中回到上方的按鈕 -->
+            <a href="#" class="back-to-top"><button type="button" class="btn btn-primary btn-block">TOP</button></a>
+
+        </div>
+    </footer>
+
+
+    <!-- 共用 (登入/NAVBAR)-->
+    <script src="/javascripts/signinNavbar.js"></script>
+
+
+
+
+</body>
+
+</html>

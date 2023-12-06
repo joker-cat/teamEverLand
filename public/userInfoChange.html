@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <!-- font awesome pro link below -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.2.0/css/all.css">
+    <link rel="stylesheet" href="https://static.fontawesome.com/css/fontawesome-app.css">
+
+    <!-- bootstrap 5-->
+    <link rel="stylesheet" href="/build/_css/bootstrap.min.css">
+    <script src="/build/_js/bootstrap.bundle.min.js"></script>
+    <script src="/build/_js/popper.min.js"></script>
+    <script src="/build/_js/bootstrap.min.js"></script>
+
+    <!-- JQUERY 3.4.1 -->
+    <script src="/build/_js/jquery-3.4.1.js"></script>
+
+    <!-- VUE 3-->
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <!-- axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- 共用 -->
+    <link rel="stylesheet" href="/stylesheets/signinNavbar.css">
+
+    <style>
+        * {
+            margin: 0 auto;
+        }
+
+        body {
+            overflow-x: hidden;
+            background-color: #C7B299;
+        }
+
+        #regForm {
+            position: relative;
+        }
+
+        #myForm {
+            padding: 8%;
+            border: solid 10px #444444;
+            border-radius: 30px;
+            background-color: #386B57;
+        }
+
+        #writeForm {
+            padding: 2%;
+            border: solid 10px #444444;
+            border-radius: 15px;
+            background-color: white;
+            z-index: 1;
+        }
+
+        #formPenImg {
+            position: absolute;
+            top: 50%;
+            right: 4%;
+            width: 20%;
+            object-fit: contain;
+            object-position: center;
+        }
+
+        #formPeople {
+            position: absolute;
+            top: 20%;
+            left: 2%;
+            width: 20%;
+            object-fit: contain;
+            object-position: center;
+        }
+
+        .myStyleSelector>div {
+            display: inline-block;
+            margin-right: 2%;
+        }
+
+        /* 個人資料 */
+        /* ------------------------------------------------------------ */
+        #tabArea.tab {
+            overflow: hidden;
+            border: solid 10px #444444;
+            border-bottom: solid 0px #444444;
+            border-radius: 15px 15px 0 0;
+            background-color: #444444;
+        }
+
+        #tabArea.tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 10px 10px;
+            border-right: solid 10px #444444;
+            background-color: #444444;
+            transition: 0.3s;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        #tabArea.tab button:hover {
+            background-color: #707070;
+        }
+
+        #tabArea.tab button.active {
+            background-color: #fff;
+            color: #444444;
+        }
+
+        #baseInfo .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            animation: fadeEffect 1s;
+        }
+
+        @keyframes fadeEffect {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* 購買紀錄 */
+        /* ------------------------------------------------------------ */
+        #writeForm .accordion {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+            transition: 0.4s;
+        }
+
+        #writeForm .active,
+        #writeForm .accordion:hover {
+            background-color: #ccc;
+        }
+
+        #writeForm .accordion:after {
+            content: '\002B';
+            color: #777;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        #writeForm .active:after {
+            content: "\2212";
+        }
+
+        #writeForm .panel {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
+    </style>
+</head>
+
+<body class="container">
+
+    <div id="returnBtn">
+        <div id="returnIcon" style="right: 20px;" v-on:click="returnPage">
+            <i class="fas fa-reply"></i>
+        </div>
+    </div>
+
+    <script>
+        const returnBtn = Vue.createApp({
+            methods: {
+                returnPage() {
+                    window.location.href = '/adminCenter';
+                },
+            }
+        }).mount('#returnBtn');
+    </script>
+
+
+    <div id="mainLogo"><img src="/images/everlandLOGOline.svg" alt=""></div>
+
+    <div id="regForm" class="row my-5">
+        <div class="col-2 mx-0">
+            <img id="formPeople" src="/images/adminCenter/regPeople.svg" alt="">
+        </div>
+        <!-- 個人資料 -->
+        <!-- ------------------------------------------------------------------------ -->
+        <div id="myForm" class="col-9 mx-0">
+            <div id="tabArea" class="tab mx-3">
+                <button class="tablinks fs-5 active" v-on:click="openCity" :data-id="open01">市民資料</button>
+                <button class="tablinks fs-5" v-on:click="openCity" :data-id="open02">購買紀錄</button>
+                <button class="tablinks fs-5" v-on:click="openCity" :data-id="open03">訂餐紀錄</button>
+                <button class="tablinks fs-5" v-on:click="openCity" :data-id="open04">訂位紀錄</button>
+                <!-- <button class="tablinks fs-5" v-on:click="openCity" :data-id="open05">貼文紀錄</button> -->
+            </div>
+            <div id="writeForm">
+                <!-- 個人資訊 -->
+                <div id="baseInfo" class="tabcontent container">
+                    <div class="row m-auto">
+                        <span class="col-12 fs-2 my-2">基本資料</span>
+                        <div class='col-12 row my-0 '>
+                            <p
+                                class='col-4 px-3 py-3 my-0 fs-5 bg-secondary text-white d-flex flex-row justify-content-between'>
+                                <span class="m-0 p-0">帳</span><span class="m-0 p-0">號</span>
+                            </p>
+                            <p class='col-8 px-3 py-3 my-0 fs-6 border-top border-secondary'>{{userName}}</p>
+                        </div>
+                        <div class='col-12 row my-0 '>
+                            <p
+                                class='col-4 px-3 py-3 my-0 fs-5 bg-secondary text-white d-flex flex-row justify-content-between'>
+                                <span class="m-0 p-0">密</span><span class="m-0 p-0">碼</span>
+                            </p>
+                            <p class='col-8 px-3 py-3 my-0 fs-6'>************<button type="button"
+                                    class="btn btn-sm btn-outline-success col-2 ms-2">修改</button></p>
+
+                        </div>
+                        <div class='col-12 row my-0 '>
+                            <p
+                                class='col-4 px-3 py-3 my-0 fs-5 bg-secondary text-white d-flex flex-row justify-content-between'>
+                                <span class="m-0 p-0">電</span>
+                                <span class="m-0 p-0">子</span>
+                                <span class="m-0 p-0">信</span>
+                                <span class="m-0 p-0">箱</span>
+                            </p>
+                            <p class='col-8 ps-0 pe-3 py-2 my-0 fs-6'>
+                                <input name="usermail" class="form-control mx-0" v-model='userMail'></input>
+                            </p>
+
+                        </div>
+                        <div class='col-12 row my-0 '>
+                            <p
+                                class='col-4 px-3 py-3 my-0 fs-5 bg-secondary text-white d-flex flex-row justify-content-between'>
+                                <span class="m-0 p-0">手</span>
+                                <span class="m-0 p-0">機</span>
+                                <span class="m-0 p-0">號</span>
+                                <span class="m-0 p-0">碼</span>
+                            </p>
+                            <p class='col-8 px-3 py-3 my-0 fs-6 border-bottom border-secondary'>{{userPhone}}</p>
+                        </div>
+                    </div>
+                    <div class="row m-auto">
+                        <span class="col-12 fs-2 mt-4 mb-2">個人資訊</span>
+                        <div class='col-12 row my-0 '>
+                            <p
+                                class='col-4 px-3 py-3 my-0 fs-5 bg-secondary text-white d-flex flex-row justify-content-between'>
+                                <span class="m-0 p-0">姓</span>
+                                <span class="m-0 p-0">名</span>
+                            </p>
+                            <p class='col-8 ps-0 pe-3 py-2 my-0 fs-6 border-top border-secondary'>
+                                <input name="usermyname" class="form-control mx-0" v-model='myname'></input>
+                            </p>
+                        </div>
+                        <div class='col-12 row my-0 '>
+                            <p
+                                class='col-4 px-3 py-3 my-0 fs-5 bg-secondary text-white d-flex flex-row justify-content-between'>
+                                <span class="m-0 p-0">生</span>
+                                <span class="m-0 p-0">日</span>
+                            </p>
+                            <p class='col-3 ps-0 pe-3 py-3 my-0 fs-6'>
+                                <select name="yyyy" class="form-control form-control-sm"
+                                    aria-label="Default select example" @change="yearOnChange" v-model="yyyyValue">
+                                    <option v-for="(item, index) in yearArr" :value="item.year">
+                                        {{item.year}}
+                                    </option>
+                                </select>
+                            </p>
+                            <p class='col-2 ps-0 pe-3 py-3 my-0 fs-6'>
+                                <select name="mm" class="form-control form-control-sm"
+                                    aria-label="Default select example" v-model="mmValue">
+                                    <option v-for="(item, index) in monthArr" :value="item.month">
+                                        {{item.month}}
+                                    </option>
+                                </select>
+                            </p>
+                            <p class='col-2 ps-0 pe-3 py-3 my-0 fs-6'>
+                                <select name="dd" class="form-control form-control-sm"
+                                    aria-label="Default select example" v-model="ddValue">
+                                    <option v-for="(item, index) in changeDay" :value="item.day">
+                                        {{item.day}}
+                                    </option>
+                                </select>
+                            </p>
+                            <p class='col-1 ps-0 pe-3 py-3 my-0 fs-6'></p>
+                        </div>
+                        <div class='col-12 row my-0 '>
+                            <p
+                                class='col-4 px-3 py-3 my-0 fs-6 bg-secondary text-white d-flex flex-row justify-content-between'>
+                                <span class="m-0 p-0">性</span>
+                                <span class="m-0 p-0">別</span>
+                            </p>
+                            <p class='col-8 px-3 py-3 my-0 fs-6'>{{usersex}}</p>
+                        </div>
+                        <div class='col-12 row my-0 '>
+                            <p
+                                class='col-4 px-3 py-3 my-0 fs-5 bg-secondary text-white d-flex flex-row justify-content-between'>
+                                <span class="m-0 p-0">地</span>
+                                <span class="m-0 p-0">址</span>
+                            </p>
+                            <p class='col-8 ps-0 pe-3 py-3 my-0 fs-6 twCitySelector myStyleSelector'>
+                                <select name="Add" class="form-control county" aria-label="Default select example"
+                                    v-model="valueAdd01"></select>
+                                <select name="Add" class="form-control district" aria-label="Default select example"
+                                    v-model="valueAdd02"></select>
+                            </p>
+                        </div>
+                        <div class='col-12 row my-0 '>
+                            <p
+                                class='col-4 px-3 py-3 my-0 fs-5 bg-secondary text-white d-flex flex-row justify-content-between'>
+                            </p>
+                            <p
+                                class='col-8 ps-0 pe-3 py-2 my-0 fs-6  border-bottom border-secondary twCitySelector myStyleSelector'>
+                                <input name="Add" class="form-control mx-0" v-model='valueAdd03'></input>
+                            </p>
+                        </div>
+                        <div id="checkBtn" class="col-12 my-4">
+                            <button type="button" class="float-end btn btn-secondary col-3 fs-5 mx-4"
+                                v-on:click="returnPage">取 消</button>
+                            <button type="button" class="float-end btn btn-success col-3 fs-5" data-bs-toggle="modal"
+                                data-bs-target="#updataCheckBox">修 改</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 購買紀錄 -->
+                <!-- ------------------------------------------------------------------------ -->
+                <div id="shoppingOrder" class="tabcontent">
+                    <clothcom v-for="item in userShop" v-bind:clothes="item"></clothcom>
+                    <!-- <clothcom v-for="item in userOrder" v-bind:clothes="item"></clothcom> -->
+                </div>
+
+                <!-- 訂餐紀錄 -->
+                <!-- ------------------------------------------------------------------------ -->
+                <div id="cakeOrder" class="tabcontent">
+                    <mycomponent v-for="item in userOrder" v-bind:apple="item"></mycomponent>
+                </div>
+
+
+                <!-- 訂位紀錄 -->
+                <!-- ------------------------------------------------------------------------ -->
+                <div id="cakeBooking" class="tabcontent">
+                    <bookcom v-bind:bookinginfo="userBook"></bookcom>
+                </div>
+
+                <!-- 貼文紀錄 -->
+                <!-- ------------------------------------------------------------------------ -->
+                <!-- <div id="article" class="tabcontent">
+
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="updataCheckBox" data-bs-keyboard="true" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" style="width:600px">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p class="fs-5">是否確定修改個人資料</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success fs-5" v-on:click="sendData">確 定</button>
+                    <button type="button" class="btn btn-secondary fs-5" data-bs-dismiss="modal">取
+                        消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="/javascripts/twCitySelector.js"></script>
+    <script>
+        getAdd()
+        async function getAdd() {
+            try {
+                const get = await axios.get('/signinCheck');
+                const { data } = get;
+                if (data.errno == 1) {
+                    let add = JSON.parse(data.data.address)
+                    let newAdd01 = add.add01
+                    let newAdd02 = add.add02
+                    new TwCitySelector({
+                        el: '.twCitySelector',
+                        elCounty: '.county', // 在 el 裡查找 element
+                        elDistrict: '.district', // 在 el 裡查找 element
+                        bootstrapStyle: true,
+                        countyValue: newAdd01,
+                        districtValue: newAdd02,
+                    });
+                } else {
+                    window.location.href = '/adminCenter'
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    </script>
+
+    <!-- 服飾店 -->
+    <script type="text/x-template" id="clothesOrder">
+        <button class="accordion" v-on:click="openbar">訂單編號：{{clothes.oid}}</button>
+        <div class="panel">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="col-3" scope="col"></th>
+                        <th class="col-5" scope="col">品名</th>
+                        <th class="col-2" scope="col">數量</th>
+                        <th class="col-2" scope="col">單價</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(temp , index) in clothes.shopinfo">
+                        <th scope="row">{{index+1}}</th>
+                        <td>{{temp.prdname}}</td>
+                        <td>{{temp.count}}</td>
+                        <td>{{temp.price}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="mb-2 float-end">總金額：{{clothes.totalp}}</div>
+        </div>
+    </script>
+
+    <!-- 蛋糕店點餐 -->
+    <script type="text/x-template" id="cakeOrderBlock">
+        <button class="accordion" v-on:click="openbar">訂單編號：{{apple.oid}}</button>
+        <div class="panel">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="col-3" scope="col"></th>
+                        <th class="col-5" scope="col">品名</th>
+                        <th class="col-2" scope="col">數量</th>
+                        <th class="col-2" scope="col">單價</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(temp , index) in apple.orderproducts">
+                        <th scope="row">{{index+1}}</th>
+                        <td>{{temp.prdname}}</td>
+                        <td>{{temp.productscount}}</td>
+                        <td>{{temp.prdprice}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="mb-2 float-end">總金額：{{apple.orderinfo.totalprice}}</div>
+        </div>
+    </script>
+
+    <!-- 蛋糕店定位 -->
+    <script type="text/x-template" id="cakeBooKBlock">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="col-3" scope="col"></th>
+                    <th class="col-3" scope="col">日期</th>
+                    <th class="col-3" scope="col">時間</th>
+                    <th class="col-3" scope="col">人數</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(temp , index) in bookinginfo">
+                    <th scope="row">{{index+1}}</th>
+                    <td>{{temp.date}}</td>
+                    <td>{{temp.booktimeH}}:{{temp.booktimeM}}</td>
+                    <td>{{temp.bookpeople}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </script>
+
+    <!-- VUE -->
+    <script>
+        const tabArea = Vue.createApp({
+            data() {
+                return {
+                    open01: 'baseInfo',
+                    open02: 'shoppingOrder',
+                    open03: 'cakeOrder',
+                    open04: 'cakeBooking',
+                    open05: 'article'
+                }
+            },
+            methods: {
+                openCity(event) {
+                    // console.log(event.target.dataset.id);
+                    // console.log(event);
+                    let tabcontent = document.getElementsByClassName("tabcontent");
+                    for (i = 0; i < tabcontent.length; i++) {
+                        tabcontent[i].style.display = "none";
+                    }
+
+                    // // Get all elements with class="tablinks" and remove the class "active"
+                    let tablinks = document.getElementsByClassName("tablinks");
+                    for (i = 0; i < tablinks.length; i++) {
+                        tablinks[i].className = tablinks[i].className.replace(" active", "");
+                    }
+
+                    let myTarget = event.target.dataset.id
+                    document.getElementById(event.target.dataset.id).style.display = "block";
+                    event.target.className += " active";
+                },
+            },
+            created() {
+                let tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                document.getElementById(this.open01).style.display = "block";
+            },
+        }).mount('#tabArea');
+
+        // 個人資料
+        // ------------------------------------------------------------------
+        const baseInfo = Vue.createApp({
+            data() {
+                return {
+                    userdata: '',
+                    userName: '',
+                    userPwd: '',
+                    userMail: '',
+                    userPhone: '',
+                    myname: '',
+                    yearArr: [],
+                    monthArr: [],
+                    yyyyValue: '',
+                    mmValue: '',
+                    ddValue: '',
+                    everyMonthDays: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+                    usersex: '',
+                    valueAdd01: '',
+                    valueAdd02: '',
+                    valueAdd03: '',
+                }
+            },
+            methods: {
+                yearOnChange() {
+                    if (this.yyyyValue % 4 == 0) {
+                        this.everyMonthDays[1] = 28
+                        if (this.yyyyValue % 100 == 0 && this.yyyyValue % 400 != 0) {
+                            this.everyMonthDays[1] = 29
+                        }
+                    } else {
+                        this.everyMonthDays[1] = 29
+                    }
+                },
+                returnPage() {
+                    window.location.href = '/adminCenter';
+                },
+
+            },
+            computed: {
+                changeDay: function () {
+                    let createDays = []
+                    for (let index = 0; index < this.everyMonthDays[this.mmValue - 1]; index++) {
+                        let obj = { day: index + 1 }
+                        createDays.push(obj)
+                    }
+                    return createDays;
+                }
+            },
+            created() {
+                axios.get('/signinCheck')
+                    .then((res) => {
+                        if (res.data.errno == 1) {
+                            this.userdata = res.data.data;
+                            // console.log(this.userdata);
+                            let add = JSON.parse(this.userdata.address)
+                            let birth = JSON.parse(this.userdata.userbirth)
+                            this.userName = this.userdata.username;
+                            this.userMail = this.userdata.usermail;
+                            this.userPhone = this.userdata.userphone;
+                            this.myname = this.userdata.myname;
+                            this.yyyyValue = birth.yyyy;
+                            this.mmValue = birth.mm;
+                            this.ddValue = birth.dd;
+                            this.valueAdd01 = add.add01;
+                            this.valueAdd02 = add.add02;
+                            this.valueAdd03 = add.add03;
+                            this.userdata.usersex == 0 ? this.usersex = '女' : this.usersex = '男';
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    });
+                for (let index = 1900; index < new Date().getFullYear() + 1; index++) {
+                    let obj = { year: index }
+                    this.yearArr.unshift(obj)
+                };
+                for (let index = 1; index < 13; index++) {
+                    let obj = { month: index }
+                    this.monthArr.push(obj)
+                };
+                // console.log(this.yearArr);
+            },
+        }).mount('#baseInfo')
+
+
+        const updataCheckBox = Vue.createApp({
+            methods: {
+                sendData() {
+                    userData = {
+                        usermail: baseInfo.userMail,
+                        myname: baseInfo.myname,
+                        address: `{ "add01": "${baseInfo.valueAdd01}","add02": "${baseInfo.valueAdd02}" ,"add03": "${baseInfo.valueAdd03}" }`,
+                        userbirth: `{ "yyyy": "${baseInfo.yyyyValue}" ,"mm":"${baseInfo.mmValue}" ,"dd": "${baseInfo.ddValue}" }`,
+                        username: baseInfo.userName,
+                    }
+                    axios.post('/adminCenter/updateUserData', userData)
+                        .then((res) => {
+                            window.location.href = '#';
+                            location.reload();
+                        })
+                        .catch((error) => { console.log(error) })
+                },
+            },
+        }).mount('#updataCheckBox')
+
+
+        // 購買紀錄
+        // ------------------------------------------------------------------
+        const shoppingOrder = Vue.createApp({
+            data() {
+                return {
+                    userShop: [],
+                }
+            }, created() {
+                axios.get('/adminCenter/shopRecord').then((res) => {
+                    // console.log(res);
+                    if (res.data.errno == 1) {
+                        res.data.data.forEach((elm) => {
+                            let info = JSON.parse(elm.usershopcart);
+                            let totalprice = 0
+                            info.forEach((elm) => {
+                                totalprice += elm.price * elm.count
+                            })
+                            // console.log(totalprice)
+                            this.userShop.push({
+                                oid: elm.orderid,
+                                shopinfo: info,
+                                totalp: totalprice,
+                            })
+                        })
+                        // console.log(this.userShop);
+                    }
+                }).catch((error) => { console.log(error) })
+            },
+            components: {
+                'clothcom': {
+                    template: '#clothesOrder',
+                    props: ['clothes'],
+                    methods: {
+                        openbar(event) {
+                            // console.log(event.target.classList);
+                            event.target.classList.toggle("active");
+                            let panel = event.target.nextElementSibling;
+                            if (panel.style.maxHeight) {
+                                panel.style.maxHeight = null;
+                            } else {
+                                panel.style.maxHeight = panel.scrollHeight + "px";
+                            }
+                        }
+                    },
+                }
+            }
+        }).mount('#shoppingOrder');
+
+        // 訂餐紀錄
+        // ------------------------------------------------------------------
+        const cakeOrder = Vue.createApp({
+            data() {
+                return {
+                    userOrder: [],
+                }
+            }, created() {
+                axios.get('/adminCenter/orderRecord').then((res) => {
+                    if (res.data.errno == 1) {
+                        res.data.data.forEach((elm) => {
+                            let info = JSON.parse(elm.orderinfo.slice(2, -2));
+                            let products = JSON.parse(info.product);
+                            delete info.product;
+                            // console.log(products);
+                            this.userOrder.push({
+                                oid: elm.orderid,
+                                date: elm.date,
+                                orderinfo: info,
+                                orderproducts: products,
+                            })
+                        })
+                        // console.log(this.userOrder);
+                    }
+                }).catch((error) => { console.log(error) })
+            },
+            components: {
+                'mycomponent': {
+                    template: '#cakeOrderBlock',
+                    props: ['apple'],
+                    methods: {
+                        openbar(event) {
+                            // console.log(event.target.classList);
+                            event.target.classList.toggle("active");
+                            let panel = event.target.nextElementSibling;
+                            if (panel.style.maxHeight) {
+                                panel.style.maxHeight = null;
+                            } else {
+                                panel.style.maxHeight = panel.scrollHeight + "px";
+                            }
+                        }
+                    },
+                }
+            }
+        }).mount('#cakeOrder');
+
+
+
+        // 訂位紀錄
+        // ------------------------------------------------------------------
+        const cakeBooking = Vue.createApp({
+            data() {
+                return {
+                    userBook: [],
+                }
+            }, created() {
+                axios.get('/adminCenter/bookRecord').then((res) => {
+                    if (res.data.errno == 1) {
+                        console.log(res)
+                        res.data.data.forEach((elm) => {
+                            let booking = JSON.parse(elm.str.slice(2, -2));
+                            let timeH, timeM;
+                            if (booking.time % 2 > 0) {
+                                timeH = 9 + (booking.time-1) / 2;
+                                timeM = "30";
+                            } else { timeH = 9 + booking.time / 2;
+                                timeM = "00" }
+                            this.userBook.push({
+                                date: elm.date,
+                                booktimeH: timeH.toString().padStart(2,'0'),
+                                booktimeM: timeM,
+                                bookpeople: booking.info[0].peopleselect,
+                            })
+                        })
+                        console.log(this.userBook);
+                    }
+                }).catch((error) => { console.log(error) })
+            },
+            components: {
+                'bookcom': {
+                    template: '#cakeBooKBlock',
+                    props: ['bookinginfo'],
+                }
+            }
+        }).mount('#cakeBooking');
+    </script>
+
+
+</body>
+
+</html>

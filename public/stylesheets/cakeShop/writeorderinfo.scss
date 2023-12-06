@@ -1,0 +1,192 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  
+  #writeordersection {
+    width: 100%;
+    height: 100vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #386b57;
+  }
+  
+  #form {
+    width: 700px;
+    min-height: 60%;
+    max-height: 90%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 25px;
+    position: relative;
+  
+    h1 {
+      margin-bottom: 25px;
+      text-align: center;
+    }
+  
+    .userinfo {
+      width: 100%;
+      margin: 10px 0;
+  
+      label {
+        font-size: 1.4rem;
+        letter-spacing: 1.5px;
+        font-weight: 400;
+      }
+  
+      #city, #area, #people, #number {
+        display: inline-block;
+        padding: 0px 1.4em 0px 0.8em;
+        line-height: 25px;
+        width: 180px;
+        margin-bottom: 10px;
+        border: 1px solid #cbcbcb;
+        border-radius: 5px;
+        color: black;
+        font-size: 1rem;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-color: white;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(white), to(white));
+        background-image: linear-gradient(white 0%, white 100%);
+        background-repeat: no-repeat, repeat;
+        background-position: right 0.7em top 50%, 0px 0px;
+        outline: none;
+      }
+  
+      #address {
+        display: inline-block;
+        padding: 0px 1.4em 0px 0.5em;
+        line-height: 25px;
+        width: 90%;
+        margin-left: 53px;
+        border: 1px solid #cbcbcb;
+        border-radius: 5px;
+        color: black;
+        font-size: 1rem;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-color: white;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(white), to(white));
+        background-image: linear-gradient(white 0%, white 100%);
+        background-repeat: no-repeat, repeat;
+        background-position: right 0.7em top 50%, 0px 0px;
+        outline: none;
+      }
+    }
+  
+    #products {
+      width: 100%;
+      margin-bottom: 20px;
+      padding: 20px;
+      max-height: 350px;
+      min-height: 300px;
+      overflow-y: scroll;
+  
+      ul {
+        list-style-type: none;
+  
+        li {
+          width: 100%;
+          height: 100px;
+          margin: 10px 0;
+          border-bottom: 1px solid black;
+  
+          &:last-of-type {
+            border: none;
+          }
+  
+          .row {
+            width: 100%;
+            height: 100%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+  
+            .col {
+              display: -webkit-box;
+              display: -ms-flexbox;
+              display: flex;
+              -webkit-box-align: center;
+              -ms-flex-align: center;
+              align-items: center;
+              padding: 0 20px;
+              flex: none;
+              &:nth-of-type(1) {
+                width: 22%;
+                height: 100%;
+                padding: 5px;
+  
+                .imgset {
+                  width: 100%;
+                  height: 100%;
+                  background-position: center;
+                  background-size: cover;
+                  background-repeat: no-repeat;
+                }
+              }
+  
+              &:nth-of-type(2) {
+                width: 30%;
+              }
+  
+              &:nth-of-type(3) {
+                width: 15%;
+              }
+  
+              &:nth-of-type(4) {
+                width: 21%;
+              }
+  
+              &:nth-of-type(5) {
+                width: 12%;
+              }
+            }
+          }
+        }
+      }
+    }
+  
+    #pricetotal {
+      width: 100%;
+      padding: 10px 14px;
+  
+      p {
+        font-size: 1.6rem;
+        letter-spacing: 2px;
+        text-align: right;
+        margin-bottom: 8px;
+  
+        span {
+          font-size: 1.4;
+          color: crimson;
+        }
+      }
+  
+      #ordergo {
+        display: inline-block;
+        width: 100%;
+        border-radius: 10px;
+        padding: 5px 10px;
+        outline: none;
+        border: none;
+        font-size: 1.6rem;
+        background: transparent;
+        background-color: cadetblue;
+      }
+    }
+  }
+  
+  /*# sourceMappingURL=writeorderinfo.css.map */
